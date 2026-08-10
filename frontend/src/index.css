@@ -1,0 +1,39 @@
+/* Importação da fonte primária (Archivo) exigida pelo projeto */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@100..900&display=swap');
+
+/* Injeção do motor Tailwind v4 */
+@import "tailwindcss";
+
+@theme {
+  /* Cores Principais - Brand Book */
+  --color-institucional-blue: #002858;
+  
+  /* Tipografia exigida */
+  --font-sans: "Archivo", sans-serif;
+  --font-title: '"Archivo Exp"', "Archivo", sans-serif;
+}
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    /* Aplica a fonte principal nos corpos de texto */
+    font-family: var(--font-sans); 
+    background-color: #ffffff;
+    color: #08060d;
+  }
+  
+  /* Aplica a fonte secundária obrigatoriamente aos títulos */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-title);
+    font-weight: 600;
+  }
+
+  /* Prepara a fundação flexível para suportar o layout Split Screen e o Kanban */
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
