@@ -10,6 +10,7 @@ import { PoliticaPrivacidade } from './pages/Legal/PoliticaPrivacidade';
 import { TermosUtilizacao } from './pages/Legal/TermosUtilizacao';
 
 // Importações do Dashboard
+import { ProtectedRoute } from './components/ProtectedRoute';
 import { Login } from './pages/Dashboard/Login';
 import { DashboardLayout } from './pages/Dashboard/DashboardLayout';
 import { Kanban } from './pages/Dashboard/Kanban';
@@ -45,11 +46,13 @@ function AppContent() {
           
           {/* Login Isolado (Sem Navbar e Sem Footer) */}
           <Route path="/login" element={<Login />} />
-          
-          {/* Rotas Agrupadas do Dashboard com Sidebar (Sem Navbar e Sem Footer) */}
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route index element={<Kanban />} />
-            <Route path="catalogo" element={<GestaoCatalogo />} />
+
+          <Route element={<ProtectedRoute />}>
+            {/* Rotas Agrupadas do Dashboard com Sidebar (Sem Navbar e Sem Footer) */}
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              <Route index element={<Kanban />} />
+              <Route path="catalogo" element={<GestaoCatalogo />} />
+            </Route>
           </Route>
         </Routes>
       </main>
