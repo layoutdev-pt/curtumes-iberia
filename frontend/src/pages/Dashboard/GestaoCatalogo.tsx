@@ -77,7 +77,7 @@ export function GestaoCatalogo() {
       const imageFormData = new FormData();
       imageFormData.append('imagem', formData.imagem);
 
-      const backendResponse = await fetch('http://localhost:3000/api/upload-catalogo', {
+      const backendResponse = await fetch('https://curtumes-backend.onrender.com', {
         method: 'POST',
         body: imageFormData,
       });
