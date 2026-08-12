@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion'; // <-- Importações das animações
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { ScrollToTop } from './components/layout/ScrollToTop'; // <-- O nosso novo utilitário
+import { ScrollToTop } from './components/layout/ScrollToTop';
 
 import { Home } from './pages/Home';
 import { Catalogo as CatalogoPublico } from './pages/Catalogo';
@@ -19,10 +19,11 @@ import { Kanban } from './pages/Dashboard/Kanban';
 import { GestaoCatalogo } from './pages/Dashboard/GestaoCatalogo';
 import { ListaCatalogo } from './pages/Dashboard/ListaCatalogo';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import { LanguageProvider } from './contexts/LanguageContext';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext'; // <-- Importamos o hook do idioma
 
 function AppContent() {
   const location = useLocation();
+  const { language } = useLanguage(); // <-- Consumimos o idioma atual aqui
   
   const isDashboardRoute = location.pathname.startsWith('/dashboard');
   const isLoginRoute = location.pathname === '/login';
@@ -31,23 +32,27 @@ function AppContent() {
   return (
     <div className="flex flex-col min-h-screen">
       
-      {/* 1. O utilitário que atira o utilizador para o topo em cada clique */}
       <ScrollToTop />
       
-      {showPublicLayout && <Navbar />}
+      {/* Envolvemos a Navbar também numa animação muito subtil para acompanhar o idioma */}
+      {showPublicLayout && (
+        <motion.div key={`nav-${language}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+          <Navbar />
+        </motion.div>
+      )}
       
       <main className="flex-grow flex flex-col relative overflow-hidden">
-        {/* 2. AnimatePresence gere a saída e entrada das páginas */}
         <AnimatePresence mode="wait">
+          
+          {/* O SEGREDO ESTÁ AQUI: A key agora junta a rota e o idioma! */}
           <motion.div
-            key={location.pathname}
-            initial={{ opacity: 0, y: 5 }}    // Estado inicial (invisível e ligeiramente abaixo)
-            animate={{ opacity: 1, y: 0 }}     // Estado final (visível e no sítio)
-            exit={{ opacity: 0, y: -10 }}      // Como sai (desvanece e sobe)
-            transition={{ duration: 0.4, ease: "easeOut" }} // Suavidade da transição
+            key={`${location.pathname}-${language}`} 
+            initial={{ opacity: 0, y: 5 }}    
+            animate={{ opacity: 1, y: 0 }}     
+            exit={{ opacity: 0, y: -10 }}      
+            transition={{ duration: 0.3, ease: "easeOut" }} 
             className="flex-grow flex flex-col"
           >
-            {/* É obrigatório passar a location para o Routes quando usamos AnimatePresence */}
             <Routes location={location}>
               {/* Frontend Público */}
               <Route path="/" element={<Home />} />
@@ -74,7 +79,7 @@ function AppContent() {
         </AnimatePresence>
       </main>
 
-      {showPublicLayout && <Footer />}
+      {showPublicLayout && <Footer key={`footer-${language}`} />}
     </div>
   );
 }
