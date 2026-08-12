@@ -1,5 +1,5 @@
 import { useLanguage } from '../../contexts/LanguageContext';
-import { motion } from 'framer-motion'; // <-- Importação do Framer Motion
+import { motion } from 'framer-motion';
 
 const content = {
   PT: {
@@ -22,7 +22,7 @@ export function PoliticaPrivacidade() {
 
   return (
     <div className="bg-[#F8FAFC] min-h-screen">
-      <div className="max-w-4xl mx-auto py-32 px-8 relative z-10">
+      <div className="max-w-4xl mx-auto pt-28 pb-20 px-4 sm:px-6 md:px-8 relative z-10">
         
         {/* Título Animado */}
         <motion.div
@@ -31,7 +31,7 @@ export function PoliticaPrivacidade() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h1 className="text-4xl md:text-5xl font-title font-bold text-institucional-blue mb-12">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-title font-bold text-institucional-blue mb-8 md:mb-12">
             {data.title}
           </h1>
         </motion.div>
@@ -42,14 +42,14 @@ export function PoliticaPrivacidade() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 space-y-8 text-gray-700 leading-relaxed text-lg"
+          className="bg-white p-6 sm:p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 space-y-6 md:space-y-8 text-gray-700 leading-relaxed text-base sm:text-lg"
         >
           <p className="font-medium text-gray-900">
             {data.intro}
           </p>
           
           <div>
-            <h2 className="text-2xl font-title font-bold text-institucional-blue mb-4">
+            <h2 className="text-xl sm:text-2xl font-title font-bold text-institucional-blue mb-3 md:mb-4">
               {data.sec1Title}
             </h2>
             <p>
@@ -57,7 +57,6 @@ export function PoliticaPrivacidade() {
             </p>
           </div>
           
-          {/* Adicionar restantes cláusulas em dictionary posteriormente */}
         </motion.div>
       </div>
     </div>
