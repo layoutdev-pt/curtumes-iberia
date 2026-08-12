@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { motion } from 'framer-motion'; // <-- Importamos o framer-motion
+import { motion } from 'framer-motion';
 
 const content = {
   PT: {
@@ -25,7 +25,7 @@ export function Footer() {
     <motion.footer 
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }} // O margin negativo faz com que a animação dispare um bocadinho antes de o footer entrar totalmente no ecrã
+      viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="bg-institucional-blue text-white py-12 mt-auto relative z-10"
     >
@@ -36,9 +36,9 @@ export function Footer() {
           <div>
             <h3 className="font-title font-bold text-xl mb-4">CURTUMES IBÉRIA</h3>
             <div className="flex space-x-4 mb-4">
-              <a href="#" target="_blank" rel="noreferrer" className="hover:opacity-75 transition-opacity">Facebook</a>
-              <a href="#" target="_blank" rel="noreferrer" className="hover:opacity-75 transition-opacity">Instagram</a>
-              <a href="#" target="_blank" rel="noreferrer" className="hover:opacity-75 transition-opacity">LinkedIn</a>
+              <a href="https://www.facebook.com/curtumesiberia" target="_blank" rel="noreferrer" className="hover:opacity-75 transition-opacity">Facebook</a>
+              <a href="https://www.instagram.com/curtumesiberia/" target="_blank" rel="noreferrer" className="hover:opacity-75 transition-opacity">Instagram</a>
+              <a href="https://www.linkedin.com/company/curtumes-iberia" target="_blank" rel="noreferrer" className="hover:opacity-75 transition-opacity">LinkedIn</a>
             </div>
             <p className="text-sm opacity-80">Rua 24 de Junho, 1399<br/>2380-639 Vila Moreira, Portugal</p>
           </div>
