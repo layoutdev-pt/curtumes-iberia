@@ -88,12 +88,12 @@ export function ListaCatalogo() {
     try {
       let imagemUrl = editingArtigo.imagem_url;
 
-      // Se o utilizador escolheu uma nova imagem, passamos pelo Node.js primeiro
+      // Se o utilizador escolheu uma nova imagem, passamos pelo Node.js primeiro (AGORA APONTANDO PARA O RENDER)
       if (editImage) {
         const imageFormData = new FormData();
         imageFormData.append('imagem', editImage);
 
-        const backendResponse = await fetch('http://localhost:3000/api/upload-catalogo', {
+        const backendResponse = await fetch('https://curtumes-backend.onrender.com/api/upload-catalogo', {
           method: 'POST',
           body: imageFormData,
         });
