@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { motion } from 'framer-motion'; // <-- Importamos a biblioteca de animações
 
 const content = {
   PT: {
@@ -31,7 +32,7 @@ export function Home() {
   return (
     <div className="w-full flex flex-col bg-[#F8FAFC]">
       
-      {/* 1. HERO SECTION (Mantida a tua base excelente) */}
+      {/* 1. HERO SECTION */}
       <section className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-institucional-blue">
         
         <video
@@ -46,23 +47,40 @@ export function Home() {
 
         <div className="absolute inset-0 bg-institucional-blue/30 mix-blend-multiply"></div>
 
-        <div className="relative z-10 text-center px-4 flex flex-col items-center">
+        {/* Título animado para evitar o "clarão" no carregamento inicial */}
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+          className="relative z-10 text-center px-4 flex flex-col items-center"
+        >
           <h1 className="font-title font-bold text-6xl md:text-8xl lg:text-[10rem] text-white uppercase tracking-wider leading-none drop-shadow-lg">
             All <br />
             About <br />
             Leather
           </h1>
-        </div>
+        </motion.div>
         
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+        {/* Indicador de scroll animado */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce"
+        >
           <div className="w-[2px] h-16 bg-white/50 rounded-full"></div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* 2. SECÇÃO DE SUSTENTABILIDADE E MISSÃO (Aprimorada visualmente) */}
-      <section className="py-32 px-6 relative overflow-hidden bg-white">
+      {/* 2. SECÇÃO DE SUSTENTABILIDADE E MISSÃO (Aparece suavemente no scroll) */}
+      <motion.section 
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="py-32 px-6 relative overflow-hidden bg-white"
+      >
         
-        {/* Elementos abstratos de couro (Brand Book) */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
           <div className="absolute top-0 right-0 w-[40vw] h-[40vw] rounded-full bg-gradient-to-bl from-blue-50 to-transparent blur-3xl"></div>
           <svg className="absolute -bottom-20 -left-20 w-[500px] h-[500px] text-institucional-blue/5 -rotate-12" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -79,10 +97,16 @@ export function Home() {
             {data.missionText}
           </p>
         </div>
-      </section>
+      </motion.section>
 
-      {/* 3. SECÇÃO DE NAVEGAÇÃO B2B (Call to Actions) */}
-      <section className="py-20 px-6 bg-[#F8FAFC]">
+      {/* 3. SECÇÃO DE NAVEGAÇÃO B2B (Aparece suavemente no scroll, logo a seguir à secção anterior) */}
+      <motion.section 
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+        className="py-20 px-6 bg-[#F8FAFC]"
+      >
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Card Catálogo */}
@@ -120,7 +144,7 @@ export function Home() {
           </div>
 
         </div>
-      </section>
+      </motion.section>
 
     </div>
   );

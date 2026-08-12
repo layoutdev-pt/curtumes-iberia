@@ -1,8 +1,34 @@
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../contexts/LanguageContext';
+import { motion } from 'framer-motion'; // <-- Importamos o framer-motion
+
+const content = {
+  PT: {
+    cofinanced: "Cofinanciado por:",
+    logosPlaceholder: "[Logótipos PRF / UE]",
+    privacy: "Política de Privacidade",
+    terms: "Termos de Utilização"
+  },
+  EN: {
+    cofinanced: "Co-financed by:",
+    logosPlaceholder: "[PRF / EU Logos]",
+    privacy: "Privacy Policy",
+    terms: "Terms of Use"
+  }
+};
 
 export function Footer() {
+  const { language } = useLanguage();
+  const data = content[language];
+
   return (
-    <footer className="bg-institucional-blue text-white py-12 mt-auto">
+    <motion.footer 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }} // O margin negativo faz com que a animação dispare um bocadinho antes de o footer entrar totalmente no ecrã
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="bg-institucional-blue text-white py-12 mt-auto relative z-10"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
@@ -19,22 +45,22 @@ export function Footer() {
 
           {/* Financiamento Governamental (Obrigatório) */}
           <div className="flex flex-col items-start md:items-center">
-            <h4 className="font-bold mb-4">Cofinanciado por:</h4>
+            <h4 className="font-bold mb-4">{data.cofinanced}</h4>
             {/* Marcador de lugar para os logótipos reais do PRF */}
             <div className="w-48 h-16 bg-white/10 border border-white/20 flex items-center justify-center rounded text-sm">
-              [Logótipos PRF / UE]
+              {data.logosPlaceholder}
             </div>
           </div>
 
-          {/* Links Legais em Hardcode */}
-          <div className="flex flex-col items-start md:items-end space-y-2 text-sm">
-            <Link to="/politica-privacidade" className="hover:underline">Política de Privacidade</Link>
-            <Link to="/termos-utilizacao" className="hover:underline">Termos de Utilização</Link>
+          {/* Links Legais Traduzidos */}
+          <div className="flex mt-3 flex-col items-start md:items-end space-y-2 text-sm">
+            <Link to="/politica-privacidade" className="hover:underline">{data.privacy}</Link>
+            <Link to="/termos-utilizacao" className="hover:underline">{data.terms}</Link>
             <p className="mt-4 opacity-60">© {new Date().getFullYear()} Curtumes Ibéria, S.A.</p>
           </div>
           
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }

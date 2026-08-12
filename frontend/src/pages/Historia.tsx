@@ -1,4 +1,5 @@
 import { useLanguage } from '../contexts/LanguageContext';
+import { motion } from 'framer-motion'; // <-- Importamos a biblioteca de animações
 
 // Dicionário local para textos longos, respeitando rigorosamente o documento fornecido.
 const content = {
@@ -59,24 +60,42 @@ export function Historia() {
 
       <div className="max-w-4xl mx-auto px-6 relative z-10">
         
-        {/* Cabeçalho da Secção */}
-        <div className="text-center mb-16">
+        {/* Cabeçalho da Secção Animado */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center mb-16"
+        >
           <span className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2 block">EST/ 1963</span>
           <h1 className="text-4xl md:text-5xl font-title font-bold text-institucional-blue">{data.title}</h1>
           <div className="w-16 h-1 bg-institucional-blue mx-auto mt-6"></div>
-        </div>
+        </motion.div>
 
-        {/* Corpo de Texto (Estilo Editorial) */}
-        <div className="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-gray-100 mb-16 space-y-6 text-gray-700 text-lg leading-relaxed">
+        {/* Corpo de Texto Animado */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-gray-100 mb-16 space-y-6 text-gray-700 text-lg leading-relaxed"
+        >
           {data.paragraphs.map((paragraph, index) => (
             <p key={index} className={index === 0 ? "text-xl font-medium text-institucional-blue" : ""}>
               {paragraph}
             </p>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Secção de Vendas Mundiais */}
-        <div className="text-center">
+        {/* Secção de Vendas Mundiais Animada */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="text-center"
+        >
           <h2 className="text-2xl font-title font-bold text-institucional-blue mb-4">{data.salesTitle}</h2>
           <p className="text-gray-600 mb-8">{data.salesText}</p>
           
@@ -90,7 +109,7 @@ export function Historia() {
               </span>
             ))}
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </div>

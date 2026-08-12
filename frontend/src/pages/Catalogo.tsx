@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useLanguage } from '../contexts/LanguageContext';
+import { motion, AnimatePresence } from 'framer-motion'; // <-- Importamos as ferramentas mágicas
 
 interface Artigo {
   id: string;
@@ -13,8 +14,6 @@ interface Artigo {
   imagem_url: string;
 }
 
-// O ID tem de coincidir exatamente com o que está na base de dados para o filtro funcionar.
-// As labels adaptam-se ao idioma escolhido.
 const categoriasFiltro = [
   { id: 'all', labelPT: 'Todas as Categorias', labelEN: 'All Categories' },
   { id: 'Artigos Chrome Free', labelPT: 'Artigos Chrome Free', labelEN: 'Chrome Free Articles' },
@@ -23,7 +22,7 @@ const categoriasFiltro = [
 ];
 
 export function Catalogo() {
-  const { language } = useLanguage(); // Consumimos o idioma atual do contexto global
+  const { language } = useLanguage();
 
   const [artigos, setArtigos] = useState<Artigo[]>([]);
   const [loadingDados, setLoadingDados] = useState(true);
@@ -56,7 +55,6 @@ export function Catalogo() {
     filtroAtivo === 'all' ? true : artigo.categoria === filtroAtivo
   );
 
-  // Helper para procurar a label correta da categoria selecionada no Dropdown
   const getCategoriaLabel = (id: string) => {
     const cat = categoriasFiltro.find(c => c.id === id);
     if (!cat) return '';
@@ -74,8 +72,13 @@ export function Catalogo() {
         </svg>
       </div>
 
-      {/* LATERAL ESQUERDA: Formulário Fixo Bilingue */}
-      <div className="w-full md:w-[400px] bg-white p-8 shadow-[10px_0_15px_-3px_rgba(0,0,0,0.05)] z-10 flex flex-col relative border-r border-gray-100">
+      {/* LATERAL ESQUERDA: Formulário Animado (Desliza da esquerda) */}
+      <motion.div 
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="w-full md:w-[400px] bg-white p-8 shadow-[10px_0_15px_-3px_rgba(0,0,0,0.05)] z-10 flex flex-col relative border-r border-gray-100"
+      >
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-institucional-blue to-blue-400"></div>
         
         <h2 className="text-2xl font-title font-bold text-institucional-blue mb-6">
@@ -152,11 +155,18 @@ export function Catalogo() {
             )}
           </div>
         </form>
-      </div>
+      </motion.div>
 
       {/* LATERAL DIREITA: Catálogo de Produtos */}
-      <div className="flex-1 p-6 md:p-10 overflow-y-auto relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 border-b border-gray-200/60 pb-6 relative z-20">
+      <div className="flex-1 p-6 md:p-10 overflow-y-auto relative z-10 custom-scrollbar">
+        
+        {/* Cabeçalho Animado (Desce suavemente) */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+          className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 border-b border-gray-200/60 pb-6 relative z-20"
+        >
           <div>
             <h1 className="text-4xl font-title font-bold text-institucional-blue tracking-tight">
               {language === 'PT' ? 'Catálogo de Artigos' : 'Leather Catalog'}
@@ -168,7 +178,6 @@ export function Catalogo() {
             </p>
           </div>
           
-          {/* O NOSSO DROPDOWN CUSTOMIZADO */}
           <div className="mt-4 md:mt-0 relative w-64">
             <button 
               type="button"
@@ -211,7 +220,7 @@ export function Catalogo() {
               ))}
             </ul>
           </div>
-        </div>
+        </motion.div>
 
         {/* Grelha de Produtos Reais da Base de Dados */}
         {loadingDados ? (
@@ -219,45 +228,54 @@ export function Catalogo() {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-institucional-blue"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 pb-12">
-            {artigosFiltrados.length > 0 ? (
-              artigosFiltrados.map((artigo) => (
-                <div 
-                  key={artigo.id} 
-                  className={`bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden shadow-sm border transition-all duration-300 cursor-pointer group hover:shadow-xl hover:-translate-y-1 ${
-                    artigoSelecionado?.id === artigo.id ? 'border-institucional-blue ring-2 ring-institucional-blue/30' : 'border-gray-100 hover:border-gray-300'
-                  }`}
-                  onClick={() => setArtigoSelecionado(artigo)}
-                >
-                  <div className="h-52 bg-institucional-blue/5 overflow-hidden relative">
-                    <img src={artigo.imagem_url} alt={artigo.titulo_pt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out mix-blend-multiply" />
-                    <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1.5 text-xs font-bold rounded-full text-institucional-blue shadow-sm border border-gray-100">
-                      {artigo.referencia}
+          <motion.div layout className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 pb-12">
+            <AnimatePresence>
+              {artigosFiltrados.length > 0 ? (
+                artigosFiltrados.map((artigo, index) => (
+                  <motion.div 
+                    layout /* Permite reorganização fluida ao filtrar */
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }} /* Efeito de cascata na entrada */
+                    key={artigo.id} 
+                    className={`bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden shadow-sm border transition-all duration-300 cursor-pointer group hover:shadow-xl hover:-translate-y-1 ${
+                      artigoSelecionado?.id === artigo.id ? 'border-institucional-blue ring-2 ring-institucional-blue/30' : 'border-gray-100 hover:border-gray-300'
+                    }`}
+                    onClick={() => setArtigoSelecionado(artigo)}
+                  >
+                    <div className="h-52 bg-institucional-blue/5 overflow-hidden relative">
+                      <img src={artigo.imagem_url} alt={artigo.titulo_pt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out mix-blend-multiply" />
+                      <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1.5 text-xs font-bold rounded-full text-institucional-blue shadow-sm border border-gray-100">
+                        {artigo.referencia}
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-6">
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-2">
-                      {/* Tradução dinâmica da tag da categoria */}
-                      {language === 'PT' ? categoriasFiltro.find(c => c.id === artigo.categoria)?.labelPT : categoriasFiltro.find(c => c.id === artigo.categoria)?.labelEN}
-                    </p>
-                    <h3 className="font-title font-bold text-xl text-gray-900 mb-3">
-                      {/* Leitura dinâmica da base de dados */}
-                      {language === 'PT' ? artigo.titulo_pt : artigo.titulo_en}
-                    </h3>
-                    <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
-                      {language === 'PT' ? artigo.descricao_pt : artigo.descricao_en}
-                    </p>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="col-span-full py-12 text-center">
-                <p className="text-gray-500 font-medium">
-                  {language === 'PT' ? 'Não foram encontrados artigos nesta categoria.' : 'No articles found in this category.'}
-                </p>
-              </div>
-            )}
-          </div>
+                    <div className="p-6">
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-2">
+                        {language === 'PT' ? categoriasFiltro.find(c => c.id === artigo.categoria)?.labelPT : categoriasFiltro.find(c => c.id === artigo.categoria)?.labelEN}
+                      </p>
+                      <h3 className="font-title font-bold text-xl text-gray-900 mb-3">
+                        {language === 'PT' ? artigo.titulo_pt : artigo.titulo_en}
+                      </h3>
+                      <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+                        {language === 'PT' ? artigo.descricao_pt : artigo.descricao_en}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))
+              ) : (
+                <motion.div 
+                  initial={{ opacity: 0 }} 
+                  animate={{ opacity: 1 }} 
+                  className="col-span-full py-12 text-center"
+                >
+                  <p className="text-gray-500 font-medium">
+                    {language === 'PT' ? 'Não foram encontrados artigos nesta categoria.' : 'No articles found in this category.'}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         )}
       </div>
     </div>

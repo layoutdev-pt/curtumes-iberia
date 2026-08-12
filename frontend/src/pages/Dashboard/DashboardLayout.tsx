@@ -6,14 +6,16 @@ const content = {
   PT: {
     panel: "Painel de Controlo",
     orders: "Gestão de Encomendas",
-    catalog: "Gestão de Catálogo",
+    inventory: "Inventário Catálogo",
+    addCatalog: "Adicionar Artigo",
     viewSite: "Ver Site Público",
     logout: "Terminar Sessão"
   },
   EN: {
     panel: "Control Panel",
     orders: "Order Management",
-    catalog: "Catalog Management",
+    inventory: "Catalog Inventory",
+    addCatalog: "Add Article",
     viewSite: "View Public Site",
     logout: "Logout"
   }
@@ -45,6 +47,8 @@ export function DashboardLayout() {
         </div>
         
         <nav className="flex-1 p-4 space-y-2 overflow-y-auto relative z-10 mt-4">
+          
+          {/* 1. Gestão de Encomendas */}
           <Link 
             to="/dashboard" 
             className={`flex items-center px-4 py-3.5 rounded-xl transition-all font-medium ${
@@ -59,6 +63,22 @@ export function DashboardLayout() {
             {data.orders}
           </Link>
           
+          {/* 2. Inventário Catálogo (NOVO - Com ícone de lista) */}
+          <Link 
+            to="/dashboard/lista-catalogo" 
+            className={`flex items-center px-4 py-3.5 rounded-xl transition-all font-medium ${
+              location.pathname === '/dashboard/lista-catalogo' 
+                ? 'bg-white text-institucional-blue shadow-md translate-x-1' 
+                : 'hover:bg-white/10 text-gray-300 hover:text-white'
+            }`}
+          >
+            <svg className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+            </svg>
+            {data.inventory}
+          </Link>
+
+          {/* 3. Adicionar Artigo (ATUALIZADO - Com ícone de "+") */}
           <Link 
             to="/dashboard/catalogo" 
             className={`flex items-center px-4 py-3.5 rounded-xl transition-all font-medium ${
@@ -68,10 +88,11 @@ export function DashboardLayout() {
             }`}
           >
             <svg className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
-            {data.catalog}
+            {data.addCatalog}
           </Link>
+          
         </nav>
 
         <div className="p-6 border-t border-white/10 relative z-10">
