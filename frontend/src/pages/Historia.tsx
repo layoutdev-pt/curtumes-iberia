@@ -44,11 +44,8 @@ const content = {
   }
 };
 
-// Topologia JSON base para o mapa-múndi
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
-
-// Coordenadas Geoespaciais (Longitude, Latitude)
-const origin: [number, number] = [-8.2245, 39.3999]; // Portugal Continental Rigoroso
+const origin: [number, number] = [-8.2245, 39.3999]; 
 
 const destinations = [
   { name: "Espanha", coordinates: [-3.7492, 40.4637] as [number, number] },
@@ -65,6 +62,19 @@ const destinations = [
   { name: "Vietname", coordinates: [108.2021, 14.0583] as [number, number] }
 ];
 
+// Matrizes de imagens com as dinâmicas de rotação exigidas
+const leftImages = [
+  { src: "/imagens/historia_img/img1.avif", rotate: "rotate-3", delay: 0.2 },
+  { src: "/imagens/historia_img/img2.avif", rotate: "-rotate-2", delay: 0.4 },
+  { src: "/imagens/historia_img/img3.avif", rotate: "rotate-0", delay: 0.6 },
+];
+
+const rightImages = [
+  { src: "/imagens/historia_img/img4.avif", rotate: "rotate-2", delay: 0.3 },
+  { src: "/imagens/historia_img/img5.avif", rotate: "rotate-0", delay: 0.5 },
+  { src: "/imagens/historia_img/img6.avif", rotate: "-rotate-3", delay: 0.7 },
+];
+
 export function Historia() {
   const { language } = useLanguage();
   const data = content[language];
@@ -72,7 +82,6 @@ export function Historia() {
   return (
     <div className="bg-[#F8FAFC] min-h-screen pt-32 pb-0 relative overflow-x-hidden">
       
-      {/* Injeção de @keyframes GPU-accelerated */}
       <style>{`
         @keyframes flowLine {
           to { stroke-dashoffset: -24; }
@@ -81,7 +90,6 @@ export function Historia() {
           stroke-dasharray: 4 8;
           animation: flowLine 1.5s linear infinite;
         }
-        
         @keyframes marquee {
           0% { transform: translateX(0%); }
           100% { transform: translateX(-50%); }
@@ -89,7 +97,7 @@ export function Historia() {
         .animate-marquee-css {
           display: flex;
           width: fit-content;
-          animation: marquee 35s linear infinite; /* Ligeiramente mais lento para facilitar leitura */
+          animation: marquee 35s linear infinite;
         }
       `}</style>
 
@@ -101,41 +109,76 @@ export function Historia() {
         </svg>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 relative z-10 mb-20">
+      {/* LAYOUT DE 3 COLUNAS: Texto mais largo (w-3/5), Imagens mais finas (w-1/5) e mais abaixo */}
+      <div className="max-w-7xl mx-auto px-6 relative z-10 mb-24 flex flex-col lg:flex-row gap-6 xl:gap-12 items-start">
         
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-16"
-        >
-          <span className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2 block">EST/ 1963</span>
-          <h1 className="text-4xl md:text-5xl font-title font-bold text-institucional-blue">{data.title}</h1>
-          <div className="w-16 h-1 bg-institucional-blue mx-auto mt-6"></div>
-        </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-gray-100 space-y-6 text-gray-700 text-lg leading-relaxed"
-        >
-          {data.paragraphs.map((paragraph, index) => (
-            <p key={index} className={index === 0 ? "text-xl font-medium text-institucional-blue" : ""}>
-              {paragraph}
-            </p>
+        {/* Coluna de Imagens Esquerda (w-1/5, mt-48 para iniciar mais abaixo) */}
+        <div className="hidden lg:flex flex-col w-1/5 space-y-24 mt-48">
+          {leftImages.map((img, i) => (
+            <motion.img 
+              key={`left-${i}`}
+              src={img.src}
+              initial={{ opacity: 0, x: -50, y: 20 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: img.delay }}
+              className={`w-full aspect-[3/4] object-cover rounded-xl shadow-xl border-4 border-white transform hover:scale-105 transition-transform duration-500 ${img.rotate}`}
+              alt={`História Curtumes Ibéria ${i + 1}`}
+            />
           ))}
-        </motion.div>
+        </div>
+
+        {/* Coluna Central (O Texto Histórico: mais largo w-3/5) */}
+        <div className="w-full lg:w-3/5">
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center mb-16"
+          >
+            <span className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2 block">EST/ 1963</span>
+            <h1 className="text-4xl md:text-5xl font-title font-bold text-institucional-blue">{data.title}</h1>
+            <div className="w-16 h-1 bg-institucional-blue mx-auto mt-6"></div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="bg-white/90 backdrop-blur-sm p-8 md:p-14 rounded-2xl shadow-sm border border-gray-100 space-y-6 text-gray-700 text-lg leading-relaxed relative"
+          >
+            {data.paragraphs.map((paragraph, index) => (
+              <p key={index} className={index === 0 ? "text-2xl font-medium text-institucional-blue mb-8 leading-snug" : ""}>
+                {paragraph}
+              </p>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Coluna de Imagens Direita (w-1/5, mt-32 para desnível assimétrico) */}
+        <div className="hidden lg:flex flex-col w-1/5 space-y-24 mt-32">
+          {rightImages.map((img, i) => (
+            <motion.img 
+              key={`right-${i}`}
+              src={img.src}
+              initial={{ opacity: 0, x: 50, y: 20 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: img.delay }}
+              className={`w-full aspect-[3/4] object-cover rounded-xl shadow-xl border-4 border-white transform hover:scale-105 transition-transform duration-500 ${img.rotate}`}
+              alt={`História Curtumes Ibéria ${i + 4}`}
+            />
+          ))}
+        </div>
+
       </div>
 
       {/* Secção Geoespacial */}
       <div className="w-full relative bg-institucional-blue py-20 overflow-hidden border-t border-blue-900 shadow-inner">
         <div className="max-w-7xl mx-auto px-6 relative z-20 text-center mb-12">
-          {/* Título mais forte e legível */}
           <h2 className="text-4xl md:text-5xl font-title font-bold text-white mb-6 drop-shadow-md">{data.salesTitle}</h2>
-          {/* Subtítulo mais claro e com maior leitura */}
           <p className="text-white text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-sm">{data.salesText}</p>
         </div>
 
@@ -149,7 +192,7 @@ export function Historia() {
                     key={geo.rsmKey}
                     geography={geo}
                     fill="#F8FAFC"
-                    fillOpacity={0.15} /* Ligeiramente mais visível o contorno dos continentes */
+                    fillOpacity={0.15} 
                     stroke="#ffffff"
                     strokeWidth={0.5}
                     strokeDasharray="2 2"
@@ -198,7 +241,6 @@ export function Historia() {
             {[...data.countries, ...data.countries].map((country, index) => (
               <span 
                 key={index} 
-                /* Texto dos países mais nítido, forte e espaçado para leitura imediata */
                 className="mx-8 text-white text-xl md:text-2xl font-bold font-title tracking-widest drop-shadow-md"
               >
                 {country} <span className="text-blue-400 opacity-50 ml-8">•</span>
