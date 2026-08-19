@@ -249,7 +249,7 @@ export function Home() {
               initial={{ opacity: 0, x: -200 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.1, ease: "easeOut", delay: 1.3 }}
+              transition={{ duration: 1.1, ease: "easeOut", delay: 1 }}
               className="w-full lg:w-1/4 order-3 lg:order-3 text-center lg:text-left mt-8 lg:mt-0 px-4 relative z-20"
             >
               <div className="w-12 h-1 bg-blue-400 mx-auto lg:mr-auto lg:ml-0 mb-6 opacity-70"></div>
