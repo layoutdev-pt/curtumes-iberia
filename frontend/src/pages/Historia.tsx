@@ -1,7 +1,8 @@
 import { useLanguage } from '../contexts/LanguageContext';
-import { motion } from 'framer-motion'; // <-- Importamos a biblioteca de animações
+import { motion } from 'framer-motion';
+import { ComposableMap, Geographies, Geography, Line, Marker } from 'react-simple-maps';
 
-// Dicionário local para textos longos, respeitando rigorosamente o documento fornecido.
+// Dicionário local
 const content = {
   PT: {
     title: "A Nossa História",
@@ -43,13 +44,56 @@ const content = {
   }
 };
 
+// Topologia JSON base para o mapa-múndi
+const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+
+// Coordenadas Geoespaciais (Longitude, Latitude)
+const origin: [number, number] = [-8.2245, 39.3999]; // Portugal Continental Rigoroso
+
+const destinations = [
+  { name: "Espanha", coordinates: [-3.7492, 40.4637] as [number, number] },
+  { name: "França", coordinates: [2.2137, 46.2276] as [number, number] },
+  { name: "Reino Unido", coordinates: [-3.4359, 55.3781] as [number, number] },
+  { name: "Alemanha", coordinates: [10.4515, 51.1656] as [number, number] },
+  { name: "Itália", coordinates: [12.5673, 41.8719] as [number, number] },
+  { name: "Suécia", coordinates: [18.6435, 60.1281] as [number, number] },
+  { name: "Roménia", coordinates: [24.9667, 45.9431] as [number, number] },
+  { name: "Marrocos", coordinates: [-7.0926, 31.7917] as [number, number] },
+  { name: "Estados Unidos", coordinates: [-95.7128, 37.0902] as [number, number] },
+  { name: "Índia", coordinates: [78.9628, 20.5936] as [number, number] },
+  { name: "China", coordinates: [104.1953, 35.8616] as [number, number] },
+  { name: "Vietname", coordinates: [108.2021, 14.0583] as [number, number] }
+];
+
 export function Historia() {
   const { language } = useLanguage();
   const data = content[language];
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen pt-32 pb-24 relative overflow-hidden">
+    <div className="bg-[#F8FAFC] min-h-screen pt-32 pb-0 relative overflow-x-hidden">
       
+      {/* Injeção de @keyframes GPU-accelerated */}
+      <style>{`
+        /* Animação que empurra os traços sempre para a frente (fluxo de exportação) */
+        @keyframes flowLine {
+          to { stroke-dashoffset: -24; }
+        }
+        .anim-line {
+          stroke-dasharray: 4 8; /* Cria um traço curto e um espaço, dando um efeito de "formigueiro" contínuo */
+          animation: flowLine 1.5s linear infinite; /* Movimento direcional contínuo e fixo */
+        }
+        
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee-css {
+          display: flex;
+          width: fit-content;
+          animation: marquee 30s linear infinite;
+        }
+      `}</style>
+
       {/* Elementos Gráficos de Fundo (Brand Book) */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
         <div className="absolute top-0 right-0 w-[50vw] h-[50vw] rounded-full bg-gradient-to-bl from-blue-100 via-transparent to-transparent blur-3xl mix-blend-multiply"></div>
@@ -58,9 +102,8 @@ export function Historia() {
         </svg>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 relative z-10">
+      <div className="max-w-4xl mx-auto px-6 relative z-10 mb-20">
         
-        {/* Cabeçalho da Secção Animado */}
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -73,13 +116,12 @@ export function Historia() {
           <div className="w-16 h-1 bg-institucional-blue mx-auto mt-6"></div>
         </motion.div>
 
-        {/* Corpo de Texto Animado */}
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-gray-100 mb-16 space-y-6 text-gray-700 text-lg leading-relaxed"
+          className="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-gray-100 space-y-6 text-gray-700 text-lg leading-relaxed"
         >
           {data.paragraphs.map((paragraph, index) => (
             <p key={index} className={index === 0 ? "text-xl font-medium text-institucional-blue" : ""}>
@@ -87,31 +129,88 @@ export function Historia() {
             </p>
           ))}
         </motion.div>
+      </div>
 
-        {/* Secção de Vendas Mundiais Animada */}
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="text-center"
-        >
-          <h2 className="text-2xl font-title font-bold text-institucional-blue mb-4">{data.salesTitle}</h2>
-          <p className="text-gray-600 mb-8">{data.salesText}</p>
-          
-          <div className="flex flex-wrap justify-center gap-3">
-            {data.countries.map((country, index) => (
+      {/* Secção Geoespacial - API DOM SVG com Splines de Bézier */}
+      <div className="w-full relative bg-institucional-blue py-20 overflow-hidden border-t border-blue-900 shadow-inner">
+        <div className="max-w-7xl mx-auto px-6 relative z-20 text-center mb-8">
+          <h2 className="text-3xl font-title font-bold text-white mb-4">{data.salesTitle}</h2>
+          <p className="text-blue-100/80 max-w-2xl mx-auto">{data.salesText}</p>
+        </div>
+
+        {/* MAPA SVG */}
+        <div className="max-w-6xl mx-auto opacity-70 pointer-events-none relative z-10 -my-10 lg:-my-24">
+          <ComposableMap projection="geoMercator" projectionConfig={{ scale: 120 }}>
+            <Geographies geography={geoUrl}>
+              {({ geographies }) =>
+                geographies.map((geo) => (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill="#F8FAFC"
+                    fillOpacity={0.1}
+                    stroke="#ffffff"
+                    strokeWidth={0.5}
+                    strokeDasharray="2 2"
+                    style={{
+                      default: { outline: "none" },
+                      hover: { outline: "none" },
+                      pressed: { outline: "none" },
+                    }}
+                  />
+                ))
+              }
+            </Geographies>
+            
+            {/* Curvas de Bézier Animadas Direcionais */}
+            {destinations.map((dest, i) => (
+              <Line
+                key={`line-${i}`}
+                from={origin}
+                to={dest.coordinates}
+                stroke="#60A5FA"
+                strokeWidth={1.5}
+                strokeLinecap="round"
+                className="anim-line"
+                style={{
+                  filter: "drop-shadow(0 0 4px rgba(96, 165, 250, 0.6))",
+                }}
+              />
+            ))}
+
+            {/* Marcadores de Destino (Pontos finais das rotas) */}
+            {destinations.map((dest, i) => (
+              <Marker key={`marker-${i}`} coordinates={dest.coordinates}>
+                <circle r={2} fill="#93C5FD" opacity={0.9} />
+              </Marker>
+            ))}
+
+            {/* Marcador Matemático de Origem (Portugal Centralizado) */}
+            <Marker coordinates={origin}>
+              {/* Radar pulsante */}
+              <circle r={6} fill="#ffffff" opacity={0.3} className="animate-ping" />
+              {/* Núcleo sólido */}
+              <circle r={3} fill="#ffffff" />
+            </Marker>
+            
+          </ComposableMap>
+        </div>
+
+        {/* Fita Marquee Infinita GPU-Accelerated */}
+        <div className="w-full overflow-hidden bg-white/10 backdrop-blur-sm border-y border-white/10 py-5 mt-10 relative z-20 flex">
+          <div className="animate-marquee-css flex whitespace-nowrap">
+            {[...data.countries, ...data.countries].map((country, index) => (
               <span 
                 key={index} 
-                className="bg-white border border-gray-200 text-institucional-blue px-4 py-2 rounded-full text-sm font-bold shadow-sm"
+                className="mx-6 text-white text-lg md:text-xl font-bold font-title tracking-wider opacity-90"
               >
-                {country}
+                {country} <span className="text-blue-400 opacity-50 ml-6">•</span>
               </span>
             ))}
           </div>
-        </motion.div>
-
+        </div>
       </div>
+
     </div>
   );
 }
