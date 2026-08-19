@@ -74,13 +74,12 @@ export function Historia() {
       
       {/* Injeção de @keyframes GPU-accelerated */}
       <style>{`
-        /* Animação que empurra os traços sempre para a frente (fluxo de exportação) */
         @keyframes flowLine {
           to { stroke-dashoffset: -24; }
         }
         .anim-line {
-          stroke-dasharray: 4 8; /* Cria um traço curto e um espaço, dando um efeito de "formigueiro" contínuo */
-          animation: flowLine 1.5s linear infinite; /* Movimento direcional contínuo e fixo */
+          stroke-dasharray: 4 8;
+          animation: flowLine 1.5s linear infinite;
         }
         
         @keyframes marquee {
@@ -90,11 +89,11 @@ export function Historia() {
         .animate-marquee-css {
           display: flex;
           width: fit-content;
-          animation: marquee 30s linear infinite;
+          animation: marquee 35s linear infinite; /* Ligeiramente mais lento para facilitar leitura */
         }
       `}</style>
 
-      {/* Elementos Gráficos de Fundo (Brand Book) */}
+      {/* Elementos Gráficos de Fundo */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
         <div className="absolute top-0 right-0 w-[50vw] h-[50vw] rounded-full bg-gradient-to-bl from-blue-100 via-transparent to-transparent blur-3xl mix-blend-multiply"></div>
         <svg className="absolute bottom-20 -left-20 w-[600px] h-[600px] text-institucional-blue/5 rotate-45" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -131,11 +130,13 @@ export function Historia() {
         </motion.div>
       </div>
 
-      {/* Secção Geoespacial - API DOM SVG com Splines de Bézier */}
+      {/* Secção Geoespacial */}
       <div className="w-full relative bg-institucional-blue py-20 overflow-hidden border-t border-blue-900 shadow-inner">
-        <div className="max-w-7xl mx-auto px-6 relative z-20 text-center mb-8">
-          <h2 className="text-3xl font-title font-bold text-white mb-4">{data.salesTitle}</h2>
-          <p className="text-blue-100/80 max-w-2xl mx-auto">{data.salesText}</p>
+        <div className="max-w-7xl mx-auto px-6 relative z-20 text-center mb-12">
+          {/* Título mais forte e legível */}
+          <h2 className="text-4xl md:text-5xl font-title font-bold text-white mb-6 drop-shadow-md">{data.salesTitle}</h2>
+          {/* Subtítulo mais claro e com maior leitura */}
+          <p className="text-white text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-sm">{data.salesText}</p>
         </div>
 
         {/* MAPA SVG */}
@@ -148,7 +149,7 @@ export function Historia() {
                     key={geo.rsmKey}
                     geography={geo}
                     fill="#F8FAFC"
-                    fillOpacity={0.1}
+                    fillOpacity={0.15} /* Ligeiramente mais visível o contorno dos continentes */
                     stroke="#ffffff"
                     strokeWidth={0.5}
                     strokeDasharray="2 2"
@@ -162,7 +163,6 @@ export function Historia() {
               }
             </Geographies>
             
-            {/* Curvas de Bézier Animadas Direcionais */}
             {destinations.map((dest, i) => (
               <Line
                 key={`line-${i}`}
@@ -178,33 +178,30 @@ export function Historia() {
               />
             ))}
 
-            {/* Marcadores de Destino (Pontos finais das rotas) */}
             {destinations.map((dest, i) => (
               <Marker key={`marker-${i}`} coordinates={dest.coordinates}>
                 <circle r={2} fill="#93C5FD" opacity={0.9} />
               </Marker>
             ))}
 
-            {/* Marcador Matemático de Origem (Portugal Centralizado) */}
             <Marker coordinates={origin}>
-              {/* Radar pulsante */}
               <circle r={6} fill="#ffffff" opacity={0.3} className="animate-ping" />
-              {/* Núcleo sólido */}
               <circle r={3} fill="#ffffff" />
             </Marker>
             
           </ComposableMap>
         </div>
 
-        {/* Fita Marquee Infinita GPU-Accelerated */}
+        {/* Fita Marquee Infinita */}
         <div className="w-full overflow-hidden bg-white/10 backdrop-blur-sm border-y border-white/10 py-5 mt-10 relative z-20 flex">
           <div className="animate-marquee-css flex whitespace-nowrap">
             {[...data.countries, ...data.countries].map((country, index) => (
               <span 
                 key={index} 
-                className="mx-6 text-white text-lg md:text-xl font-bold font-title tracking-wider opacity-90"
+                /* Texto dos países mais nítido, forte e espaçado para leitura imediata */
+                className="mx-8 text-white text-xl md:text-2xl font-bold font-title tracking-widest drop-shadow-md"
               >
-                {country} <span className="text-blue-400 opacity-50 ml-6">•</span>
+                {country} <span className="text-blue-400 opacity-50 ml-8">•</span>
               </span>
             ))}
           </div>
