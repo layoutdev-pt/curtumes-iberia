@@ -12,7 +12,7 @@ export function Navbar() {
   const { language, toggleLanguage, t } = useLanguage();
 
   // ------------------------------------------------------------------
-  // CONFIGURAÇÃO INDEPENDENTE DAS LOGOS (3 ESTADOS POSSÍVEIS)
+  // CONFIGURAÇÃO INDEPENDENTE DAS LOGOS (PROPORÇÕES MANTIDAS)
   // ------------------------------------------------------------------
   const LOGO_CONFIG = {
     transparente_escuro: {
@@ -29,16 +29,12 @@ export function Navbar() {
     }
   };
 
-  // Motor de Decisão da Logo principal
-  let currentLogo;
-  if (isScrolled) {
-    currentLogo = LOGO_CONFIG.solida; 
-  } else if (isMobileMenuOpen) {
-    // Se o menu abrir no topo, forçamos a logo colorida pois o fundo do menu é branco
-    currentLogo = LOGO_CONFIG.transparente_claro;
-  } else {
-    currentLogo = isHomePage ? LOGO_CONFIG.transparente_escuro : LOGO_CONFIG.transparente_claro;
-  }
+  // ------------------------------------------------------------------
+  // ESTADOS DE VISIBILIDADE DAS LOGOS (SEM DESMONTAR O DOM)
+  // ------------------------------------------------------------------
+  const showSolida = isScrolled;
+  const showTransparenteClaro = !isScrolled && (isMobileMenuOpen || !isHomePage);
+  const showTransparenteEscuro = !isScrolled && isHomePage && !isMobileMenuOpen;
 
   // Cor global dos textos na barra (Azul ou Branco)
   const useDarkText = isScrolled || !isHomePage;
@@ -86,20 +82,36 @@ export function Navbar() {
 
   return (
     <>
+      {/* CORREÇÃO BUG 2: Altura fixa estrutural (h-24 lg:h-32) para prevenir layout reflow */}
       <header
-        className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ease-in-out ${
-          isScrolled ? 'bg-white shadow-sm py-4' : 'bg-transparent py-6'
+        className={`fixed top-0 left-0 w-full z-40 transition-colors duration-300 ease-in-out h-24 lg:h-32 flex items-center ${
+          isScrolled ? 'bg-white shadow-sm' : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="flex justify-between items-center w-full">
             
-            <Link to="/" className="flex-shrink-0 cursor-pointer flex items-center relative z-50">
+            {/* CORREÇÃO BUG 1: Todas as logos carregam no DOM em Grid Overlap (alternando opacidade) */}
+            <Link to="/" className="grid items-center flex-shrink-0 cursor-pointer relative z-50">
+              
               <img 
-                src={currentLogo.src} 
+                src={LOGO_CONFIG.transparente_escuro.src} 
                 alt="Curtumes Ibéria, S.A." 
-                className={currentLogo.classes}
+                className={`${LOGO_CONFIG.transparente_escuro.classes} col-start-1 row-start-1 ${showTransparenteEscuro ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
               />
+              
+              <img 
+                src={LOGO_CONFIG.transparente_claro.src} 
+                alt="Curtumes Ibéria, S.A." 
+                className={`${LOGO_CONFIG.transparente_claro.classes} col-start-1 row-start-1 ${showTransparenteClaro ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+              />
+              
+              <img 
+                src={LOGO_CONFIG.solida.src} 
+                alt="Curtumes Ibéria, S.A." 
+                className={`${LOGO_CONFIG.solida.classes} col-start-1 row-start-1 ${showSolida ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+              />
+
             </Link>
 
             <div className="flex items-center space-x-4 md:space-x-8 relative z-50">

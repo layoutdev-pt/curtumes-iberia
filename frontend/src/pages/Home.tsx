@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { motion } from 'framer-motion'; // <-- Importamos a biblioteca de animações
+import { motion } from 'framer-motion';
 
 const content = {
   PT: {
@@ -47,28 +47,40 @@ export function Home() {
 
         <div className="absolute inset-0 bg-institucional-blue/30 mix-blend-multiply"></div>
 
-        {/* Título animado para evitar o "clarão" no carregamento inicial */}
+        {/* Título animado com as diretrizes tipográficas exigidas */}
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-          className="relative z-10 text-center px-4 flex flex-col items-center"
+          className="relative z-10 text-center px-4 mt-16"
         >
-          <h1 className="font-title font-bold text-6xl md:text-8xl lg:text-[10rem] text-white uppercase tracking-wider leading-none drop-shadow-lg">
-            All <br />
-            About <br />
-            Leather
-          </h1>
+          <div className="relative inline-flex flex-col items-end">
+            <h1 className="font-title font-bold text-6xl md:text-8xl lg:text-[10rem] text-white uppercase tracking-wider leading-none drop-shadow-lg text-left">
+              All <br />
+              About <br />
+              Leather
+            </h1>
+            <span className="font-title italic font-medium text-white/75 text-2xl md:text-4xl tracking-widest mt-2 md:-mt-4 mr-2 drop-shadow-md">
+              Since 1963
+            </span>
+          </div>
         </motion.div>
         
-        {/* Indicador de scroll animado */}
+        {/* Indicador de scroll animado via transform: translateY() (GPU) */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
         >
-          <div className="w-[2px] h-16 bg-white/50 rounded-full"></div>
+          <svg 
+            className="w-8 h-8 text-white/70 animate-bounce" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
         </motion.div>
       </section>
 
