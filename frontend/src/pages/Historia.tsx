@@ -238,7 +238,7 @@ export function Historia() {
                   
                   <div className="hidden md:block w-1/2"></div>
                   
-                  <div className={`w-full md:w-1/2 flex flex-col ${isEven ? 'md:pl-16' : 'md:pr-16 md:text-right'}`}>
+                  <div className={`w-full md:w-1/2 flex flex-col ${isEven ? 'md:pl-17' : 'md:pr-18 md:text-right'}`}>
                     <span className="text-4xl md:text-5xl font-title font-black text-blue-100 mb-2">{item.year}</span>
                     <p className="text-gray-600 text-lg leading-relaxed relative z-10 -mt-4">
                       {item.text}
