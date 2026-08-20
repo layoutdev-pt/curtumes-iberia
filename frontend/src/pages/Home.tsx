@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { motion, useInView } from 'framer-motion'; // <-- Importámos o useInView
+import { motion, useInView } from 'framer-motion';
 import { ComposableMap, Geographies, Geography, Line, Marker } from 'react-simple-maps';
 
 const content = {
@@ -62,21 +62,30 @@ export function Home() {
   const [rotation, setRotation] = useState<[number, number, number]>([0, -20, 0]);
   const requestRef = useRef<number>(0);
   
-  // NOVA LÓGICA: Referência para a secção do globo para saber se está no ecrã
   const globeRef = useRef(null);
   const isGlobeInView = useInView(globeRef, { margin: "200px" });
 
   useEffect(() => {
-    // Se o globo NÃO estiver no ecrã, pausamos imediatamente a função pesada
     if (!isGlobeInView) return;
 
-    const rotate = () => {
-      setRotation((prevRotation) => {
-        const currentLong = prevRotation[0] % 360;
-        const speed = 0.5 - 0.40 * Math.cos((currentLong * Math.PI) / 180);
-        return [prevRotation[0] + speed, prevRotation[1], prevRotation[2]];
-      });
+    // LÓGICA DE PERFORMANCE: Limitar o mapa a ~30 FPS para evitar bloqueio do React
+    let lastTime = performance.now();
+    const fpsInterval = 1000 / 30;
+
+    const rotate = (currentTime: number) => {
       requestRef.current = requestAnimationFrame(rotate);
+      
+      const elapsed = currentTime - lastTime;
+      
+      if (elapsed > fpsInterval) {
+        lastTime = currentTime - (elapsed % fpsInterval);
+        
+        setRotation((prevRotation) => {
+          const currentLong = prevRotation[0] % 360;
+          const speed = 0.5 - 0.40 * Math.cos((currentLong * Math.PI) / 180);
+          return [prevRotation[0] + speed, prevRotation[1], prevRotation[2]];
+        });
+      }
     };
     
     requestRef.current = requestAnimationFrame(rotate);
@@ -84,7 +93,7 @@ export function Home() {
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-  }, [isGlobeInView]); // Reavalia a animação se o utilizador fizer scroll até ao globo
+  }, [isGlobeInView]);
 
   return (
     <div className="w-full flex flex-col bg-[#F8FAFC]">
@@ -101,7 +110,7 @@ export function Home() {
 
       {/* 1. HERO SECTION */}
       <section className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-institucional-blue z-0">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50 pointer-events-none">
           <source src="/videos/curtumesiberia.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-institucional-blue/30 mix-blend-multiply pointer-events-none"></div>
@@ -126,7 +135,7 @@ export function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 pointer-events-none"
         >
           <svg className="w-8 h-8 text-white/70 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
@@ -168,7 +177,7 @@ export function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center mb-12 md:mb-16"
+            className="text-center mb-12 md:mb-16 pointer-events-none"
           >
             <h2 className="text-4xl md:text-5xl font-title font-bold text-white mb-4 drop-shadow-md">
               {data.globalTitle}
@@ -185,7 +194,7 @@ export function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.2, ease: "easeOut", delay: 1.5 }}
-              className="w-full lg:w-1/4 order-2 lg:order-1 text-center lg:text-right mt-8 lg:mt-0 px-4 relative z-20"
+              className="w-full lg:w-1/4 order-2 lg:order-1 text-center lg:text-right mt-8 lg:mt-0 px-4 relative z-20 pointer-events-none"
             >
               <div className="w-12 h-1 bg-blue-400 mx-auto lg:ml-auto lg:mr-0 mb-6 opacity-70"></div>
               <p className="text-blue-50 text-base md:text-lg leading-relaxed font-medium">
@@ -193,14 +202,14 @@ export function Home() {
               </p>
             </motion.div>
 
-            {/* AQUI ESTÁ A REFERÊNCIA QUE ACORDA O GLOBO APENAS QUANDO VISTO */}
-            <div ref={globeRef} className="w-full lg:w-1/2 max-w-2xl h-[400px] md:h-[500px] relative pointer-events-none cursor-default flex justify-center items-center order-1 lg:order-2 z-10 -my-8 md:-my-12">
+            <div ref={globeRef} className="w-full lg:w-1/2 max-w-2xl h-[400px] md:h-[500px] relative pointer-events-none flex justify-center items-center order-1 lg:order-2 z-0 -my-8 md:-my-12">
               <div className="absolute w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full bg-blue-500/20 blur-[80px] z-0"></div>
 
+              {/* TS FIX: Classe padrão Tailwind substitui objetos incorretos em style */}
               <ComposableMap 
                 projection="geoOrthographic" 
                 projectionConfig={{ scale: 220, rotate: rotation }}
-                className="w-full h-full relative z-10 opacity-90"
+                className="w-full h-full relative z-10 opacity-90 pointer-events-none"
               >
                 <circle cx={400} cy={300} r={220} fill="#00183A" stroke="#ffffff" strokeWidth={0.5} strokeOpacity={0.1} />
                 
@@ -232,18 +241,18 @@ export function Home() {
                     stroke="#60A5FA"
                     strokeWidth={1.5}
                     strokeLinecap="round"
-                    className="anim-line"
+                    className="anim-line pointer-events-none"
                     style={{ filter: "drop-shadow(0 0 4px rgba(96, 165, 250, 0.6))" }}
                   />
                 ))}
 
                 {destinations.map((dest, i) => (
-                  <Marker key={`marker-${i}`} coordinates={dest.coordinates}>
+                  <Marker key={`marker-${i}`} coordinates={dest.coordinates} className="pointer-events-none">
                     <circle r={2} fill="#93C5FD" opacity={0.9} />
                   </Marker>
                 ))}
 
-                <Marker coordinates={origin}>
+                <Marker coordinates={origin} className="pointer-events-none">
                   <circle r={6} fill="#ffffff" opacity={0.3} className="animate-ping" />
                   <circle r={3} fill="#ffffff" />
                 </Marker>
@@ -255,7 +264,7 @@ export function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.1, ease: "easeOut", delay: 1 }}
-              className="w-full lg:w-1/4 order-3 lg:order-3 text-center lg:text-left mt-8 lg:mt-0 px-4 relative z-20"
+              className="w-full lg:w-1/4 order-3 lg:order-3 text-center lg:text-left mt-8 lg:mt-0 px-4 relative z-20 pointer-events-none"
             >
               <div className="w-12 h-1 bg-blue-400 mx-auto lg:mr-auto lg:ml-0 mb-6 opacity-70"></div>
               <p className="text-blue-50 text-base md:text-lg leading-relaxed font-medium">
@@ -274,7 +283,7 @@ export function Home() {
           >
             <Link 
               to="/historia" 
-              className="inline-flex items-center justify-center px-8 py-3.5 border border-white/30 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded font-bold uppercase tracking-wider text-sm transition-all duration-300 shadow-md hover:shadow-lg"
+              className="pointer-events-auto inline-flex items-center justify-center px-8 py-3.5 border border-white/30 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded font-bold uppercase tracking-wider text-sm transition-all duration-300 shadow-md hover:shadow-lg"
             >
               {data.globalBtn}
               <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
