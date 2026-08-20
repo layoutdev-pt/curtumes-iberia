@@ -12,7 +12,7 @@ export function Navbar() {
   const { language, toggleLanguage, t } = useLanguage();
 
   // ------------------------------------------------------------------
-  // CONFIGURAÇÃO INDEPENDENTE DAS LOGOS (PROPORÇÕES MANTIDAS)
+  // CONFIGURAÇÃO INDEPENDENTE DAS LOGOS (PROPORÇÕES MANTIDAS EXACTAMENTE)
   // ------------------------------------------------------------------
   const LOGO_CONFIG = {
     transparente_escuro: {
@@ -30,7 +30,7 @@ export function Navbar() {
   };
 
   // ------------------------------------------------------------------
-  // ESTADOS DE VISIBILIDADE DAS LOGOS (SEM DESMONTAR O DOM)
+  // ESTADOS DE VISIBILIDADE DAS LOGOS
   // ------------------------------------------------------------------
   const showSolida = isScrolled;
   const showTransparenteClaro = !isScrolled && (isMobileMenuOpen || !isHomePage);
@@ -46,7 +46,6 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Prevenir o scroll da página quando o menu mobile está aberto
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -56,14 +55,10 @@ export function Navbar() {
     return () => { document.body.style.overflow = 'unset'; };
   }, [isMobileMenuOpen]);
 
-  // Fechar o menu mobile sempre que a rota mudar
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
-  // ------------------------------------------------------------------
-  // ESTADO ATIVO DOS LINKS (Destaque consoante a página)
-  // ------------------------------------------------------------------
   const getLinkClasses = (path: string, isMobile = false) => {
     const isActive = location.pathname === path;
     
@@ -82,40 +77,46 @@ export function Navbar() {
 
   return (
     <>
-      {/* CORREÇÃO BUG 2: Altura fixa estrutural (h-24 lg:h-32) para prevenir layout reflow */}
-      <header
-        className={`fixed top-0 left-0 w-full z-40 transition-colors duration-300 ease-in-out h-24 lg:h-32 flex items-center ${
-          isScrolled ? 'bg-white shadow-sm' : 'bg-transparent'
-        }`}
+      {/* 
+        ANIMAÇÃO DE CÁPSULA (PILL EFFECT):
+        Usa o motion.header para transitar as propriedades físicas.
+        O width usa `calc(100% - 2rem)` no mobile para dar margem e `min(100% - 4rem, 1280px)` no desktop.
+      */}
+      <motion.header
+        initial={false}
+        animate={{
+          width: isScrolled ? "min(100% - 2rem, 1280px)" : "100%",
+          top: isScrolled ? "1rem" : "0px",
+          borderRadius: isScrolled ? "9999px" : "0px",
+          backgroundColor: isScrolled ? "rgba(255, 255, 255, 0.95)" : "transparent",
+          boxShadow: isScrolled ? "0 4px 20px rgba(0, 0, 0, 0.08)" : "none",
+          backdropFilter: isScrolled ? "blur(12px)" : "blur(0px)"
+        }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+        className="fixed left-1/2 -translate-x-1/2 z-40 flex items-center h-24 lg:h-32"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full">
           <div className="flex justify-between items-center w-full">
             
-            {/* CORREÇÃO BUG 1: Todas as logos carregam no DOM em Grid Overlap (alternando opacidade) */}
             <Link to="/" className="grid items-center flex-shrink-0 cursor-pointer relative z-50">
-              
               <img 
                 src={LOGO_CONFIG.transparente_escuro.src} 
                 alt="Curtumes Ibéria, S.A." 
                 className={`${LOGO_CONFIG.transparente_escuro.classes} col-start-1 row-start-1 ${showTransparenteEscuro ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
               />
-              
               <img 
                 src={LOGO_CONFIG.transparente_claro.src} 
                 alt="Curtumes Ibéria, S.A." 
                 className={`${LOGO_CONFIG.transparente_claro.classes} col-start-1 row-start-1 ${showTransparenteClaro ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
               />
-              
               <img 
                 src={LOGO_CONFIG.solida.src} 
                 alt="Curtumes Ibéria, S.A." 
                 className={`${LOGO_CONFIG.solida.classes} col-start-1 row-start-1 ${showSolida ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
               />
-
             </Link>
 
             <div className="flex items-center space-x-4 md:space-x-8 relative z-50">
-              {/* NAVEGAÇÃO DESKTOP */}
               <nav className={`hidden md:flex space-x-6 text-sm ${useDarkText ? 'text-institucional-blue' : 'text-white'}`}>
                 <Link to="/" className={getLinkClasses('/')}>{t('nav.home')}</Link>
                 <Link to="/historia" className={getLinkClasses('/historia')}>{t('nav.about')}</Link>
@@ -124,7 +125,6 @@ export function Navbar() {
                 <Link to="/contactos" className={getLinkClasses('/contactos')}>{t('nav.contact')}</Link>
               </nav>
 
-              {/* TOGGLE DE IDIOMA */}
               <button 
                 onClick={toggleLanguage}
                 className={`px-3 py-1 rounded border font-medium transition-colors ${
@@ -137,7 +137,6 @@ export function Navbar() {
                 {language}
               </button>
 
-              {/* BOTÃO HAMBURGUER (MOBILE) */}
               <button 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={`md:hidden p-2 -mr-2 transition-colors ${
@@ -156,9 +155,9 @@ export function Navbar() {
             </div>
           </div>
         </div>
-      </header>
+      </motion.header>
 
-      {/* OVERLAY DO MENU MOBILE */}
+      {/* OVERLAY DO MENU MOBILE INTACTO */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 

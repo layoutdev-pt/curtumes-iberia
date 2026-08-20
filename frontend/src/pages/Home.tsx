@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion'; // <-- Importámos o useInView
 import { ComposableMap, Geographies, Geography, Line, Marker } from 'react-simple-maps';
 
 const content = {
@@ -61,8 +61,15 @@ export function Home() {
   
   const [rotation, setRotation] = useState<[number, number, number]>([0, -20, 0]);
   const requestRef = useRef<number>(0);
+  
+  // NOVA LÓGICA: Referência para a secção do globo para saber se está no ecrã
+  const globeRef = useRef(null);
+  const isGlobeInView = useInView(globeRef, { margin: "200px" });
 
   useEffect(() => {
+    // Se o globo NÃO estiver no ecrã, pausamos imediatamente a função pesada
+    if (!isGlobeInView) return;
+
     const rotate = () => {
       setRotation((prevRotation) => {
         const currentLong = prevRotation[0] % 360;
@@ -77,7 +84,7 @@ export function Home() {
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-  }, []);
+  }, [isGlobeInView]); // Reavalia a animação se o utilizador fizer scroll até ao globo
 
   return (
     <div className="w-full flex flex-col bg-[#F8FAFC]">
@@ -93,17 +100,17 @@ export function Home() {
       `}</style>
 
       {/* 1. HERO SECTION */}
-      <section className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-institucional-blue">
+      <section className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-institucional-blue z-0">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
           <source src="/videos/curtumesiberia.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-institucional-blue/30 mix-blend-multiply"></div>
+        <div className="absolute inset-0 bg-institucional-blue/30 mix-blend-multiply pointer-events-none"></div>
 
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-          className="relative z-10 text-center px-4 mt-16"
+          className="relative text-center px-4 mt-16 pointer-events-none"
         >
           <div className="relative inline-flex flex-col items-end">
             <h1 className="font-title font-bold text-6xl md:text-8xl lg:text-[10rem] text-white uppercase tracking-wider leading-none drop-shadow-lg text-left">
@@ -119,7 +126,7 @@ export function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
         >
           <svg className="w-8 h-8 text-white/70 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
@@ -173,7 +180,6 @@ export function Home() {
 
           <div className="flex flex-col lg:flex-row items-center justify-between w-full">
             
-            {/* Texto Esquerda (Nasce do centro do globo - x: 200 - após 1.5s) */}
             <motion.div 
               initial={{ opacity: 0, x: 200 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -187,8 +193,8 @@ export function Home() {
               </p>
             </motion.div>
 
-            {/* O GLOBO ROTATIVO (Tamanho e proporção originais) */}
-            <div className="w-full lg:w-1/2 max-w-2xl h-[400px] md:h-[500px] relative pointer-events-none cursor-default flex justify-center items-center order-1 lg:order-2 z-10 -my-8 md:-my-12">
+            {/* AQUI ESTÁ A REFERÊNCIA QUE ACORDA O GLOBO APENAS QUANDO VISTO */}
+            <div ref={globeRef} className="w-full lg:w-1/2 max-w-2xl h-[400px] md:h-[500px] relative pointer-events-none cursor-default flex justify-center items-center order-1 lg:order-2 z-10 -my-8 md:-my-12">
               <div className="absolute w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full bg-blue-500/20 blur-[80px] z-0"></div>
 
               <ComposableMap 
@@ -244,7 +250,6 @@ export function Home() {
               </ComposableMap>
             </div>
 
-            {/* Texto Direita (Nasce do centro do globo - x: -200 - após 1.5s) */}
             <motion.div 
               initial={{ opacity: 0, x: -200 }}
               whileInView={{ opacity: 1, x: 0 }}
