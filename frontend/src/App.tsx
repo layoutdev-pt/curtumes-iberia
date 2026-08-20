@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { ScrollToTop } from './components/layout/ScrollToTop';
-import { Loader } from './components/layout/Loader'; // <-- Importámos o Loader
+import { Loader } from './components/layout/Loader';
 
 import { Home } from './pages/Home';
 import { Catalogo as CatalogoPublico } from './pages/Catalogo';
+import { ArtigoDetalhe } from './pages/ArtigoDetalhe'; // <-- Import da Nova Página de Produto
 import { Historia } from './pages/Historia';
 import { Sustentabilidade } from './pages/Sustentabilidade';
 import { Contactos } from './pages/Contactos';
@@ -73,16 +74,20 @@ function AppContent() {
               className="flex-grow flex flex-col"
             >
               <Routes location={location}>
+                {/* Frontend Público */}
                 <Route path="/" element={<Home />} />
                 <Route path="/historia" element={<Historia />} />
                 <Route path="/sustentabilidade" element={<Sustentabilidade />} />
                 <Route path="/catalogo" element={<CatalogoPublico />} />
+                <Route path="/produto/:id" element={<ArtigoDetalhe />} /> {/* <-- Nova Rota Registada */}
                 <Route path="/contactos" element={<Contactos />} />
                 <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
                 <Route path="/termos-utilizacao" element={<TermosUtilizacao />} />
                 
+                {/* Login Isolado */}
                 <Route path="/login" element={<Login />} />
                 
+                {/* Rotas Agrupadas do Dashboard com Sidebar */}
                 <Route element={<ProtectedRoute />}>
                   <Route path="/dashboard" element={<DashboardLayout />}>
                     <Route index element={<Kanban />} />

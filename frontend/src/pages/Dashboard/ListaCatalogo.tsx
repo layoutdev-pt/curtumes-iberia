@@ -49,15 +49,23 @@ export function ListaCatalogo() {
   const [loading, setLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Estado para o Modal de Edição
   const [editingArtigo, setEditingArtigo] = useState<any | null>(null);
   const [editImage, setEditImage] = useState<File | null>(null);
 
-  // Carregar dados da Base de Dados
   const fetchArtigos = async () => {
     setLoading(true);
     const { data: fetch, error } = await supabase.from('artigos').select('*').order('created_at', { ascending: false });
-    if (!error && fetch) setArtigos(fetch);
+    
+    if (!error && fetch) {
+      // Parsing de segurança para os novos campos JSONB
+      const parsedData = fetch.map(art => ({
+        ...art,
+        cores: typeof art.cores === 'string' ? JSON.parse(art.cores) : art.cores || [],
+        detalhes: typeof art.detalhes === 'string' ? JSON.parse(art.detalhes) : art.detalhes || [],
+        tags: typeof art.tags === 'string' ? JSON.parse(art.tags) : art.tags || []
+      }));
+      setArtigos(parsedData);
+    }
     setLoading(false);
   };
 
@@ -65,7 +73,6 @@ export function ListaCatalogo() {
     fetchArtigos();
   }, []);
 
-  // Função de Apagar
   const handleDelete = async (id: string) => {
     if (!window.confirm(data.deleteConfirm)) return;
     
@@ -75,12 +82,11 @@ export function ListaCatalogo() {
       alert("Erro ao apagar: " + error.message);
     } else {
       alert(data.successDelete);
-      fetchArtigos(); // Atualiza a tabela
+      fetchArtigos();
     }
     setIsProcessing(false);
   };
 
-  // Função de Submeter Edição
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
@@ -88,7 +94,6 @@ export function ListaCatalogo() {
     try {
       let imagemUrl = editingArtigo.imagem_url;
 
-      // Se o utilizador escolheu uma nova imagem, passamos pelo Node.js primeiro (AGORA APONTANDO PARA O RENDER)
       if (editImage) {
         const imageFormData = new FormData();
         imageFormData.append('imagem', editImage);
@@ -103,7 +108,7 @@ export function ListaCatalogo() {
         imagemUrl = backendData.urlImagem;
       }
 
-      // Atualizar o registo no Supabase
+      // IMPORTANTE: Devolver os arrays JSON intactos na atualização
       const { error } = await supabase.from('artigos').update({
         referencia: editingArtigo.referencia,
         categoria: editingArtigo.categoria,
@@ -112,6 +117,9 @@ export function ListaCatalogo() {
         descricao_pt: editingArtigo.descricao_pt,
         descricao_en: editingArtigo.descricao_en,
         imagem_url: imagemUrl,
+        cores: editingArtigo.cores,
+        detalhes: editingArtigo.detalhes,
+        tags: editingArtigo.tags
       }).eq('id', editingArtigo.id);
 
       if (error) throw error;
@@ -129,7 +137,7 @@ export function ListaCatalogo() {
   };
 
   return (
-    <div className="flex flex-col max-w-6xl">
+    <div className="flex flex-col max-w-6xl pb-20">
       <div className="mb-10">
         <h1 className="text-4xl font-title font-bold text-institucional-blue">{data.title}</h1>
         <p className="text-gray-500 mt-2">{data.subtitle}</p>
@@ -165,6 +173,10 @@ export function ListaCatalogo() {
                     <td className="p-4 font-mono text-sm font-bold text-gray-600">{artigo.referencia}</td>
                     <td className="p-4">
                       <div className="font-bold text-gray-900">{language === 'PT' ? artigo.titulo_pt : artigo.titulo_en}</div>
+                      {/* Pequeno helper visual para mostrar quantas cores tem */}
+                      {artigo.cores && artigo.cores.length > 0 && (
+                        <div className="text-[10px] text-gray-400 font-medium mt-1">{artigo.cores.length} Variante(s) de Cor</div>
+                      )}
                     </td>
                     <td className="p-4">
                       <span className="bg-blue-50 text-institucional-blue text-xs font-bold px-2.5 py-1 rounded-md">
@@ -203,6 +215,11 @@ export function ListaCatalogo() {
             <div className="p-6 overflow-y-auto custom-scrollbar">
               <form id="editForm" onSubmit={handleEditSubmit} className="space-y-6">
                 
+                <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100 mb-6 text-sm text-blue-700 flex items-start">
+                  <svg className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <span><strong>Aviso:</strong> A edição de Variantes de Cor, Ficha Técnica e Tags só está disponível através da criação de um novo artigo.</span>
+                </div>
+
                 <div className="grid grid-cols-2 gap-6">
                   <div>
                     <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Referência</label>
@@ -244,7 +261,7 @@ export function ListaCatalogo() {
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                   <label className="block text-sm font-bold text-gray-700 mb-1">Substituir Imagem</label>
                   <p className="text-xs text-gray-500 mb-3">{data.imgNote}</p>
-                  <input type="file" accept="image/*" onChange={(e) => { if(e.target.files) setEditImage(e.target.files[0]) }} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-bold file:bg-institucional-blue file:text-white" />
+                  <input type="file" accept="image/*" onChange={(e) => { if(e.target.files) setEditImage(e.target.files[0]) }} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-bold file:bg-institucional-blue file:text-white hover:file:bg-blue-900 cursor-pointer transition-colors" />
                 </div>
 
               </form>
