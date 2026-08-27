@@ -24,8 +24,8 @@ export function Navbar() {
       classes: "h-12 md:h-18 lg:h-18 w-auto object-contain transition-all duration-300 origin-left scale-140",
     },
     solida: {
-      src: "/logos/VersaoComplementar_Logomarca_CoresOriginais.svg",
-      classes: "h-12 md:h-14 lg:h-26 w-auto object-contain transition-all duration-300 origin-left scale-120",
+      src: "/logos/Icone_CoresOriginais_FundoBranco.svg",
+      classes: "h-12 md:h-12 lg:h-24 w-auto object-contain transition-all duration-300 origin-left scale-120",
     }
   };
 
@@ -93,7 +93,7 @@ export function Navbar() {
           backdropFilter: isScrolled ? "blur(12px)" : "blur(0px)"
         }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="fixed left-1/2 -translate-x-1/2 z-40 flex items-center h-24 lg:h-32"
+        className="fixed left-1/2 -translate-x-1/2 z-40 flex items-center h-24 lg:h-24"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full">
           <div className="flex justify-between items-center w-full">
