@@ -23,7 +23,9 @@ const supabase = createClient(
 // 1. Interceção do ficheiro: Multer configurado para guardar na memória RAM (não no disco)
 const upload = multer({ storage: multer.memoryStorage() });
 
-// Endpoint do Pipeline de Imagens
+// ============================================================================
+// ENDPOINT 1: UPLOAD DE IMAGENS DO CATÁLOGO
+// ============================================================================
 app.post('/api/upload-catalogo', upload.single('imagem'), async (req, res): Promise<any> => {
   try {
     if (!req.file) {
@@ -35,7 +37,7 @@ app.post('/api/upload-catalogo', upload.single('imagem'), async (req, res): Prom
 
     console.log(`A processar imagem: ${nomeOriginal}`);
 
-    // 2 e 3. Processamento com Sharp: Conversão para WebP, redimensionamento e compressão
+    // Processamento com Sharp: Conversão para WebP, redimensionamento e compressão
     const bufferOtimizado = await sharp(req.file.buffer)
       .resize({ 
         width: 1200, 
@@ -46,10 +48,10 @@ app.post('/api/upload-catalogo', upload.single('imagem'), async (req, res): Prom
       .webp({ quality: 80 }) // Compressão e conversão automática
       .toBuffer();
 
-    // 4. Exportação para o serviço de Object Storage nativo (Supabase Storage)
+    // Exportação para o serviço de Object Storage nativo (Supabase Storage)
     const { data: uploadData, error: uploadError } = await supabase
       .storage
-      .from('catalogo-imagens') // NOTA: Tens de criar este bucket no painel do Supabase
+      .from('catalogo-imagens')
       .upload(`public/${nomeFicheiroWebp}`, bufferOtimizado, {
         contentType: 'image/webp',
         upsert: false
@@ -65,7 +67,6 @@ app.post('/api/upload-catalogo', upload.single('imagem'), async (req, res): Prom
       .from('catalogo-imagens')
       .getPublicUrl(`public/${nomeFicheiroWebp}`);
 
-    // 5. Devolvemos apenas a string de texto com o URL público para o Frontend guardar na base de dados relacional
     return res.status(200).json({ 
       mensagem: 'Pipeline executado com sucesso',
       urlImagem: publicUrlData.publicUrl 
@@ -74,6 +75,51 @@ app.post('/api/upload-catalogo', upload.single('imagem'), async (req, res): Prom
   } catch (error) {
     console.error('Erro no pipeline de processamento:', error);
     return res.status(500).json({ error: 'Falha no processamento da imagem.' });
+  }
+});
+
+// ============================================================================
+// ENDPOINT 2: INTEGRAÇÃO COM NEWSLETTER (CLOSUM)
+// ============================================================================
+app.post('/api/newsletter', async (req, res): Promise<any> => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: 'O e-mail é obrigatório.' });
+    }
+
+    const CLOSUM_API_KEY = process.env.CLOSUM_API_KEY;
+
+    if (!CLOSUM_API_KEY) {
+      console.error('ERRO: CLOSUM_API_KEY não está definida no .env.');
+      return res.status(500).json({ error: 'Erro interno de configuração do servidor.' });
+    }
+
+    // Chamada à API Oficial do Closum
+    const response = await fetch(`https://api.closum.com/v2/lead/add?api-key=${CLOSUM_API_KEY}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        consent_email: true
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Erro reportado pelo Closum:", data);
+      return res.status(response.status).json({ error: data.message || 'Erro ao subscrever.' });
+    }
+
+    return res.status(200).json({ success: true, message: 'Subscrito com sucesso!' });
+
+  } catch (error) {
+    console.error("Falha na subscrição da newsletter:", error);
+    return res.status(500).json({ error: 'Ocorreu um erro no servidor de newsletter.' });
   }
 });
 
