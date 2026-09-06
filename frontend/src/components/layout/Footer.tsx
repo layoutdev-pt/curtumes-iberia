@@ -46,12 +46,12 @@ export function Footer() {
           </div>
 
           {/* 2. Logomarca Central */}
-          <div className="flex justify-center items-center h-full pt-4 md:pt-0 border-t border-white/10 md:border-t-0">
+          <div className="flex justify-center items-center py-8 pt-16 md:py-0 border-t border-white/10 md:border-t-0">
             <img 
               src="/logos/VersaoComplementar_Logomarca_CoresOriginais.svg" 
               alt="Curtumes Ibéria" 
-              /* O brightness-0 e invert forçam a logo a ficar branca para contrastar com o fundo azul */
-              className="h-16 md:h-40 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity brightness-0 invert"
+              /* w-56 força a largura no mobile (fica bem grande). md:w-auto e md:h-40 devolvem o controlo ao desktop */
+              className="w-36 md:w-auto md:h-40 object-contain scale-120 opacity-90 hover:opacity-100 transition-opacity brightness-0 invert"
             />
           </div>
 

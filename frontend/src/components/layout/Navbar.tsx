@@ -11,9 +11,6 @@ export function Navbar() {
   
   const { language, toggleLanguage, t } = useLanguage();
 
-  // ------------------------------------------------------------------
-  // CONFIGURAÇÃO INDEPENDENTE DAS LOGOS (PROPORÇÕES MANTIDAS EXACTAMENTE)
-  // ------------------------------------------------------------------
   const LOGO_CONFIG = {
     transparente_escuro: {
       src: "/logos/Icone_Branco.svg",
@@ -29,14 +26,9 @@ export function Navbar() {
     }
   };
 
-  // ------------------------------------------------------------------
-  // ESTADOS DE VISIBILIDADE DAS LOGOS
-  // ------------------------------------------------------------------
   const showSolida = isScrolled;
   const showTransparenteClaro = !isScrolled && (isMobileMenuOpen || !isHomePage);
   const showTransparenteEscuro = !isScrolled && isHomePage && !isMobileMenuOpen;
-
-  // Cor global dos textos na barra (Azul ou Branco)
   const useDarkText = isScrolled || !isHomePage;
 
   useEffect(() => {
@@ -77,28 +69,23 @@ export function Navbar() {
 
   return (
     <>
-      {/* 
-        ANIMAÇÃO DE CÁPSULA (PILL EFFECT):
-        Usa o motion.header para transitar as propriedades físicas.
-        O width usa `calc(100% - 2rem)` no mobile para dar margem e `min(100% - 4rem, 1280px)` no desktop.
-      */}
       <motion.header
         initial={false}
         animate={{
-          width: isScrolled ? "min(100% - 2rem, 1280px)" : "100%",
-          top: isScrolled ? "1rem" : "0px",
-          borderRadius: isScrolled ? "9999px" : "0px",
-          backgroundColor: isScrolled ? "rgba(255, 255, 255, 0.95)" : "transparent",
-          boxShadow: isScrolled ? "0 4px 20px rgba(0, 0, 0, 0.08)" : "none",
-          backdropFilter: isScrolled ? "blur(12px)" : "blur(0px)"
+          /* A Navbar só fica em modo cápsula se houver scroll E o menu mobile estiver fechado */
+          width: (isScrolled && !isMobileMenuOpen) ? "min(100% - 2rem, 1280px)" : "100%",
+          top: (isScrolled && !isMobileMenuOpen) ? "1rem" : "0px",
+          borderRadius: (isScrolled && !isMobileMenuOpen) ? "9999px" : "0px",
+          backgroundColor: (isScrolled && !isMobileMenuOpen) ? "rgba(255, 255, 255, 0.95)" : "transparent",
+          boxShadow: (isScrolled && !isMobileMenuOpen) ? "0 4px 20px rgba(0, 0, 0, 0.08)" : "none",
+          backdropFilter: (isScrolled && !isMobileMenuOpen) ? "blur(12px)" : "blur(0px)"
         }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="fixed left-1/2 -translate-x-1/2 z-40 flex items-center h-24 lg:h-24"
+        className="fixed left-1/2 -translate-x-1/2 z-40 flex items-center h-24 lg:h-24" // Altura estrita mantida
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full">
-          <div className="flex justify-between items-center w-full">
-            
-            <Link to="/" className="grid items-center flex-shrink-0 cursor-pointer relative z-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full h-full flex items-center">
+          <div className="flex justify-between items-center w-full relative">
+            <Link to="/" className="grid items-center flex-shrink-0 cursor-pointer relative z-50 h-full">
               <img 
                 src={LOGO_CONFIG.transparente_escuro.src} 
                 alt="Curtumes Ibéria, S.A." 
