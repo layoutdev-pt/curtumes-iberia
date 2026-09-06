@@ -36,25 +36,45 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('PT');
 
   useEffect(() => {
-    // Cumprimento da regra de arquitetura: ler localStorage ou o cabeçalho do browser, ignorar IP
     const savedLang = localStorage.getItem('preferred_language') as Language;
+    
     if (savedLang) {
       setLanguage(savedLang);
     } else {
-      const browserLang = navigator.language.toUpperCase();
-      if (browserLang.startsWith('EN')) {
-        setLanguage('EN');
-      }
+      // Deteção por IP conforme exigido na reunião
+      const detectLanguageByIP = async () => {
+        try {
+          const response = await fetch('https://ipwho.is/');
+          const data = await response.json();
+          
+          if (data.country_code === 'PT' || data.country_code === 'BR') {
+            setLanguage('PT');
+            localStorage.setItem('preferred_language', 'PT');
+          } else {
+            setLanguage('EN');
+            localStorage.setItem('preferred_language', 'EN');
+          }
+        } catch (error) {
+          console.error("Erro ao detetar idioma por IP, a usar idioma do browser como fallback:", error);
+          
+          // Se o adblocker cortar a API, cai para a deteção do browser
+          const browserLang = navigator.language.toUpperCase();
+          const fallbackLang = browserLang.startsWith('PT') ? 'PT' : 'EN';
+          setLanguage(fallbackLang);
+          localStorage.setItem('preferred_language', fallbackLang);
+        }
+      };
+      
+      detectLanguageByIP();
     }
   }, []);
 
   const toggleLanguage = () => {
     const newLang = language === 'PT' ? 'EN' : 'PT';
     setLanguage(newLang);
-    localStorage.setItem('preferred_language', newLang); // Persistência obrigatória
+    localStorage.setItem('preferred_language', newLang); 
   };
 
-  // Função tradutora
   const t = (key: keyof typeof translations['PT']) => {
     return translations[language][key] || key;
   };
