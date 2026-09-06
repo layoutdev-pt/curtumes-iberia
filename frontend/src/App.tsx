@@ -6,10 +6,11 @@ import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { ScrollToTop } from './components/layout/ScrollToTop';
 import { Loader } from './components/layout/Loader';
+import { Newsletter } from './components/layout/Newsletter'; // <-- Import da Newsletter
 
 import { Home } from './pages/Home';
 import { Catalogo as CatalogoPublico } from './pages/Catalogo';
-import { ArtigoDetalhe } from './pages/ArtigoDetalhe'; // <-- Import da Nova Página de Produto
+import { ArtigoDetalhe } from './pages/ArtigoDetalhe'; 
 import { Historia } from './pages/Historia';
 import { Sustentabilidade } from './pages/Sustentabilidade';
 import { Contactos } from './pages/Contactos';
@@ -35,7 +36,7 @@ function AppContent() {
   const isLoginRoute = location.pathname === '/login';
   const showPublicLayout = !isDashboardRoute && !isLoginRoute;
 
-  // Lógica para esconder o Loader após 1.8 segundos (tempo para a barra encher)
+  // Lógica para esconder o Loader após 1.8 segundos
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsInitialLoading(false);
@@ -63,7 +64,6 @@ function AppContent() {
       
       <main className="flex-grow flex flex-col relative z-0">
         <AnimatePresence mode="wait">
-          {/* Só renderizamos as rotas após o Loader terminar, para as animações das páginas não dispararem "às escondidas" */}
           {!isInitialLoading && (
             <motion.div
               key={`${location.pathname}-${language}`} 
@@ -79,7 +79,7 @@ function AppContent() {
                 <Route path="/historia" element={<Historia />} />
                 <Route path="/sustentabilidade" element={<Sustentabilidade />} />
                 <Route path="/catalogo" element={<CatalogoPublico />} />
-                <Route path="/produto/:id" element={<ArtigoDetalhe />} /> {/* <-- Nova Rota Registada */}
+                <Route path="/produto/:id" element={<ArtigoDetalhe />} />
                 <Route path="/contactos" element={<Contactos />} />
                 <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
                 <Route path="/termos-utilizacao" element={<TermosUtilizacao />} />
@@ -101,7 +101,14 @@ function AppContent() {
         </AnimatePresence>
       </main>
 
-      {showPublicLayout && <Footer key={`footer-${language}`} />}
+      {/* RENDERIZAÇÃO DA NEWSLETTER E DO FOOTER */}
+      {showPublicLayout && (
+        <>
+          <Newsletter key={`newsletter-${language}`} />
+          <Footer key={`footer-${language}`} />
+        </>
+      )}
+      
     </div>
   );
 }

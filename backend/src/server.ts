@@ -104,7 +104,8 @@ app.post('/api/newsletter', async (req, res): Promise<any> => {
       },
       body: JSON.stringify({
         email: email,
-        consent_email: true
+        consent_email: true,
+        tags: ["Newsletter Site"] // <-- ADICIONADO: Tag exata que criámos na Audiência!
       })
     });
 
