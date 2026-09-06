@@ -11,6 +11,7 @@ interface Pedido {
   nome_cliente: string;
   empresa_nif: string;
   email_cliente: string;
+  telefone_cliente?: string; // Adicionado para permitir a pesquisa por telefone
   referencia_produto: string;
   quantidade_m2: number;
   status: string; // Vem da BD em formato minúsculo ou com outra capitalização, mas normalizamos para EstadoPedido
@@ -32,6 +33,7 @@ const content = {
     title: "Gestão de Encomendas",
     subtitle: "Acompanhe e gira o processamento dos pedidos do catálogo B2B.",
     loading: "A sincronizar encomendas...",
+    searchPlaceholder: "Pesquisar (Nome, Email, NIF, Tel)...", // Adicionado para a pesquisa
     article: "Referência:",
     qty: "Qtd:",
     moveTo: "Mover para",
@@ -48,6 +50,7 @@ const content = {
     title: "Order Management",
     subtitle: "Track and manage processing of B2B catalog orders.",
     loading: "Syncing orders...",
+    searchPlaceholder: "Search (Name, Email, VAT, Phone)...", // Adicionado para a pesquisa
     article: "Reference:",
     qty: "Qty:",
     moveTo: "Move to",
@@ -78,6 +81,7 @@ export function Kanban() {
 
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState(''); // Estado para a barra de pesquisa
 
   // 1. CARREGAR OS DADOS (Leitura)
   const fetchEncomendas = async () => {
@@ -135,9 +139,25 @@ export function Kanban() {
   return (
     <div className="flex flex-col h-full">
       
-      <div className="mb-10">
-        <h1 className="text-4xl font-title font-bold text-institucional-blue">{data.title}</h1>
-        <p className="text-gray-500 mt-2">{data.subtitle}</p>
+      {/* CABEÇALHO COM BARRA DE PESQUISA */}
+      <div className="mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+        <div>
+          <h1 className="text-4xl font-title font-bold text-institucional-blue">{data.title}</h1>
+          <p className="text-gray-500 mt-2">{data.subtitle}</p>
+        </div>
+        
+        <div className="w-full md:w-96 relative">
+          <svg className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            type="text"
+            placeholder={data.searchPlaceholder}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-institucional-blue shadow-sm"
+          />
+        </div>
       </div>
 
       {loading ? (
@@ -148,8 +168,20 @@ export function Kanban() {
       ) : (
         <div className="flex flex-grow gap-6 overflow-x-auto pb-4 custom-scrollbar">
           {colunasKanban.map((coluna) => {
-            // Filtramos as encomendas que pertencem a esta coluna específica
-            const encomendasDaColuna = pedidos.filter(p => normalizeStatus(p.status) === coluna);
+            
+            // NOVA LÓGICA DE FILTRAGEM (Estado + Pesquisa)
+            const termo = searchQuery.toLowerCase();
+            const encomendasDaColuna = pedidos.filter(p => {
+              const matchesStatus = normalizeStatus(p.status) === coluna;
+              
+              const matchesSearch = termo === '' || 
+                (p.nome_cliente?.toLowerCase().includes(termo)) ||
+                (p.email_cliente?.toLowerCase().includes(termo)) ||
+                (p.empresa_nif?.toLowerCase().includes(termo)) ||
+                (p.telefone_cliente?.toLowerCase().includes(termo)); 
+
+              return matchesStatus && matchesSearch;
+            });
 
             return (
               <div key={coluna} className="flex flex-col min-w-[340px] w-[340px] bg-gray-200/40 rounded-2xl p-5 border border-gray-100 h-[calc(100vh-220px)]">
