@@ -14,21 +14,19 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 // 3. Provider (O componente que envolve a aplicação)
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  // O estado inicial começa em 'EN' (ou 'PT'), mas será imediatamente atualizado pelo useEffect
   const [language, setLanguage] = useState<Language>('PT');
 
-  // O useEffect TEM de estar aqui dentro, pois precisa de aceder ao 'setLanguage'
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language') as Language;
     
     if (savedLanguage) {
-      // Se o utilizador já escolheu antes, respeita essa escolha
+      // Se já escolheu antes, respeita
       setLanguage(savedLanguage);
     } else {
-      // Se for a primeira visita, deteta pelo IP da rede
+      // API alterada para ipwho.is (não bloqueia localhost nem precisa de CORS)
       const detectLanguageByIP = async () => {
         try {
-          const response = await fetch('https://ipapi.co/json/');
+          const response = await fetch('https://ipwho.is/');
           const data = await response.json();
           
           if (data.country_code === 'PT' || data.country_code === 'BR') {
@@ -40,7 +38,6 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
           }
         } catch (error) {
           console.error("Erro ao detetar idioma por IP:", error);
-          // Fallback de segurança
           setLanguage('EN');
           localStorage.setItem('language', 'EN');
         }
@@ -48,16 +45,14 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
       
       detectLanguageByIP();
     }
-  }, []); // Executa apenas uma vez quando a app carrega
+  }, []);
 
-  // Função para alternar o idioma no botão da Navbar
   const toggleLanguage = () => {
     const newLang = language === 'PT' ? 'EN' : 'PT';
     setLanguage(newLang);
-    localStorage.setItem('language', newLang); // Guarda a escolha no browser
+    localStorage.setItem('language', newLang); 
   };
 
-  // Dicionário de traduções da Navbar
   const translations: Record<Language, Record<string, string>> = {
     PT: {
       'nav.home': 'Início',
@@ -75,7 +70,6 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Função que devolve a tradução baseada na chave
   const t = (key: string) => translations[language][key] || key;
 
   return (
@@ -85,7 +79,6 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// 4. Hook personalizado para usar nos outros ficheiros
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
   if (context === undefined) {
