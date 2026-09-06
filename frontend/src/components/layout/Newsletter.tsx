@@ -10,6 +10,7 @@ const content = {
     placeholder: "O seu melhor endereço de e-mail",
     button: "Subscrever Agora",
     success: "✅ Obrigado pela subscrição! Verifique a sua caixa de entrada em breve.",
+    error: "❌ Ocorreu um erro. Por favor tente novamente.",
     agreeText: "Li e concordo com a",
     privacy: "Política de Privacidade"
   },
@@ -19,6 +20,7 @@ const content = {
     placeholder: "Your best email address",
     button: "Subscribe Now",
     success: "✅ Thank you for subscribing! Check your inbox soon.",
+    error: "❌ An error occurred. Please try again.",
     agreeText: "I have read and agree to the",
     privacy: "Privacy Policy"
   }
@@ -30,23 +32,40 @@ export function Newsletter() {
   
   const [email, setEmail] = useState('');
   const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email || !acceptedTerms) return;
     
     setStatus('submitting');
     
-    // Simulação de chamada à API (onde no futuro colocarás o fetch para o teu backend/Closum)
-    setTimeout(() => {
+    try {
+      // Chamada real ao teu backend Node.js
+      const response = await fetch('https://curtumes-backend.onrender.com/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email })
+      });
+
+      if (!response.ok) {
+        throw new Error('Falha na subscrição');
+      }
+
       setStatus('success');
       setEmail('');
       setAcceptedTerms(false);
       
-      // Opcional: voltar ao estado inicial após uns segundos
+      // Voltar ao estado inicial após uns segundos
       setTimeout(() => setStatus('idle'), 5000);
-    }, 1200);
+
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 5000);
+    }
   };
 
   return (
@@ -92,6 +111,16 @@ export function Newsletter() {
                 className="bg-green-50 border border-green-200 text-green-700 font-bold text-lg p-6 rounded-2xl max-w-2xl mx-auto"
               >
                 {data.success}
+              </motion.div>
+            ) : status === 'error' ? (
+               <motion.div 
+                key="error"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="bg-red-50 border border-red-200 text-red-700 font-bold text-lg p-6 rounded-2xl max-w-2xl mx-auto"
+              >
+                {data.error}
               </motion.div>
             ) : (
               <motion.form 
