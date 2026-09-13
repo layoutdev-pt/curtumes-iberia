@@ -54,7 +54,7 @@ export function ArtigoDetalhe() {
     </div>;
   }
 
-  if (!artigo) return <div className="min-h-screen pt-32 text-center">Artigo não encontrado.</div>;
+  if (!artigo) return <div className="min-h-screen pt-32 text-center font-title text-xl">Artigo não encontrado.</div>;
 
   const handleFormChange = (e: any) => {
     setFormEncomenda({ ...formEncomenda, [e.target.name]: e.target.value });
@@ -116,7 +116,7 @@ export function ArtigoDetalhe() {
           <span>/</span>
           <span className="text-gray-400">{artigo.categoria}</span>
           <span>/</span>
-          <span className="text-institucional-blue font-bold">{artigo.referencia}</span>
+          <span className="text-institucional-blue font-bold font-title">{artigo.referencia}</span>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-16">
@@ -147,7 +147,7 @@ export function ArtigoDetalhe() {
             {/* SELEÇÃO DE CORES INTERATIVA */}
             {artigo.cores && artigo.cores.length > 0 && (
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-400 mb-4">
+                <h3 className="text-sm font-title font-bold uppercase tracking-wider text-gray-400 mb-4">
                   {language === 'PT' ? 'Variantes de Cor' : 'Color Variants'}
                 </h3>
                 <div className="flex flex-wrap gap-4">
@@ -186,7 +186,7 @@ export function ArtigoDetalhe() {
             {/* FICHA TÉCNICA (DETALHES) */}
             {artigo.detalhes && artigo.detalhes.length > 0 && (
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-400 mb-4">
+                <h3 className="text-sm font-title font-bold uppercase tracking-wider text-gray-400 mb-4">
                   {language === 'PT' ? 'Ficha Técnica' : 'Technical Specifications'}
                 </h3>
                 <div className="divide-y divide-gray-100">
@@ -208,7 +208,7 @@ export function ArtigoDetalhe() {
                 <span className="bg-blue-50 text-institucional-blue text-xs font-bold px-3 py-1.5 rounded-md tracking-wider uppercase">
                   {artigo.categoria}
                 </span>
-                <span className="text-gray-400 font-mono text-sm">REF: {artigo.referencia}</span>
+                <span className="text-gray-400 font-mono text-sm font-bold">REF: {artigo.referencia}</span>
               </div>
               
               <h1 className="text-3xl md:text-5xl font-title font-bold text-gray-900 mb-6">
@@ -223,7 +223,7 @@ export function ArtigoDetalhe() {
               {artigo.tags && artigo.tags.length > 0 && (
                 <div className="flex flex-wrap gap-3 mb-10 pb-10 border-b border-gray-200">
                   {artigo.tags.map((tag: any, idx: number) => (
-                    <div key={idx} className="bg-green-50/50 border border-green-100 text-green-700 px-4 py-2 rounded-xl font-medium text-sm flex items-center shadow-sm">
+                    <div key={idx} className="bg-green-50/50 border border-green-100 text-green-700 px-4 py-2 rounded-xl font-medium text-sm flex items-center shadow-sm font-title">
                       <span className="text-lg mr-2">{tag.icone}</span> 
                       {language === 'PT' ? tag.pt : tag.en}
                     </div>
@@ -264,36 +264,35 @@ export function ArtigoDetalhe() {
               <form onSubmit={handleOrderSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">{language === 'PT' ? 'Empresa / NIF *' : 'Company / VAT *'}</label>
+                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2 font-title">{language === 'PT' ? 'Empresa / NIF *' : 'Company / VAT *'}</label>
                     <input type="text" name="empresa" value={formEncomenda.empresa} onChange={handleFormChange} required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-institucional-blue/20 outline-none transition-all text-sm" />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">{language === 'PT' ? 'Nome *' : 'Name *'}</label>
+                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2 font-title">{language === 'PT' ? 'Nome *' : 'Name *'}</label>
                     <input type="text" name="nome" value={formEncomenda.nome} onChange={handleFormChange} required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-institucional-blue/20 outline-none transition-all text-sm" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">E-mail *</label>
+                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2 font-title">E-mail *</label>
                     <input type="email" name="email" value={formEncomenda.email} onChange={handleFormChange} required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-institucional-blue/20 outline-none transition-all text-sm" />
                   </div>
                   <div>
-                    {/* ALTERAÇÃO DE SqFt PARA m² */}
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">{language === 'PT' ? 'Quantidade (m²) *' : 'Amount (m²) *'}</label>
+                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2 font-title">{language === 'PT' ? 'Quantidade (m²) *' : 'Amount (m²) *'}</label>
                     <input type="number" min="1" step="0.1" name="quantidade" value={formEncomenda.quantidade} onChange={handleFormChange} required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-institucional-blue/20 outline-none transition-all text-sm" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase mb-2">{language === 'PT' ? 'Notas Adicionais' : 'Additional Notes'}</label>
+                  <label className="block text-xs font-bold text-gray-500 uppercase mb-2 font-title">{language === 'PT' ? 'Notas Adicionais' : 'Additional Notes'}</label>
                   <textarea rows={3} name="obs" value={formEncomenda.obs} onChange={handleFormChange} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-institucional-blue/20 outline-none transition-all text-sm resize-none" placeholder={language === 'PT' ? "Detalhes sobre a encomenda..." : "Order details..."}></textarea>
                 </div>
 
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className={`w-full text-white py-4 rounded-xl font-bold text-lg shadow-md mt-4 transition-all ${isSubmitting ? 'bg-blue-400 cursor-wait' : 'bg-institucional-blue hover:bg-blue-900 hover:-translate-y-0.5 hover:shadow-lg'}`}
+                  className={`w-full text-white py-4 rounded-xl font-bold font-title tracking-wider text-lg shadow-md mt-4 transition-all ${isSubmitting ? 'bg-blue-400 cursor-wait' : 'bg-institucional-blue hover:bg-blue-900 hover:-translate-y-0.5 hover:shadow-lg'}`}
                 >
                   {isSubmitting 
                     ? (language === 'PT' ? 'A Enviar...' : 'Sending...') 

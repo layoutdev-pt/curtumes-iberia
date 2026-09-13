@@ -1,3 +1,4 @@
+// PoliticaPrivacidade.tsx
 import { useLanguage } from '../../contexts/LanguageContext';
 import { motion } from 'framer-motion';
 
@@ -24,7 +25,6 @@ export function PoliticaPrivacidade() {
     <div className="bg-[#F8FAFC] min-h-screen">
       <div className="max-w-4xl mx-auto pt-28 pb-20 px-4 sm:px-6 md:px-8 relative z-10">
         
-        {/* Título Animado */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -36,7 +36,6 @@ export function PoliticaPrivacidade() {
           </h1>
         </motion.div>
         
-        {/* Bloco de Conteúdo Animado */}
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

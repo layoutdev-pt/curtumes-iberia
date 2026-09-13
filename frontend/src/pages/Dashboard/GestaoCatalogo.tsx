@@ -31,7 +31,7 @@ export function GestaoCatalogo() {
   // Estado Central de todo o Artigo
   const [formData, setFormData] = useState({
     referencia: '',
-    categoria: 'Artigos Chrome Free',
+    categoria: 'Hidrofogados',
     titulo_pt: '',
     titulo_en: '',
     descricao_pt: '',
@@ -47,7 +47,7 @@ export function GestaoCatalogo() {
   // Estados temporários para adicionar novos arrays
   const [tempCor, setTempCor] = useState({ hex: '#000000', nome_pt: '', nome_en: '', desc_pt: '', desc_en: '', img_url: '' });
   const [tempDetalhe, setTempDetalhe] = useState({ tipo_pt: '', tipo_en: '', valor_pt: '', valor_en: '' });
-  const [tempTag, setTempTag] = useState({ pt: '', en: '', icone: '🚚' });
+  const [tempTag, setTempTag] = useState({ pt: '', en: '', icone: '♻️' });
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -76,7 +76,7 @@ export function GestaoCatalogo() {
   const addTag = () => {
     if(!tempTag.pt) return;
     setFormData(prev => ({ ...prev, tags: [...prev.tags, tempTag] }));
-    setTempTag({ pt: '', en: '', icone: '🚚' });
+    setTempTag({ pt: '', en: '', icone: '♻️' });
   };
 
   // Submissão Final
@@ -122,7 +122,7 @@ export function GestaoCatalogo() {
 
       alert(data.alertSuccess);
       // Reset Total
-      setFormData({ referencia: '', categoria: 'Artigos Chrome Free', titulo_pt: '', titulo_en: '', descricao_pt: '', descricao_en: '', imagem: null, cores: [], detalhes: [], tags: [] });
+      setFormData({ referencia: '', categoria: 'Hidrofogados', titulo_pt: '', titulo_en: '', descricao_pt: '', descricao_en: '', imagem: null, cores: [], detalhes: [], tags: [] });
       (document.getElementById('imagem-input') as HTMLInputElement).value = '';
       
     } catch (error: any) {
@@ -171,9 +171,14 @@ export function GestaoCatalogo() {
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Categoria *</label>
                   <select name="categoria" value={formData.categoria} onChange={handleChange} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm">
-                    <option value="Artigos Chrome Free">Artigos Chrome Free</option>
-                    <option value="Artigos Hidrofugados">Artigos Hidrofugados</option>
-                    <option value="Outros Artigos">Outros Artigos</option>
+                    <option value="Hidrofogados">Hidrofogados</option>
+                    <option value="Camurças">Camurças</option>
+                    <option value="Napas">Napas</option>
+                    <option value="Anilinas">Anilinas</option>
+                    <option value="Fantasia">Fantasia</option>
+                    <option value="Nubucks">Nubucks</option>
+                    <option value="Floaters">Floaters</option>
+                    <option value="Ceras e Óleos">Ceras e Óleos</option>
                   </select>
                 </div>
               </div>
@@ -264,16 +269,19 @@ export function GestaoCatalogo() {
           {activeTab === 'detalhes' && (
             <div className="space-y-8 animate-[fadeIn_0.3s_ease-out]">
               <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                <h3 className="font-bold text-lg mb-4 text-gray-800">Adicionar Especificação Técnica</h3>
+                <h3 className="font-bold text-lg text-gray-800 mb-1">Adicionar Especificação Técnica</h3>
+                <p className="text-xs text-gray-500 mb-4">
+                  Nota: Adicione as especificações obrigatórias: <strong>Espessura (Thickness)</strong>, <strong>Tamanho médio (Average size)</strong> e <strong>Tipo de artigo (Type of the article)</strong>.
+                </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                   <div className="space-y-2">
                     <label className="block text-xs font-bold text-blue-600 uppercase">Característica PT</label>
-                    <input type="text" value={tempDetalhe.tipo_pt} onChange={e => setTempDetalhe({...tempDetalhe, tipo_pt: e.target.value})} placeholder="Ex: Espessura" className="w-full p-2 border rounded-lg text-sm" />
+                    <input type="text" value={tempDetalhe.tipo_pt} onChange={e => setTempDetalhe({...tempDetalhe, tipo_pt: e.target.value})} placeholder="Ex: Tamanho médio" className="w-full p-2 border rounded-lg text-sm" />
                     <input type="text" value={tempDetalhe.valor_pt} onChange={e => setTempDetalhe({...tempDetalhe, valor_pt: e.target.value})} placeholder="Ex: 1.2 - 1.4 mm" className="w-full p-2 border rounded-lg text-sm" />
                   </div>
                   <div className="space-y-2">
                     <label className="block text-xs font-bold text-gray-600 uppercase">Feature EN</label>
-                    <input type="text" value={tempDetalhe.tipo_en} onChange={e => setTempDetalhe({...tempDetalhe, tipo_en: e.target.value})} placeholder="Ex: Thickness" className="w-full p-2 border rounded-lg text-sm" />
+                    <input type="text" value={tempDetalhe.tipo_en} onChange={e => setTempDetalhe({...tempDetalhe, tipo_en: e.target.value})} placeholder="Ex: Average size" className="w-full p-2 border rounded-lg text-sm" />
                     <input type="text" value={tempDetalhe.valor_en} onChange={e => setTempDetalhe({...tempDetalhe, valor_en: e.target.value})} placeholder="Ex: 1.2 - 1.4 mm" className="w-full p-2 border rounded-lg text-sm" />
                   </div>
                 </div>
@@ -314,7 +322,6 @@ export function GestaoCatalogo() {
                   <div>
                     <label className="block text-xs font-bold text-gray-500 mb-1">Emoji / Ícone</label>
                     <select value={tempTag.icone} onChange={e => setTempTag({...tempTag, icone: e.target.value})} className="w-full p-2 border rounded-lg text-sm text-2xl">
-                      <option value="🚚">🚚 (Envio Rápido)</option>
                       <option value="♻️">♻️ (Sustentável)</option>
                       <option value="🛡️">🛡️ (Garantia)</option>
                       <option value="💧">💧 (Waterproof)</option>
@@ -323,11 +330,11 @@ export function GestaoCatalogo() {
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-500 mb-1">Texto PT</label>
-                    <input type="text" value={tempTag.pt} onChange={e => setTempTag({...tempTag, pt: e.target.value})} placeholder="Ex: Envio Imediato" className="w-full p-2 border rounded-lg text-sm" />
+                    <input type="text" value={tempTag.pt} onChange={e => setTempTag({...tempTag, pt: e.target.value})} placeholder="Ex: Sustentável" className="w-full p-2 border rounded-lg text-sm" />
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-500 mb-1">Texto EN</label>
-                    <input type="text" value={tempTag.en} onChange={e => setTempTag({...tempTag, en: e.target.value})} placeholder="Ex: Fast Shipping" className="w-full p-2 border rounded-lg text-sm" />
+                    <input type="text" value={tempTag.en} onChange={e => setTempTag({...tempTag, en: e.target.value})} placeholder="Ex: Sustainable" className="w-full p-2 border rounded-lg text-sm" />
                   </div>
                 </div>
                 <button type="button" onClick={addTag} className="bg-green-600 text-white px-4 py-2 rounded font-bold text-sm hover:bg-green-700">+ Adicionar Etiqueta</button>

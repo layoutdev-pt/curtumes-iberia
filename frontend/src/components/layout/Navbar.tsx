@@ -7,9 +7,12 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
   
   const { language, toggleLanguage, t } = useLanguage();
+
+  // DEFINIR QUAIS PÁGINAS TÊM O HEADER ESCURO NO TOPO
+  const darkHeaderPaths = ['/', '/historia', '/sustentabilidade', '/contactos'];
+  const hasDarkHeader = darkHeaderPaths.includes(location.pathname);
 
   const LOGO_CONFIG = {
     transparente_escuro: {
@@ -26,10 +29,14 @@ export function Navbar() {
     }
   };
 
+  // NOVA LÓGICA DE EXIBIÇÃO:
   const showSolida = isScrolled;
-  const showTransparenteClaro = !isScrolled && (isMobileMenuOpen || !isHomePage);
-  const showTransparenteEscuro = !isScrolled && isHomePage && !isMobileMenuOpen;
-  const useDarkText = isScrolled || !isHomePage;
+  // Mostra o Logo Branco nas páginas com header escuro (Home, Historia, Sustentabilidade, Contactos)
+  const showTransparenteEscuro = !isScrolled && hasDarkHeader && !isMobileMenuOpen;
+  // Mostra o Logo Colorido no topo de páginas sem header escuro (Catálogo, Termos, etc)
+  const showTransparenteClaro = !isScrolled && !hasDarkHeader && !isMobileMenuOpen;
+  // Usa texto escuro se houver scroll OU se for uma página de fundo claro
+  const useDarkText = isScrolled || !hasDarkHeader;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -72,7 +79,6 @@ export function Navbar() {
       <motion.header
         initial={false}
         animate={{
-          /* A Navbar só fica em modo cápsula se houver scroll E o menu mobile estiver fechado */
           width: (isScrolled && !isMobileMenuOpen) ? "min(100% - 2rem, 1280px)" : "100%",
           top: (isScrolled && !isMobileMenuOpen) ? "1rem" : "0px",
           borderRadius: (isScrolled && !isMobileMenuOpen) ? "9999px" : "0px",
@@ -81,7 +87,7 @@ export function Navbar() {
           backdropFilter: (isScrolled && !isMobileMenuOpen) ? "blur(12px)" : "blur(0px)"
         }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="fixed left-1/2 -translate-x-1/2 z-40 flex items-center h-24 lg:h-24" // Altura estrita mantida
+        className="fixed left-1/2 -translate-x-1/2 z-40 flex items-center h-24 lg:h-24" 
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full h-full flex items-center">
           <div className="flex justify-between items-center w-full relative">
@@ -107,8 +113,8 @@ export function Navbar() {
               <nav className={`hidden md:flex space-x-6 text-sm ${useDarkText ? 'text-institucional-blue' : 'text-white'}`}>
                 <Link to="/" className={getLinkClasses('/')}>{t('nav.home')}</Link>
                 <Link to="/historia" className={getLinkClasses('/historia')}>{t('nav.about')}</Link>
-                <Link to="/sustentabilidade" className={getLinkClasses('/sustentabilidade')}>{t('nav.sustainability')}</Link>
                 <Link to="/catalogo" className={getLinkClasses('/catalogo')}>{t('nav.catalog')}</Link>
+                <Link to="/sustentabilidade" className={getLinkClasses('/sustentabilidade')}>{t('nav.sustainability')}</Link>
                 <Link to="/contactos" className={getLinkClasses('/contactos')}>{t('nav.contact')}</Link>
               </nav>
 
@@ -157,8 +163,8 @@ export function Navbar() {
             <nav className="flex flex-col space-y-8 mt-4">
               <Link to="/" className={getLinkClasses('/', true)}>{t('nav.home')}</Link>
               <Link to="/historia" className={getLinkClasses('/historia', true)}>{t('nav.about')}</Link>
-              <Link to="/sustentabilidade" className={getLinkClasses('/sustentabilidade', true)}>{t('nav.sustainability')}</Link>
               <Link to="/catalogo" className={getLinkClasses('/catalogo', true)}>{t('nav.catalog')}</Link>
+              <Link to="/sustentabilidade" className={getLinkClasses('/sustentabilidade', true)}>{t('nav.sustainability')}</Link>
               <Link to="/contactos" className={getLinkClasses('/contactos', true)}>{t('nav.contact')}</Link>
             </nav>
 

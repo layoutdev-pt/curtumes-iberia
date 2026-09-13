@@ -49,7 +49,7 @@ export function Loader() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-xs md:text-sm font-medium text-gray-400 tracking-[0.3em] uppercase"
+          className="text-xs md:text-sm font-title font-medium text-gray-400 tracking-[0.3em] uppercase"
         >
           All About Leather <span className="mx-2 text-institucional-blue/30">•</span> Est. 1963
         </motion.p>

@@ -12,7 +12,7 @@ const content = {
     ctaCatalogText: "Descubra a nossa gama de peles Chrome Free, Hidrofugadas e artigos técnicos para marroquinaria e calçado.",
     ctaCatalogBtn: "Explorar Catálogo",
     ctaSusTitle: "Compromisso Ambiental",
-    ctaSusText: "Conheça as nossas certificações LWG Gold e ISO 9001, pilares da nossa integração na economia circular.",
+    ctaSusText: "Conheça a nossa certificação LWG Gold, pilar da nossa integração na economia circular.",
     ctaSusBtn: "Ler sobre Sustentabilidade",
     globalTitle: "Presença Global",
     globalText: "Mais de 60 anos a exportar qualidade portuguesa para o mundo.",
@@ -27,7 +27,7 @@ const content = {
     ctaCatalogText: "Discover our range of Chrome Free, Waterproof leathers, and technical articles for footwear and leather goods.",
     ctaCatalogBtn: "Explore Catalog",
     ctaSusTitle: "Environmental Commitment",
-    ctaSusText: "Learn about our LWG Gold and ISO 9001 certifications, the pillars of our integration into the circular economy.",
+    ctaSusText: "Learn about our LWG Gold certification, the pillar of our integration into the circular economy.",
     ctaSusBtn: "Read about Sustainability",
     globalTitle: "Global Presence",
     globalText: "Over 60 years exporting Portuguese quality to the world.",
@@ -125,7 +125,7 @@ export function Home() {
             <h1 className="font-title font-bold text-6xl md:text-8xl lg:text-[10rem] text-white uppercase tracking-wider leading-none drop-shadow-lg text-left">
               All <br /> About <br /> Leather
             </h1>
-            <span className="font-title italic font-medium text-white/75 text-2xl md:text-4xl tracking-widest mt-2 md:-mt-4 mr-2 drop-shadow-md">
+            <span className="font-title font-medium text-white/75 text-2xl md:text-4xl tracking-widest mt-2 md:-mt-4 mr-2 drop-shadow-md">
               Since 1963
             </span>
           </div>
@@ -143,13 +143,13 @@ export function Home() {
         </motion.div>
       </section>
 
-      {/* 2. SECÇÃO DE SUSTENTABILIDADE E MISSÃO */}
+      {/* 2. SECÇÃO DE MISSÃO COM DESTAQUE VISUAL DA FÁBRICA */}
       <motion.section 
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="py-32 px-6 relative overflow-hidden bg-white"
+        className="py-24 md:py-32 px-6 relative overflow-hidden bg-white"
       >
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
           <div className="absolute top-0 right-0 w-[40vw] h-[40vw] rounded-full bg-gradient-to-bl from-blue-50 to-transparent blur-3xl"></div>
@@ -157,14 +157,37 @@ export function Home() {
             <path fill="currentColor" d="M45.7,-76.4C58.9,-69.3,69.1,-55.4,78.2,-41.1C87.3,-26.8,95.3,-12.1,94.2,2C93.1,16.1,82.8,29.6,72.4,41.4C62,53.2,51.5,63.3,39,70.5C26.5,77.7,11.9,82,-3.1,87C-18.1,92,-33.5,77.7,-46.8,68.2C-60.1,58.7,-71.3,44.1,-77.6,28.1C-83.9,12.1,-85.3,-5.3,-79.8,-20.1C-74.3,-34.9,-61.9,-47.1,-48.5,-54.6C-35.1,-62.1,-20.7,-64.9,-4.9,-56.9C10.9,-48.9,21.8,-30.1,32.4,-83.4Z" transform="translate(100 100)" />
           </svg>
         </div>
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="font-title font-bold text-institucional-blue text-4xl md:text-5xl mb-8">
-            {data.missionTitle}
-          </h2>
-          <div className="w-16 h-1 bg-institucional-blue mx-auto mb-8"></div>
-          <p className="text-lg md:text-xl leading-relaxed text-gray-600 font-medium">
-            {data.missionText}
-          </p>
+        
+        <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          {/* Texto de Missão */}
+          <div>
+            <h2 className="font-title font-bold text-institucional-blue text-4xl md:text-5xl mb-6">
+              {data.missionTitle}
+            </h2>
+            <div className="w-16 h-1 bg-institucional-blue mb-8"></div>
+            <p className="text-lg leading-relaxed text-gray-600 font-medium">
+              {data.missionText}
+            </p>
+          </div>
+
+          {/* Destaque Visual - Modo de Trabalho / Fábrica */}
+          <div className="grid grid-cols-2 gap-4 h-full relative">
+            <div className="flex flex-col justify-end">
+              <img 
+                src="/imagens/fotos/Curtumes_Iberia_20.JPG" 
+                alt="Instalações Curtumes Ibéria" 
+                className="rounded-2xl shadow-lg w-full h-48 md:h-64 object-cover hover:scale-[1.02] transition-transform duration-500"
+              />
+            </div>
+            <div className="flex flex-col justify-start mt-8 md:mt-12">
+              <img 
+                src="/imagens/fotos/Curtumes_Iberia_23.JPG" 
+                alt="Modo de produção Curtumes Ibéria" 
+                className="rounded-2xl shadow-lg w-full h-56 md:h-72 object-cover hover:scale-[1.02] transition-transform duration-500"
+              />
+            </div>
+          </div>
         </div>
       </motion.section>
 

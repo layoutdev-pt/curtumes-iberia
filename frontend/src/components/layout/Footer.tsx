@@ -30,7 +30,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* SEÇÃO SUPERIOR: 3 Colunas (Identidade, Logo, Links Legais) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-center md:items-start mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-center md:items-start mb-5">
           
           {/* 1. Identidade e Redes Sociais (Esquerda) */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left md:pt-4">
@@ -40,23 +40,28 @@ export function Footer() {
               <a href="https://www.instagram.com/curtumesiberia/" target="_blank" rel="noreferrer" className="hover:opacity-75 transition-opacity">Instagram</a>
               <a href="https://www.linkedin.com/company/curtumes-iberia" target="_blank" rel="noreferrer" className="hover:opacity-75 transition-opacity">LinkedIn</a>
             </div>
-            <p className="text-sm opacity-80 leading-relaxed">
+            <p className="text-sm opacity-80 leading-relaxed mb-4">
               Rua 24 de Junho, 1399<br/>2380-639 Vila Moreira, Portugal
             </p>
+            <div className="text-sm opacity-80 leading-relaxed">
+              <p>Telefone: +351 249 890 676</p>
+              <p>Telemóvel: +351 [Inserir Número]</p>
+              <p>WhatsApp: +351 [Inserir Número]</p>
+            </div>
           </div>
 
           {/* 2. Logomarca Central */}
-          <div className="flex justify-center items-center py-8 pt-16 md:py-0 border-t border-white/10 md:border-t-0">
+          <div className="flex justify-center items-center py-8 pt-16 md:py-7 border-t border-white/10 md:border-t-0">
             <img 
-              src="/logos/VersaoComplementar_Logomarca_CoresOriginais.svg" 
+              src="/logos/VersaoPrincipal_CoresOriginais.svg" 
               alt="Curtumes Ibéria" 
               /* w-56 força a largura no mobile (fica bem grande). md:w-auto e md:h-40 devolvem o controlo ao desktop */
-              className="w-36 md:w-auto md:h-40 object-contain scale-120 opacity-90 hover:opacity-100 transition-opacity brightness-0 invert"
+              className="w-36 md:w-auto md:h-40 object-contain scale-100 opacity-90 hover:opacity-100 transition-opacity brightness-0 invert"
             />
           </div>
 
           {/* 3. Links Legais e Copyright (Direita) */}
-          <div className="flex flex-col items-center md:items-end text-center md:text-right space-y-2 text-sm pt-4 md:pt-10 border-t border-white/10 md:border-t-0 h-full md:justify-start">
+          <div className="flex flex-col items-center md:items-end text-center md:text-right space-y-2 text-sm pt-4 md:pt-16 border-t border-white/10 md:border-t-0 h-full md:justify-start">
             <Link to="/politica-privacidade" className="hover:underline py-1 md:py-0">{data.privacy}</Link>
             <Link to="/termos-utilizacao" className="hover:underline py-1 md:py-0">{data.terms}</Link>
             <p className="mt-4 opacity-60 text-xs sm:text-sm">
@@ -66,19 +71,7 @@ export function Footer() {
           
         </div>
 
-        {/* SEÇÃO INFERIOR: Logótipos de Financiamento (Largura Total) */}
-        <div className="flex flex-col items-center border-t border-white/10 pt-8 mt-4">
-          <h4 className="font-bold mb-6 text-sm uppercase tracking-widest opacity-80">
-            {data.cofinanced}
-          </h4>
-          <div className="w-full max-w-5xl bg-white p-4 md:p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
-            <img 
-              src="/logos/Logos_Curtumes.avif" 
-              alt="Logótipos de Cofinanciamento PRF e União Europeia" 
-              className="w-full h-auto object-contain"
-            />
-          </div>
-        </div>
+        
 
       </div>
     </motion.footer>

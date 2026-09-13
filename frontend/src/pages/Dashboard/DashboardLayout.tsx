@@ -1,6 +1,7 @@
+// DashboardLayout.tsx
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { useLanguage } from '../../contexts/LanguageContext'; // Importamos o motor bilingue
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const content = {
   PT: {
@@ -24,8 +25,6 @@ const content = {
 export function DashboardLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  
-  // Consumir o idioma
   const { language } = useLanguage();
   const data = content[language];
 
@@ -47,11 +46,9 @@ export function DashboardLayout() {
         </div>
         
         <nav className="flex-1 p-4 space-y-2 overflow-y-auto relative z-10 mt-4">
-          
-          {/* 1. Gestão de Encomendas */}
           <Link 
             to="/dashboard" 
-            className={`flex items-center px-4 py-3.5 rounded-xl transition-all font-medium ${
+            className={`flex items-center px-4 py-3.5 rounded-xl transition-all font-title font-bold ${
               location.pathname === '/dashboard' 
                 ? 'bg-white text-institucional-blue shadow-md translate-x-1' 
                 : 'hover:bg-white/10 text-gray-300 hover:text-white'
@@ -63,10 +60,9 @@ export function DashboardLayout() {
             {data.orders}
           </Link>
           
-          {/* 2. Inventário Catálogo (NOVO - Com ícone de lista) */}
           <Link 
             to="/dashboard/lista-catalogo" 
-            className={`flex items-center px-4 py-3.5 rounded-xl transition-all font-medium ${
+            className={`flex items-center px-4 py-3.5 rounded-xl transition-all font-title font-bold ${
               location.pathname === '/dashboard/lista-catalogo' 
                 ? 'bg-white text-institucional-blue shadow-md translate-x-1' 
                 : 'hover:bg-white/10 text-gray-300 hover:text-white'
@@ -78,10 +74,9 @@ export function DashboardLayout() {
             {data.inventory}
           </Link>
 
-          {/* 3. Adicionar Artigo (ATUALIZADO - Com ícone de "+") */}
           <Link 
             to="/dashboard/catalogo" 
-            className={`flex items-center px-4 py-3.5 rounded-xl transition-all font-medium ${
+            className={`flex items-center px-4 py-3.5 rounded-xl transition-all font-title font-bold ${
               location.pathname === '/dashboard/catalogo' 
                 ? 'bg-white text-institucional-blue shadow-md translate-x-1' 
                 : 'hover:bg-white/10 text-gray-300 hover:text-white'
@@ -92,16 +87,15 @@ export function DashboardLayout() {
             </svg>
             {data.addCatalog}
           </Link>
-          
         </nav>
 
         <div className="p-6 border-t border-white/10 relative z-10">
-          <Link to="/" className="w-full text-center block px-4 py-2 text-xs text-blue-200 hover:text-white transition-colors mb-4 border border-white/20 rounded-lg">
+          <Link to="/" className="w-full text-center block px-4 py-2 text-xs font-bold text-blue-200 hover:text-white transition-colors mb-4 border border-white/20 rounded-lg font-title tracking-wider">
             {data.viewSite}
           </Link>
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center justify-center px-4 py-2.5 text-sm text-red-200 hover:text-white hover:bg-red-500/20 rounded-lg transition-colors font-bold"
+            className="w-full flex items-center justify-center px-4 py-2.5 text-sm text-red-200 hover:text-white hover:bg-red-500/20 rounded-lg transition-colors font-title font-bold tracking-wider"
           >
             <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

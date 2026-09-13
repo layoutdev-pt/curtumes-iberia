@@ -1,3 +1,4 @@
+// Login.tsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
@@ -65,26 +66,26 @@ export function Login() {
           <form className="space-y-6" onSubmit={handleLogin}>
             
             {error && (
-              <div className="bg-red-50 text-red-600 p-3.5 rounded-lg text-sm text-center border border-red-100 font-medium">
+              <div className="bg-red-50 text-red-600 p-3.5 rounded-lg text-sm text-center border border-red-100 font-title font-bold tracking-wider">
                 {error}
               </div>
             )}
 
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">{data.emailLabel}</label>
+                <label className="block text-xs font-title font-bold text-gray-500 uppercase tracking-wider mb-2">{data.emailLabel}</label>
                 <input
                   type="email" required
-                  className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-institucional-blue/20 focus:border-institucional-blue outline-none transition-all text-sm"
+                  className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-institucional-blue/20 focus:border-institucional-blue outline-none transition-all text-sm font-medium"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">{data.passwordLabel}</label>
+                <label className="block text-xs font-title font-bold text-gray-500 uppercase tracking-wider mb-2">{data.passwordLabel}</label>
                 <input
                   type="password" required
-                  className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-institucional-blue/20 focus:border-institucional-blue outline-none transition-all text-sm"
+                  className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-institucional-blue/20 focus:border-institucional-blue outline-none transition-all text-sm font-medium"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -93,7 +94,7 @@ export function Login() {
 
             <button
               type="submit" disabled={loading}
-              className={`w-full flex justify-center py-3.5 px-4 rounded-lg text-sm font-bold text-white shadow-md transition-all ${
+              className={`w-full flex justify-center py-3.5 px-4 rounded-lg text-sm font-title font-bold uppercase tracking-wider text-white shadow-md transition-all ${
                 loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-institucional-blue hover:bg-blue-900 hover:-translate-y-0.5'
               }`}
             >

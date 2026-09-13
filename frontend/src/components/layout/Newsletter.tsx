@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const content = {
   PT: {
-    title: "Subscreva a nossa Newsletter",
+    title: "Subscreva A Nossa Newsletter",
     description: "Fique a par das últimas novidades, inovações sustentáveis e presenças em feiras internacionais da Curtumes Ibéria.",
     placeholder: "O seu melhor endereço de e-mail",
     button: "Subscrever Agora",

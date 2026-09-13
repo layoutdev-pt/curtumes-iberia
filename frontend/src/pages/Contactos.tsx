@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { PageHeader } from '../components/ui/PageHeader';
 import { motion } from 'framer-motion';
 
 const content = {
@@ -13,7 +14,7 @@ const content = {
     agentsText: "A Curtumes Ibéria conta com uma rede de parceiros com presença estratégica nos principais polos da indústria do calçado e marroquinaria.",
     formTitle: "Envie-nos uma Mensagem",
     formName: "Nome / Empresa *",
-    formEmail: "E-mail Corporativo *",
+    formEmail: "E-mail *",
     formSubject: "Assunto *",
     formMessage: "Mensagem *",
     formSubmit: "Enviar Mensagem",
@@ -28,14 +29,13 @@ const content = {
     agentsText: "Curtumes Ibéria has a network of partners with a strategic presence in the main hubs of the footwear and leather goods industry.",
     formTitle: "Send us a Message",
     formName: "Name / Company *",
-    formEmail: "Corporate E-mail *",
+    formEmail: "E-mail *",
     formSubject: "Subject *",
     formMessage: "Message *",
     formSubmit: "Send Message",
   }
 };
 
-// Estrutura de dados enriquecida com a documentação oficial
 const agentesInternacionais = [
   { 
     id: 'pt', 
@@ -55,6 +55,13 @@ const agentesInternacionais = [
         morada: 'Avenida Liberdade, n. 866 - Trás Q, 3700-163 São João da Madeira',
         telefone: '+351 966 002 201',
         email: 'miguel.josapel@gmail.com'
+      },
+      {
+        local: 'Lisboa, Porto',
+        nome: '[Nome do Agente]',
+        morada: '[Morada do Agente]',
+        telefone: '+351 [Inserir Número]',
+        email: '[Email do Agente]'
       }
     ] 
   },
@@ -118,42 +125,35 @@ export function Contactos() {
   };
 
   return (
-    <div className="bg-[#F8FAFC] min-h-[calc(100vh-80px)] pt-32 pb-24 relative overflow-hidden flex items-center">
+    <div className="bg-[#F8FAFC] min-h-screen relative overflow-hidden flex flex-col">
       
+      {/* HEADER DINÂMICO APLICADO AQUI */}
+      <PageHeader 
+        title={data.title} 
+        subtitle={data.subtitle} 
+        backgroundImage="/imagens/historia_img/img5.avif" // Substitua pela imagem desejada
+      />
+
       {/* Elementos Gráficos de Fundo */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30 mt-[50vh]">
         <div className="absolute top-0 right-[20%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-tr from-purple-100 via-blue-50 to-orange-50 blur-3xl mix-blend-multiply"></div>
         <svg className="absolute bottom-10 right-10 w-[400px] h-[400px] text-institucional-blue/5 -rotate-45" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
           <path fill="currentColor" d="M45.7,-76.4C58.9,-69.3,69.1,-55.4,78.2,-41.1C87.3,-26.8,95.3,-12.1,94.2,2C93.1,16.1,82.8,29.6,72.4,41.4C62,53.2,51.5,63.3,39,70.5C26.5,77.7,11.9,82,-3.1,87C-18.1,92,-33.5,77.7,-46.8,68.2C-60.1,58.7,-71.3,44.1,-77.6,28.1C-83.9,12.1,-85.3,-5.3,-79.8,-20.1C-74.3,-34.9,-61.9,-47.1,-48.5,-54.6C-35.1,-62.1,-20.7,-64.9,-4.9,-56.9C10.9,-48.9,21.8,-30.1,32.4,-83.4Z" transform="translate(100 100)" />
         </svg>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
+      <div className="max-w-7xl mx-auto px-6 w-full relative z-10 py-24">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
           
           {/* COLUNA ESQUERDA: Informação Institucional e Agentes */}
           <div className="flex-1 flex flex-col justify-center">
-            
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <h1 className="text-4xl md:text-5xl font-title font-bold text-institucional-blue mb-6">
-                {data.title}
-              </h1>
-              <p className="text-lg text-gray-600 mb-12 max-w-lg leading-relaxed">
-                {data.subtitle}
-              </p>
-            </motion.div>
 
             {/* Sede com Contactos Completos */}
             <motion.div 
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
               className="mb-12"
             >
               <h2 className="text-sm font-bold uppercase tracking-widest text-institucional-blue mb-3">
@@ -167,6 +167,18 @@ export function Contactos() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                     <span>+351 249 890 676 <span className="text-xs text-gray-400 font-medium ml-1">({data.phoneNote})</span></span>
+                  </div>
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 mr-3 text-institucional-blue opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    <span>+351 [Inserir Telemóvel]</span>
+                  </div>
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 mr-3 text-green-500 opacity-80" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                    <span>+351 [Inserir WhatsApp]</span>
                   </div>
                   <div className="flex items-center">
                     <svg className="w-5 h-5 mr-3 text-institucional-blue opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -185,7 +197,7 @@ export function Contactos() {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             >
               <h2 className="text-xl font-title font-bold text-institucional-blue mb-3">
                 {data.agentsTitle}

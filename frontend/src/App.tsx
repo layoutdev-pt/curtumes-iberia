@@ -6,7 +6,8 @@ import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { ScrollToTop } from './components/layout/ScrollToTop';
 import { Loader } from './components/layout/Loader';
-import { Newsletter } from './components/layout/Newsletter'; // <-- Import da Newsletter
+import { Newsletter } from './components/layout/Newsletter';
+import { WhatsAppWidget } from './components/ui/WhatsAppWidget';
 
 import { Home } from './pages/Home';
 import { Catalogo as CatalogoPublico } from './pages/Catalogo';
@@ -106,6 +107,7 @@ function AppContent() {
         <>
           <Newsletter key={`newsletter-${language}`} />
           <Footer key={`footer-${language}`} />
+          <WhatsAppWidget />
         </>
       )}
       

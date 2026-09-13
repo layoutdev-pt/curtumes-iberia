@@ -1,3 +1,4 @@
+// ListaCatalogo.tsx
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -57,7 +58,6 @@ export function ListaCatalogo() {
     const { data: fetch, error } = await supabase.from('artigos').select('*').order('created_at', { ascending: false });
     
     if (!error && fetch) {
-      // Parsing de segurança para os novos campos JSONB
       const parsedData = fetch.map(art => ({
         ...art,
         cores: typeof art.cores === 'string' ? JSON.parse(art.cores) : art.cores || [],
@@ -108,7 +108,6 @@ export function ListaCatalogo() {
         imagemUrl = backendData.urlImagem;
       }
 
-      // IMPORTANTE: Devolver os arrays JSON intactos na atualização
       const { error } = await supabase.from('artigos').update({
         referencia: editingArtigo.referencia,
         categoria: editingArtigo.categoria,
@@ -145,17 +144,17 @@ export function ListaCatalogo() {
 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         {loading ? (
-          <div className="p-10 text-center text-gray-500 font-bold animate-pulse">{data.loading}</div>
+          <div className="p-10 text-center text-gray-500 font-title font-bold animate-pulse">{data.loading}</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-[#F8FAFC] border-b border-gray-200">
-                  <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-24">Img</th>
-                  <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">{data.ref}</th>
-                  <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">{data.article}</th>
-                  <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">{data.category}</th>
-                  <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">{data.actions}</th>
+                  <th className="p-4 text-xs font-title font-bold text-gray-500 uppercase tracking-wider w-24">Img</th>
+                  <th className="p-4 text-xs font-title font-bold text-gray-500 uppercase tracking-wider">{data.ref}</th>
+                  <th className="p-4 text-xs font-title font-bold text-gray-500 uppercase tracking-wider">{data.article}</th>
+                  <th className="p-4 text-xs font-title font-bold text-gray-500 uppercase tracking-wider">{data.category}</th>
+                  <th className="p-4 text-xs font-title font-bold text-gray-500 uppercase tracking-wider text-right">{data.actions}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -170,24 +169,23 @@ export function ListaCatalogo() {
                         <div className="w-12 h-12 rounded-lg bg-gray-100 border border-gray-200"></div>
                       )}
                     </td>
-                    <td className="p-4 font-mono text-sm font-bold text-gray-600">{artigo.referencia}</td>
+                    <td className="p-4 font-title font-bold text-sm text-institucional-blue tracking-wider">{artigo.referencia}</td>
                     <td className="p-4">
-                      <div className="font-bold text-gray-900">{language === 'PT' ? artigo.titulo_pt : artigo.titulo_en}</div>
-                      {/* Pequeno helper visual para mostrar quantas cores tem */}
+                      <div className="font-bold font-title text-gray-900">{language === 'PT' ? artigo.titulo_pt : artigo.titulo_en}</div>
                       {artigo.cores && artigo.cores.length > 0 && (
-                        <div className="text-[10px] text-gray-400 font-medium mt-1">{artigo.cores.length} Variante(s) de Cor</div>
+                        <div className="text-[10px] text-gray-400 font-medium mt-1 uppercase tracking-wider">{artigo.cores.length} Variante(s) de Cor</div>
                       )}
                     </td>
                     <td className="p-4">
-                      <span className="bg-blue-50 text-institucional-blue text-xs font-bold px-2.5 py-1 rounded-md">
+                      <span className="bg-blue-50 text-institucional-blue text-xs font-title font-bold px-3 py-1.5 rounded-md uppercase tracking-wider">
                         {artigo.categoria}
                       </span>
                     </td>
                     <td className="p-4 text-right space-x-3">
-                      <button onClick={() => setEditingArtigo(artigo)} className="text-sm font-bold text-blue-500 hover:text-blue-700 transition-colors">
+                      <button onClick={() => setEditingArtigo(artigo)} className="text-sm font-title font-bold text-blue-500 hover:text-blue-700 transition-colors uppercase tracking-wider">
                         {data.edit}
                       </button>
-                      <button onClick={() => handleDelete(artigo.id)} className="text-sm font-bold text-red-500 hover:text-red-700 transition-colors">
+                      <button onClick={() => handleDelete(artigo.id)} className="text-sm font-title font-bold text-red-500 hover:text-red-700 transition-colors uppercase tracking-wider">
                         {data.delete}
                       </button>
                     </td>
@@ -196,13 +194,12 @@ export function ListaCatalogo() {
               </tbody>
             </table>
             {artigos.length === 0 && (
-              <div className="p-10 text-center text-gray-500">Sem artigos registados.</div>
+              <div className="p-10 text-center text-gray-500 font-title font-bold">Sem artigos registados.</div>
             )}
           </div>
         )}
       </div>
 
-      {/* MODAL DE EDIÇÃO FLUTUANTE */}
       {editingArtigo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-institucional-blue/40 backdrop-blur-sm p-4">
           <div className="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
@@ -222,15 +219,20 @@ export function ListaCatalogo() {
 
                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Referência</label>
+                    <label className="block text-xs font-title font-bold text-gray-500 uppercase tracking-wider mb-2">Referência</label>
                     <input type="text" value={editingArtigo.referencia} onChange={(e) => setEditingArtigo({...editingArtigo, referencia: e.target.value})} required className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm" />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Categoria</label>
-                    <select value={editingArtigo.categoria} onChange={(e) => setEditingArtigo({...editingArtigo, categoria: e.target.value})} className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm">
-                      <option value="Artigos Chrome Free">Artigos Chrome Free</option>
-                      <option value="Artigos Hidrofugados">Artigos Hidrofugados</option>
-                      <option value="Outros Artigos">Outros Artigos</option>
+                    <label className="block text-xs font-title font-bold text-gray-500 uppercase tracking-wider mb-2">Categoria</label>
+                    <select value={editingArtigo.categoria} onChange={(e) => setEditingArtigo({...editingArtigo, categoria: e.target.value})} className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium">
+                      <option value="Hidrofogados">Hidrofogados</option>
+                      <option value="Camurças">Camurças</option>
+                      <option value="Napas">Napas</option>
+                      <option value="Anilinas">Anilinas</option>
+                      <option value="Fantasia">Fantasia</option>
+                      <option value="Nubucks">Nubucks</option>
+                      <option value="Floaters">Floaters</option>
+                      <option value="Ceras e Óleos">Ceras e Óleos</option>
                     </select>
                   </div>
                 </div>
@@ -238,40 +240,40 @@ export function ListaCatalogo() {
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-xs font-bold text-blue-600 uppercase mb-1">Título PT</label>
+                      <label className="block text-xs font-title font-bold text-blue-600 uppercase tracking-wider mb-1">Título PT</label>
                       <input type="text" value={editingArtigo.titulo_pt} onChange={(e) => setEditingArtigo({...editingArtigo, titulo_pt: e.target.value})} required className="w-full p-2.5 border border-gray-200 rounded-lg text-sm" />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-blue-600 uppercase mb-1">Descrição PT</label>
+                      <label className="block text-xs font-title font-bold text-blue-600 uppercase tracking-wider mb-1">Descrição PT</label>
                       <textarea rows={3} value={editingArtigo.descricao_pt} onChange={(e) => setEditingArtigo({...editingArtigo, descricao_pt: e.target.value})} required className="w-full p-2.5 border border-gray-200 rounded-lg text-sm resize-none"></textarea>
                     </div>
                   </div>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-xs font-bold text-gray-600 uppercase mb-1">Title EN</label>
+                      <label className="block text-xs font-title font-bold text-gray-600 uppercase tracking-wider mb-1">Title EN</label>
                       <input type="text" value={editingArtigo.titulo_en} onChange={(e) => setEditingArtigo({...editingArtigo, titulo_en: e.target.value})} required className="w-full p-2.5 border border-gray-200 rounded-lg text-sm" />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-gray-600 uppercase mb-1">Description EN</label>
+                      <label className="block text-xs font-title font-bold text-gray-600 uppercase tracking-wider mb-1">Description EN</label>
                       <textarea rows={3} value={editingArtigo.descricao_en} onChange={(e) => setEditingArtigo({...editingArtigo, descricao_en: e.target.value})} required className="w-full p-2.5 border border-gray-200 rounded-lg text-sm resize-none"></textarea>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Substituir Imagem</label>
+                  <label className="block text-sm font-title font-bold text-gray-700 mb-1">Substituir Imagem</label>
                   <p className="text-xs text-gray-500 mb-3">{data.imgNote}</p>
-                  <input type="file" accept="image/*" onChange={(e) => { if(e.target.files) setEditImage(e.target.files[0]) }} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-bold file:bg-institucional-blue file:text-white hover:file:bg-blue-900 cursor-pointer transition-colors" />
+                  <input type="file" accept="image/*" onChange={(e) => { if(e.target.files) setEditImage(e.target.files[0]) }} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-title file:font-bold file:tracking-wider file:bg-institucional-blue file:text-white hover:file:bg-blue-900 cursor-pointer transition-colors" />
                 </div>
 
               </form>
             </div>
 
             <div className="p-6 border-t border-gray-100 bg-white flex justify-end space-x-4">
-              <button onClick={() => setEditingArtigo(null)} className="px-6 py-2.5 rounded-lg font-bold text-gray-600 hover:bg-gray-100 transition-colors">
+              <button onClick={() => setEditingArtigo(null)} className="px-6 py-2.5 rounded-lg font-title font-bold tracking-wider text-gray-600 hover:bg-gray-100 transition-colors uppercase">
                 {data.cancelBtn}
               </button>
-              <button form="editForm" type="submit" disabled={isProcessing} className={`px-6 py-2.5 rounded-lg font-bold text-white transition-colors ${isProcessing ? 'bg-blue-400' : 'bg-institucional-blue hover:bg-blue-900'}`}>
+              <button form="editForm" type="submit" disabled={isProcessing} className={`px-6 py-2.5 rounded-lg font-title font-bold tracking-wider text-white transition-colors uppercase ${isProcessing ? 'bg-blue-400' : 'bg-institucional-blue hover:bg-blue-900'}`}>
                 {isProcessing ? 'A processar...' : data.saveBtn}
               </button>
             </div>

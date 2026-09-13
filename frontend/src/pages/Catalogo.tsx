@@ -13,14 +13,19 @@ interface Artigo {
   descricao_pt: string;
   descricao_en: string;
   imagem_url: string;
-  tags?: any; // Suporte para as novas tags criadas na Gestão
+  tags?: any;
 }
 
 const categoriasFiltro = [
   { id: 'all', labelPT: 'Todas as Categorias', labelEN: 'All Categories' },
-  { id: 'Artigos Chrome Free', labelPT: 'Artigos Chrome Free', labelEN: 'Chrome Free Articles' },
-  { id: 'Artigos Hidrofugados', labelPT: 'Artigos Hidrofugados', labelEN: 'Waterproof Articles' },
-  { id: 'Outros Artigos', labelPT: 'Outros Artigos', labelEN: 'Other Articles' },
+  { id: 'Hidrofogados', labelPT: 'Hidrofogados', labelEN: 'Waterproof' },
+  { id: 'Camurças', labelPT: 'Camurças', labelEN: 'Suedes' },
+  { id: 'Napas', labelPT: 'Napas', labelEN: 'Nappas' },
+  { id: 'Anilinas', labelPT: 'Anilinas', labelEN: 'Anilines' },
+  { id: 'Fantasia', labelPT: 'Fantasia', labelEN: 'Fantasy' },
+  { id: 'Nubucks', labelPT: 'Nubucks', labelEN: 'Nubucks' },
+  { id: 'Floaters', labelPT: 'Floaters', labelEN: 'Floaters' },
+  { id: 'Ceras e Óleos', labelPT: 'Ceras e Óleos', labelEN: 'Waxes and Oils' }
 ];
 
 export function Catalogo() {
@@ -36,7 +41,6 @@ export function Catalogo() {
         const { data, error } = await supabase.from('artigos').select('*').order('created_at', { ascending: false });
         if (error) throw error;
         
-        // Parsing das tags para mostrar a primeira tag no cartão
         if (data) {
           const parsedData = data.map(art => ({
             ...art,
@@ -79,7 +83,7 @@ export function Catalogo() {
         >
           <div className="mb-6 md:mb-0">
             <h1 className="text-4xl md:text-5xl font-title font-bold text-institucional-blue tracking-tight">
-              {language === 'PT' ? 'Catálogo de Artigos' : 'Leather Catalog'}
+              {language === 'PT' ? 'Catálogo' : 'Catalog'}
             </h1>
             <p className="text-gray-500 mt-3 text-lg max-w-xl leading-relaxed">
               {language === 'PT' 
@@ -136,7 +140,6 @@ export function Catalogo() {
                         <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1.5 text-xs font-bold rounded-full text-institucional-blue shadow-sm border border-gray-100">
                           {artigo.referencia}
                         </div>
-                        {/* Renderizar a primeira Tag como Destaque Visual */}
                         {artigo.tags && artigo.tags.length > 0 && (
                           <div className="absolute bottom-3 left-3 bg-green-500/90 backdrop-blur-md px-3 py-1.5 text-xs font-bold rounded-full text-white shadow-md flex items-center">
                             <span className="mr-1">{artigo.tags[0].icone}</span> {language === 'PT' ? artigo.tags[0].pt : artigo.tags[0].en}
