@@ -1,6 +1,6 @@
 import { useLanguage } from '../contexts/LanguageContext';
-import { PageHeader } from '../components/ui/PageHeader';
 import { motion } from 'framer-motion';
+import { TypewriterText } from '../components/ui/TypewriterText';
 
 const content = {
   PT: {
@@ -24,15 +24,15 @@ const content = {
         title: "Segurança",
         text: "Priorizamos em manter um local de trabalho saudável e seguro para os nossos funcionários.\n\nAtuamos em conformidade com as diretrizes de saúde no trabalho.",
         image: "/tour/DSCF9261.webp"
-      },
-      {
-        id: "audit",
-        title: "Auditoria",
-        text: "A Curtumes Ibéria SA é medalha de Ouro no Grupo LWG (Leather Working Group).\n\nO objetivo do LWG é melhorar a indústria de curtumes com as melhores práticas e políticas ambientais.",
-        image: "/logos/LWG_GOLD.png",
-        isLogo: true
       }
     ],
+    audit: {
+      tag: "Certificação Oficial",
+      title: "Auditoria — Medalha de Ouro LWG",
+      text: "A Curtumes Ibéria SA é medalha de Ouro no Grupo LWG (Leather Working Group).\n\nO objetivo do LWG é melhorar a indústria de curtumes com as melhores práticas e políticas ambientais.",
+      image: "/logos/LWG_GOLD.png",
+      badges: ["Classificação Ouro Oficial", "Melhores Práticas Ambientais"]
+    },
     fullWidthSections: [
       {
         id: "energy",
@@ -51,7 +51,7 @@ const content = {
       {
         id: "animal-welfare",
         title: "Bem estar animal",
-        text: "Priorizamos em manter um local de trabalho saudável e seguro para os nossos funcionários.\n\nAtuamos em conformidade com as diretrizes de saúde no trabalho.",        
+        text: "Na Curtumes Ibéria, o bem-estar animal é basilar. Integramos uma economia circular ao utilizar exclusivamente subprodutos da indústria alimentar, rejeitando categoricamente espécies ameaçadas, fauna da Amazónia ou animais listados na CITES.\n\nAlinhados com os nossos fornecedores, asseguramos o cumprimento rigoroso dos padrões internacionais da OIE desde a origem da cadeia produtiva.",        
         image: "/imagens/historia_img/img4.avif",
         align: "right"
       },
@@ -83,16 +83,17 @@ const content = {
       {
         id: "safety",
         title: "Safety",
-        text: "At Curtumes Ibéria, animal welfare is fundamental.\n\nWe embrace a circular economy by using exclusively by-products from the food industry, categorically rejecting endangered species, Amazonian wildlife, or animals listed under CITES.\n\nWorking in alignment with our suppliers, we ensure strict compliance with international OIE standards throughout the supply chain, starting at the source.",      
-      },
-      {
-        id: "audit",
-        title: "Audit",
-        text: "Curtumes Ibéria S.A. is a Gold Rated LWG (Leather Working Group) Member.\n\nLWG aims to improve the tanning industry with best practices and environmental policies.",
-        image: "/logos/LWG_GOLD.png",
-        isLogo: true
+        text: "A healthy and safe workplace is a priority and we aim to guarantee that our employees will act in a safe and responsible way.\n\nWe ensure compliance with all applicable health laws where we operate.",
+        image: "/tour/DSCF9261.webp"
       }
     ],
+    audit: {
+      tag: "Official Certification",
+      title: "Audit — LWG Gold Rated Member",
+      text: "Curtumes Ibéria S.A. is a Gold Rated LWG (Leather Working Group) Member.\n\nLWG aims to improve the tanning industry with best practices and environmental policies.",
+      image: "/logos/LWG_GOLD.png",
+      badges: ["Official Gold Rating", "Best Environmental Practices"]
+    },
     fullWidthSections: [
       {
         id: "energy",
@@ -111,7 +112,7 @@ const content = {
       {
         id: "animal-welfare",
         title: "Animal Welfare",
-        text: "At Curtumes Ibéria, animal welfare is fundamental.\n\nWe actively drive a circular economy by sourcing exclusively by-products of the food industry, strictly prohibiting endangered species, Amazon wildlife, and CITES-listed fauna.\n\nIn close collaboration with our suppliers, we enforce full compliance with international standards, such as WOAH guidelines, right from the origin of our supply chain.",
+        text: "At Curtumes Ibéria, animal welfare is fundamental. We actively drive a circular economy by sourcing exclusively by-products of the food industry, strictly prohibiting endangered species, Amazon wildlife, and CITES-listed fauna.\n\nIn close collaboration with our suppliers, we enforce full compliance with international standards, such as WOAH guidelines, right from the origin of our supply chain.",
         image: "/imagens/historia_img/img4.avif",
         align: "right"
       },
@@ -149,14 +150,9 @@ export function Sustentabilidade() {
         </div>
         
         <div className="relative z-10 text-center px-6 max-w-5xl mx-auto mt-20">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-title font-bold text-white mb-6 tracking-tight drop-shadow-lg"
-          >
-            {data.subtitle}
-          </motion.h1>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-title font-bold text-white mb-6 tracking-tight drop-shadow-lg min-h-[1.2em]">
+            <TypewriterText text={data.subtitle} speed={40} />
+          </h1>
           <motion.div 
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
@@ -168,11 +164,11 @@ export function Sustentabilidade() {
 
       {/* 
         =========================================================================
-        4-COLUMN GRID (Chemicals, Waste, Safety, Audit)
+        3-COLUMN GRID (Chemicals, Waste, Safety)
         ========================================================================= 
       */}
-      <div className="max-w-7xl mx-auto px-6 py-24 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+      <div className="max-w-7xl mx-auto px-6 pt-24 pb-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
           {data.gridSections.map((item, index) => (
             <motion.div 
               key={item.id}
@@ -182,21 +178,12 @@ export function Sustentabilidade() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="flex flex-col h-full group"
             >
-              <div className="w-full aspect-square mb-8 overflow-hidden rounded-2xl bg-white shadow-sm border border-gray-100 flex items-center justify-center p-2 relative">
-                {item.isLogo ? (
-                  <img 
-                    src={item.image} 
-                    alt={item.title} 
-                    className="w-3/4 h-3/4 object-contain transform group-hover:scale-105 transition-transform duration-500" 
-                  />
-                ) : (
-                  <img 
-                    src={item.image} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover rounded-xl transform group-hover:scale-105 transition-transform duration-700" 
-                  />
-                )}
-                {/* Subtle overlay effect */}
+              <div className="w-full aspect-square mb-8 overflow-hidden rounded-2xl bg-white shadow-sm border border-gray-100 flex items-center justify-center relative">
+                <img 
+                  src={item.image} 
+                  alt={item.title} 
+                  className="w-full h-full object-cover rounded-xl transform group-hover:scale-105 transition-transform duration-700" 
+                />
                 <div className="absolute inset-0 bg-institucional-blue/0 group-hover:bg-institucional-blue/5 transition-colors duration-500 rounded-2xl pointer-events-none"></div>
               </div>
               
@@ -216,11 +203,71 @@ export function Sustentabilidade() {
 
       {/* 
         =========================================================================
+        DESTAQUE DISCRETO: AUDITORIA / MEDALHA DE OURO LWG
+        ========================================================================= 
+      */}
+      <div className="max-w-7xl mx-auto px-6 pb-24 pt-4 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="bg-white rounded-3xl border border-gray-200/70 shadow-sm p-8 sm:p-10 lg:p-12 relative overflow-hidden"
+        >
+          <div className="flex flex-col md:flex-row items-center gap-8 lg:gap-12">
+            
+            {/* Logo LWG em container clean */}
+            <div className="flex-shrink-0 w-36 h-36 sm:w-44 sm:h-44 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center p-4">
+              <img 
+                src={data.audit.image} 
+                alt="Leather Working Group Gold Rating" 
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            {/* Texto & Badges discretos */}
+            <div className="flex-1 text-center md:text-left space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold tracking-wider uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                {data.audit.tag}
+              </div>
+
+              <h3 className="text-2xl sm:text-3xl font-title font-bold text-institucional-blue tracking-tight">
+                {data.audit.title}
+              </h3>
+
+              <div className="text-gray-600 text-base sm:text-lg font-light leading-relaxed space-y-2 max-w-3xl">
+                {data.audit.text.split('\n\n').map((p, idx) => (
+                  <p key={idx}>{p}</p>
+                ))}
+              </div>
+
+              <div className="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-3">
+                {data.audit.badges.map((badge, bIdx) => (
+                  <span 
+                    key={bIdx}
+                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs sm:text-sm font-medium text-slate-700"
+                  >
+                    <svg className="w-3.5 h-3.5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </motion.div>
+      </div>
+
+      {/* 
+        =========================================================================
         FULL WIDTH SECTIONS (Immersive Parallax/Cover with Overlay)
         ========================================================================= 
       */}
       <div className="w-full flex flex-col">
-        {data.fullWidthSections.map((section, index) => {
+        {data.fullWidthSections.map((section) => {
           const isLeft = section.align === "left";
           
           return (

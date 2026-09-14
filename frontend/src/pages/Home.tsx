@@ -4,6 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { motion, useInView } from 'framer-motion';
 import { ComposableMap, Geographies, Geography, Line, Marker } from 'react-simple-maps';
 import { GalleryMarquee } from '../components/ui/GalleryMarquee';
+import { TypewriterText } from '../components/ui/TypewriterText';
 
 const content = {
   PT: {
@@ -123,11 +124,11 @@ export function Home() {
           className="relative text-center px-4 mt-16 pointer-events-none"
         >
           <div className="relative inline-flex flex-col items-end">
-            <h1 className="font-title font-bold text-6xl md:text-8xl lg:text-[10rem] text-white uppercase tracking-wider leading-none drop-shadow-lg text-left">
-              All <br /> About <br /> Leather
+            <h1 className="font-title font-bold text-6xl md:text-8xl lg:text-[10rem] text-white uppercase tracking-wider leading-none drop-shadow-lg text-left min-h-[3.1em]">
+              <TypewriterText text={`ALL\nABOUT\nLEATHER`} speed={60} />
             </h1>
             <span className="font-title font-medium text-white/75 text-2xl md:text-4xl tracking-widest mt-2 md:-mt-4 mr-2 drop-shadow-md">
-              Since 1963
+              <TypewriterText text="Since 1963" delay={2600} speed={50} />
             </span>
           </div>
         </motion.div>

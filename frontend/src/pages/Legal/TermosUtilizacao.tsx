@@ -1,6 +1,7 @@
 // TermosUtilizacao.tsx
 import { useLanguage } from '../../contexts/LanguageContext';
 import { motion } from 'framer-motion';
+import { TypewriterText } from '../../components/ui/TypewriterText';
 
 const content = {
   PT: {
@@ -31,8 +32,8 @@ export function TermosUtilizacao() {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-title font-bold text-institucional-blue mb-8 md:mb-12">
-            {data.title}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-title font-bold text-institucional-blue mb-8 md:mb-12 min-h-[1.2em]">
+            <TypewriterText text={data.title} speed={40} />
           </h1>
         </motion.div>
         

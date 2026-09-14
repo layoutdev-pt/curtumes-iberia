@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase';
 import { useLanguage } from '../contexts/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { TypewriterText } from '../components/ui/TypewriterText';
 
 interface Artigo {
   id: string;
@@ -84,8 +85,8 @@ export function Catalogo() {
           className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-gray-200/60 pb-8"
         >
           <div className="mb-6 md:mb-0">
-            <h1 className="text-4xl md:text-5xl font-title font-bold text-institucional-blue tracking-tight">
-              {language === 'PT' ? 'Catálogo' : 'Catalog'}
+            <h1 className="text-4xl md:text-5xl font-title font-bold text-institucional-blue tracking-tight min-h-[1.2em]">
+              <TypewriterText text={language === 'PT' ? 'Catálogo' : 'Catalog'} speed={50} />
             </h1>
             <p className="text-gray-500 mt-3 text-lg max-w-xl leading-relaxed">
               {language === 'PT' 

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { TypewriterText } from './TypewriterText';
 
 interface PageHeaderProps {
   title: string;
@@ -24,14 +25,9 @@ export function PageHeader({ title, subtitle, backgroundImage }: PageHeaderProps
 
       {/* Conteúdo Centralizado com Animação Fluida */}
       <div className="relative z-20 text-center px-6 max-w-4xl mx-auto pt-20">
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-4xl md:text-5xl lg:text-6xl font-title font-bold text-white mb-6 tracking-tight drop-shadow-lg"
-        >
-          {title}
-        </motion.h1>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-title font-bold text-white mb-6 tracking-tight drop-shadow-lg min-h-[1.2em]">
+          <TypewriterText text={title} speed={40} />
+        </h1>
 
         <motion.p
           initial={{ opacity: 0, y: 30 }}
