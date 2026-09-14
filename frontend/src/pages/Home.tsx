@@ -8,34 +8,112 @@ import { TypewriterText } from '../components/ui/TypewriterText';
 
 const content = {
   PT: {
+    heroCtaCatalog: "Explorar Catálogo",
+    heroCtaHistory: "A Nossa História",
+    stats: [
+      { number: "55+", label: "Anos de Tradição", sub: "Desde 1963 no setor" },
+      { number: "LWG", label: "Medalha de Ouro", sub: "Classificação ambiental máxima" },
+      { number: "100%", label: "Energia Renovável", sub: "Produção sustentável" },
+      { number: "13+", label: "Países de Exportação", sub: "Alcance mundial" }
+    ],
+    collectionsTitle: "Coleções em Destaque",
+    collectionsSubtitle: "Peles de qualidade superior desenvolvidas para as exigências do calçado e marroquinaria de luxo.",
+    collections: [
+      {
+        title: "Artigos Hidrofugados",
+        desc: "Máxima resistência à água sem comprometer a flexibilidade e a respirabilidade.",
+        image: "/tour/DSCF9039.webp",
+        tag: "Impermeabilidade"
+      },
+      {
+        title: "Napas & Anilinas",
+        desc: "Toque natural, suavidade excecional e acabamento nobre para alta-costura.",
+        image: "/tour/DSCF9217.webp",
+        tag: "Toque Nobre"
+      },
+      {
+        title: "Camurças & Nubucks",
+        desc: "Textura aveludada e consistência de cor perfeita para coleções contemporâneas.",
+        image: "/tour/DSCF9288.webp",
+        tag: "Aveludado"
+      },
+      {
+        title: "Ceras, Óleos & Fantasia",
+        desc: "Efeitos visuais marcantes com acabamentos artesanais e tecnologia inovadora.",
+        image: "/tour/DSCF9306.webp",
+        tag: "Inovação"
+      }
+    ],
+    viewAllCatalog: "Ver Todos os Artigos",
     missionTitle: "Um Legado de Excelência",
     missionText: "Desde 1963 que a Curtumes Ibéria se dedica a transformar matéria-prima num material durável e de elevado valor acrescentado. Integrados num modelo de economia circular, aliamos o nosso conhecimento técnico à inovação tecnológica para entregar couro da máxima qualidade, sempre com o mais alto rigor e compromisso ambiental.",
-    ctaCatalogTitle: "Catálogo de Artigos",
-    ctaCatalogText: "Descubra a nossa gama de peles Chrome Free, Hidrofugadas e artigos técnicos para marroquinaria e calçado.",
-    ctaCatalogBtn: "Explorar Catálogo",
-    ctaSusTitle: "Compromisso Ambiental",
-    ctaSusText: "Conheça a nossa certificação LWG Gold, pilar da nossa integração na economia circular.",
-    ctaSusBtn: "Ler sobre Sustentabilidade",
+    missionBtn: "Conhecer a Nossa História",
     globalTitle: "Presença Global",
     globalText: "Mais de 60 anos a exportar qualidade portuguesa para o mundo.",
-    globalBtn: "Conhecer a Nossa História",
+    globalBtn: "Ver Presença Internacional",
     globeTextLeft: "Da tradição ibérica para a alta-costura. Os nossos couros marcam forte presença nos exigentes pólos de calçado em Espanha, vestindo também a elegância singular de mercados como França, Itália e Reino Unido.",
-    globeTextRight: "A atravessar oceanos para calçar o mundo. A nossa qualidade superior chega às exigentes linhas de produção da Índia e do Vietname, respondendo com excelência à rigorosa procura dos Estados Unidos."
+    globeTextRight: "A atravessar oceanos para calçar o mundo. A nossa qualidade superior chega às exigentes linhas de produção da Índia e do Vietname, respondendo com excelência à rigorosa procura dos Estados Unidos.",
+    susTitle: "Compromisso Ambiental & LWG Gold",
+    susSubtitle: "Integramos a economia circular com certificação Gold do Leather Working Group e 100% de energias renováveis.",
+    susBtn: "Saber Mais sobre Sustentabilidade",
+    ctaFinalTitle: "Pronto para dar vida à sua próxima coleção?",
+    ctaFinalText: "A nossa equipa comercial e técnica está pronta para responder às suas especificações com amostras personalizadas e consultoria especializada.",
+    ctaFinalBtnContact: "Entrar em Contacto",
+    ctaFinalBtnCatalog: "Explorar o Catálogo"
   },
   EN: {
+    heroCtaCatalog: "Explore Catalog",
+    heroCtaHistory: "Our Legacy",
+    stats: [
+      { number: "55+", label: "Years of Tradition", sub: "Since 1963 in the industry" },
+      { number: "LWG", label: "Gold Rated Member", sub: "Top environmental rating" },
+      { number: "100%", label: "Green Energy", sub: "Sustainable production" },
+      { number: "13+", label: "Export Markets", sub: "Global worldwide reach" }
+    ],
+    collectionsTitle: "Featured Collections",
+    collectionsSubtitle: "Superior quality leathers tailored to the demanding requirements of luxury footwear and leather goods.",
+    collections: [
+      {
+        title: "Waterproof Leathers",
+        desc: "Maximum water resistance while retaining premium breathability and softness.",
+        image: "/tour/DSCF9039.webp",
+        tag: "Water Repellent"
+      },
+      {
+        title: "Nappas & Anilines",
+        desc: "Natural feel, exceptional softness and exquisite finish for haute-couture.",
+        image: "/tour/DSCF9217.webp",
+        tag: "Natural Touch"
+      },
+      {
+        title: "Suedes & Nubucks",
+        desc: "Velvety texture and outstanding color consistency for contemporary collections.",
+        image: "/tour/DSCF9288.webp",
+        tag: "Velvet Feel"
+      },
+      {
+        title: "Waxes, Oils & Fantasy",
+        desc: "Striking visual effects with artisanal craftsmanship and state-of-the-art innovation.",
+        image: "/tour/DSCF9306.webp",
+        tag: "Innovation"
+      }
+    ],
+    viewAllCatalog: "View All Products",
     missionTitle: "A Legacy of Excellence",
     missionText: "Since 1963, Curtumes Ibéria has been dedicated to transforming raw materials into durable, high-value products. Operating within a circular economy model, we combine our technical expertise with technological innovation to deliver leather of the highest quality, always with the utmost rigor and environmental commitment.",
-    ctaCatalogTitle: "Leather Catalog",
-    ctaCatalogText: "Discover our range of Chrome Free, Waterproof leathers, and technical articles for footwear and leather goods.",
-    ctaCatalogBtn: "Explore Catalog",
-    ctaSusTitle: "Environmental Commitment",
-    ctaSusText: "Learn about our LWG Gold certification, the pillar of our integration into the circular economy.",
-    ctaSusBtn: "Read about Sustainability",
+    missionBtn: "Discover Our History",
     globalTitle: "Global Presence",
     globalText: "Over 60 years exporting Portuguese quality to the world.",
-    globalBtn: "Discover Our History",
+    globalBtn: "View International Reach",
     globeTextLeft: "From Iberian tradition to haute couture. Our leathers have a strong presence in Spain's demanding footwear hubs, also dressing the singular elegance of markets like France, Italy, and the United Kingdom.",
-    globeTextRight: "Crossing oceans to shoe the world. Our premium quality reaches the demanding production lines of India and Vietnam, responding with excellence to the rigorous requirements of the United States."
+    globeTextRight: "Crossing oceans to shoe the world. Our premium quality reaches the demanding production lines of India and Vietnam, responding with excellence to the rigorous requirements of the United States.",
+    susTitle: "Environmental Commitment & LWG Gold",
+    susSubtitle: "We champion the circular economy with Gold Rating certification by the Leather Working Group and 100% renewable energy.",
+    susBtn: "Learn More About Sustainability",
+    ctaFinalTitle: "Ready to bring your next collection to life?",
+    ctaFinalText: "Our commercial and technical team is ready to assist your exact specifications with customized samples and dedicated consulting.",
+    ctaFinalBtnContact: "Get in Touch",
+    ctaFinalBtnCatalog: "Explore the Catalog"
   }
 };
 
@@ -70,7 +148,6 @@ export function Home() {
   useEffect(() => {
     if (!isGlobeInView) return;
 
-    // LÓGICA DE PERFORMANCE: Limitar o mapa a ~30 FPS para evitar bloqueio do React
     let lastTime = performance.now();
     const fpsInterval = 1000 / 30;
 
@@ -110,56 +187,196 @@ export function Home() {
         }
       `}</style>
 
-      {/* 1. HERO SECTION */}
-      <section className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-institucional-blue z-0">
+      {/* 
+        =========================================================================
+        1. HERO SECTION COM VÍDEO E CTAS PRINCIPAIS
+        ========================================================================= 
+      */}
+      <section className="relative h-screen min-h-[650px] w-full overflow-hidden flex items-center justify-center bg-institucional-blue z-0">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50 pointer-events-none">
           <source src="/videos/curtumesiberia.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-institucional-blue/30 mix-blend-multiply pointer-events-none"></div>
+        <div className="absolute inset-0 bg-institucional-blue/35 mix-blend-multiply pointer-events-none"></div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-          className="relative text-center px-4 mt-16 pointer-events-none"
-        >
-          <div className="relative inline-flex flex-col items-end">
-            <h1 className="font-title font-bold text-6xl md:text-8xl lg:text-[10rem] text-white uppercase tracking-wider leading-none drop-shadow-lg text-left min-h-[3.1em]">
-              <TypewriterText text={`ALL\nABOUT\nLEATHER`} speed={60} />
-            </h1>
-            <span className="font-title font-medium text-white/75 text-2xl md:text-4xl tracking-widest mt-2 md:-mt-4 mr-2 drop-shadow-md">
-              <TypewriterText text="Since 1963" delay={2600} speed={50} />
-            </span>
-          </div>
-        </motion.div>
+        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center mt-12 md:mt-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+            className="flex flex-col items-center"
+          >
+            <div className="relative inline-flex flex-col items-end">
+              <h1 className="font-title font-bold text-6xl md:text-8xl lg:text-[9.5rem] text-white uppercase tracking-wider leading-none drop-shadow-2xl text-left min-h-[3em]">
+                <TypewriterText text={`ALL\nABOUT\nLEATHER`} speed={60} />
+              </h1>
+              <span className="font-title font-medium text-white/80 text-xl md:text-3xl tracking-widest mt-2 md:-mt-3 mr-2 drop-shadow-md">
+                <TypewriterText text="Since 1963" delay={2600} speed={50} />
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Botões de Ação Imediata no Hero */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+            className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 z-20"
+          >
+            <Link
+              to="/catalogo"
+              className="px-8 py-4 bg-white text-institucional-blue hover:bg-blue-50 font-bold uppercase tracking-wider text-sm rounded-xl shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 group"
+            >
+              <span>{data.heroCtaCatalog}</span>
+              <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
+
+            <Link
+              to="/historia"
+              className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/30 font-bold uppercase tracking-wider text-sm rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+            >
+              {data.heroCtaHistory}
+            </Link>
+          </motion.div>
+        </div>
         
+        {/* Seta suave a indicar scroll */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 pointer-events-none"
+          transition={{ duration: 1, delay: 1.8 }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 pointer-events-none"
         >
-          <svg className="w-8 h-8 text-white/70 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-6 h-6 text-white/60 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </motion.div>
       </section>
 
-      {/* 2. SECÇÃO DE MISSÃO COM DESTAQUE VISUAL DA FÁBRICA */}
+      {/* 
+        =========================================================================
+        2. FAIXA DE MÉTRICAS & CONFIANÇA (TRUST BADGES)
+        ========================================================================= 
+      */}
+      <section className="relative z-20 -mt-10 sm:-mt-14 max-w-7xl mx-auto px-4 sm:px-6 w-full">
+        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 sm:p-8 grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
+          {data.stats.map((stat, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className={`flex flex-col items-center text-center ${idx > 0 ? 'pt-4 sm:pt-0' : ''}`}
+            >
+              <span className="text-3xl sm:text-4xl font-title font-bold text-institucional-blue mb-1">
+                {stat.number}
+              </span>
+              <span className="text-sm sm:text-base font-bold text-gray-800">
+                {stat.label}
+              </span>
+              <span className="text-xs text-gray-500 mt-0.5">
+                {stat.sub}
+              </span>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* 
+        =========================================================================
+        3. MONTRA DE COLEÇÕES EM DESTAQUE (VISUAL PRODUCT DISCOVERY)
+        ========================================================================= 
+      */}
+      <section className="py-24 px-6 max-w-7xl mx-auto w-full">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-title font-bold text-institucional-blue mb-4"
+          >
+            {data.collectionsTitle}
+          </motion.h2>
+          <p className="text-gray-600 text-lg font-light leading-relaxed">
+            {data.collectionsSubtitle}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {data.collections.map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+            >
+              <Link 
+                to="/catalogo"
+                className="group flex flex-col h-full bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+                  <img 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
+                    loading="lazy"
+                  />
+                  <span className="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-xs font-bold text-institucional-blue shadow-sm">
+                    {item.tag}
+                  </span>
+                </div>
+                
+                <div className="p-6 flex flex-col flex-grow justify-between">
+                  <div>
+                    <h3 className="text-xl font-title font-bold text-institucional-blue mb-2 group-hover:text-blue-700 transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm leading-relaxed font-light mb-6">
+                      {item.desc}
+                    </p>
+                  </div>
+                  
+                  <div className="flex items-center text-xs font-bold uppercase tracking-wider text-institucional-blue group-hover:translate-x-1 transition-transform">
+                    <span>{language === 'PT' ? 'Ver no Catálogo' : 'View in Catalog'}</span>
+                    <svg className="w-4 h-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <Link
+            to="/catalogo"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-institucional-blue hover:bg-blue-900 text-white font-bold uppercase tracking-wider text-sm rounded-xl shadow-lg hover:shadow-xl transition-all"
+          >
+            <span>{data.viewAllCatalog}</span>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </Link>
+        </div>
+      </section>
+
+      {/* 
+        =========================================================================
+        4. SECÇÃO EDITORIAL DE ARTESANATO & TRADIÇÃO
+        ========================================================================= 
+      */}
       <motion.section 
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="py-24 md:py-32 px-6 relative overflow-hidden bg-white"
+        className="py-24 md:py-32 px-6 relative overflow-hidden bg-white border-y border-gray-100"
       >
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
-          <div className="absolute top-0 right-0 w-[40vw] h-[40vw] rounded-full bg-gradient-to-bl from-blue-50 to-transparent blur-3xl"></div>
-          <svg className="absolute -bottom-20 -left-20 w-[500px] h-[500px] text-institucional-blue/5 -rotate-12" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path fill="currentColor" d="M45.7,-76.4C58.9,-69.3,69.1,-55.4,78.2,-41.1C87.3,-26.8,95.3,-12.1,94.2,2C93.1,16.1,82.8,29.6,72.4,41.4C62,53.2,51.5,63.3,39,70.5C26.5,77.7,11.9,82,-3.1,87C-18.1,92,-33.5,77.7,-46.8,68.2C-60.1,58.7,-71.3,44.1,-77.6,28.1C-83.9,12.1,-85.3,-5.3,-79.8,-20.1C-74.3,-34.9,-61.9,-47.1,-48.5,-54.6C-35.1,-62.1,-20.7,-64.9,-4.9,-56.9C10.9,-48.9,21.8,-30.1,32.4,-83.4Z" transform="translate(100 100)" />
-          </svg>
-        </div>
-        
         <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           
           {/* Texto de Missão */}
@@ -167,33 +384,48 @@ export function Home() {
             <h2 className="font-title font-bold text-institucional-blue text-4xl md:text-5xl mb-6">
               {data.missionTitle}
             </h2>
-            <div className="w-16 h-1 bg-institucional-blue mb-8"></div>
-            <p className="text-lg leading-relaxed text-gray-600 font-medium">
+            <div className="w-16 h-1 bg-institucional-blue mb-8 rounded-full"></div>
+            <p className="text-lg leading-relaxed text-gray-600 font-light mb-8">
               {data.missionText}
             </p>
+            <Link
+              to="/historia"
+              className="inline-flex items-center gap-2 text-institucional-blue hover:text-blue-700 font-bold uppercase tracking-wider text-sm group"
+            >
+              <span>{data.missionBtn}</span>
+              <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
           </div>
 
-          {/* Destaque Visual - Modo de Trabalho / Fábrica */}
+          {/* Destaque Visual da Fábrica */}
           <div className="grid grid-cols-2 gap-4 h-full relative">
             <div className="flex flex-col justify-end">
               <img 
                 src="/imagens/fotos/Curtumes_Iberia_20.JPG" 
                 alt="Instalações Curtumes Ibéria" 
-                className="rounded-2xl shadow-lg w-full h-48 md:h-64 object-cover hover:scale-[1.02] transition-transform duration-500"
+                className="rounded-3xl shadow-lg w-full h-48 sm:h-64 object-cover hover:scale-[1.02] transition-transform duration-500 border border-gray-100"
+                loading="lazy"
               />
             </div>
-            <div className="flex flex-col justify-start mt-8 md:mt-12">
+            <div className="flex flex-col justify-start mt-8 sm:mt-12">
               <img 
                 src="/imagens/fotos/Curtumes_Iberia_23.JPG" 
                 alt="Modo de produção Curtumes Ibéria" 
-                className="rounded-2xl shadow-lg w-full h-56 md:h-72 object-cover hover:scale-[1.02] transition-transform duration-500"
+                className="rounded-3xl shadow-lg w-full h-56 sm:h-72 object-cover hover:scale-[1.02] transition-transform duration-500 border border-gray-100"
+                loading="lazy"
               />
             </div>
           </div>
         </div>
       </motion.section>
 
-      {/* 3. SECÇÃO GLOBO DE PRESENÇA MUNDIAL */}
+      {/* 
+        =========================================================================
+        5. GLOBO INTERATIVO DE PRESENÇA MUNDIAL
+        ========================================================================= 
+      */}
       <section className="w-full relative bg-institucional-blue py-24 overflow-hidden border-t border-blue-900 shadow-inner">
         <div className="max-w-7xl mx-auto px-6 relative z-20">
           
@@ -207,7 +439,7 @@ export function Home() {
             <h2 className="text-4xl md:text-5xl font-title font-bold text-white mb-4 drop-shadow-md">
               {data.globalTitle}
             </h2>
-            <p className="text-white text-lg font-medium drop-shadow-sm">
+            <p className="text-white text-lg font-light drop-shadow-sm">
               {data.globalText}
             </p>
           </motion.div>
@@ -215,14 +447,14 @@ export function Home() {
           <div className="flex flex-col lg:flex-row items-center justify-between w-full">
             
             <motion.div 
-              initial={{ opacity: 0, x: 200 }}
+              initial={{ opacity: 0, x: 100 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.2, ease: "easeOut", delay: 1.5 }}
+              transition={{ duration: 1, ease: "easeOut", delay: 0.8 }}
               className="w-full lg:w-1/4 order-2 lg:order-1 text-center lg:text-right mt-8 lg:mt-0 px-4 relative z-20 pointer-events-none"
             >
-              <div className="w-12 h-1 bg-blue-400 mx-auto lg:ml-auto lg:mr-0 mb-6 opacity-70"></div>
-              <p className="text-blue-50 text-base md:text-lg leading-relaxed font-medium">
+              <div className="w-12 h-1 bg-blue-400 mx-auto lg:ml-auto lg:mr-0 mb-6 opacity-70 rounded-full"></div>
+              <p className="text-blue-50 text-base md:text-lg leading-relaxed font-light">
                 {data.globeTextLeft}
               </p>
             </motion.div>
@@ -230,7 +462,6 @@ export function Home() {
             <div ref={globeRef} className="w-full lg:w-1/2 max-w-2xl h-[400px] md:h-[500px] relative pointer-events-none flex justify-center items-center order-1 lg:order-2 z-0 -my-8 md:-my-12">
               <div className="absolute w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full bg-blue-500/20 blur-[80px] z-0"></div>
 
-              {/* TS FIX: Classe padrão Tailwind substitui objetos incorretos em style */}
               <ComposableMap 
                 projection="geoOrthographic" 
                 projectionConfig={{ scale: 220, rotate: rotation }}
@@ -285,14 +516,14 @@ export function Home() {
             </div>
 
             <motion.div 
-              initial={{ opacity: 0, x: -200 }}
+              initial={{ opacity: 0, x: -100 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.1, ease: "easeOut", delay: 1 }}
+              transition={{ duration: 1, ease: "easeOut", delay: 0.8 }}
               className="w-full lg:w-1/4 order-3 lg:order-3 text-center lg:text-left mt-8 lg:mt-0 px-4 relative z-20 pointer-events-none"
             >
-              <div className="w-12 h-1 bg-blue-400 mx-auto lg:mr-auto lg:ml-0 mb-6 opacity-70"></div>
-              <p className="text-blue-50 text-base md:text-lg leading-relaxed font-medium">
+              <div className="w-12 h-1 bg-blue-400 mx-auto lg:mr-auto lg:ml-0 mb-6 opacity-70 rounded-full"></div>
+              <p className="text-blue-50 text-base md:text-lg leading-relaxed font-light">
                 {data.globeTextRight}
               </p>
             </motion.div>
@@ -303,12 +534,12 @@ export function Home() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 2.2 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 1.2 }}
             className="relative z-30 mt-12 md:mt-16 text-center"
           >
             <Link 
               to="/historia" 
-              className="pointer-events-auto inline-flex items-center justify-center px-8 py-3.5 border border-white/30 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded font-bold uppercase tracking-wider text-sm transition-all duration-300 shadow-md hover:shadow-lg"
+              className="pointer-events-auto inline-flex items-center justify-center px-8 py-3.5 border border-white/30 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-300 shadow-md hover:shadow-lg"
             >
               {data.globalBtn}
               <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -320,47 +551,113 @@ export function Home() {
         </div>
       </section>
 
-      {/* GALERIA ANIMADA (NOVA INJEÇÃO VISUAL) */}
+      {/* 
+        =========================================================================
+        6. DESTAQUE DE SUSTENTABILIDADE & LWG GOLD
+        ========================================================================= 
+      */}
+      <section className="py-24 px-6 bg-[#F8FAFC]">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8 }}
+            className="bg-white rounded-3xl p-8 sm:p-12 lg:p-16 border border-gray-100 shadow-md relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16"
+          >
+            <div className="w-full lg:w-7/12 space-y-6 text-center lg:text-left">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-institucional-blue text-xs font-bold uppercase tracking-wider">
+                <span className="w-2 h-2 rounded-full bg-institucional-blue"></span>
+                {language === 'PT' ? 'Economia Circular & Ética' : 'Circular Economy & Ethics'}
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-title font-bold text-institucional-blue tracking-tight">
+                {data.susTitle}
+              </h2>
+              <p className="text-gray-600 text-base sm:text-lg font-light leading-relaxed max-w-2xl">
+                {data.susSubtitle}
+              </p>
+              <div>
+                <Link
+                  to="/sustentabilidade"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-institucional-blue hover:bg-blue-900 text-white font-bold uppercase tracking-wider text-sm rounded-xl shadow-lg hover:shadow-xl transition-all"
+                >
+                  <span>{data.susBtn}</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+
+            <div className="w-full lg:w-5/12 flex justify-center">
+              <div className="w-48 sm:w-60 aspect-square bg-slate-50 border border-slate-100 rounded-3xl p-6 flex items-center justify-center shadow-inner">
+                <img 
+                  src="/LWG_temp.jpeg" 
+                  alt="LWG Gold Rating" 
+                  className="w-full h-full object-contain"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 
+        =========================================================================
+        7. GALERIA MARQUEE INFINITA (VISITA VISUAL)
+        ========================================================================= 
+      */}
       <GalleryMarquee />
 
-      {/* 4. SECÇÃO DE NAVEGAÇÃO B2B */}
-      <motion.section 
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-        className="py-20 px-6 bg-[#F8FAFC]"
-      >
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white p-10 rounded-2xl shadow-sm border border-gray-100 group hover:shadow-xl transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-full">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -z-0 transition-transform duration-500 group-hover:scale-125"></div>
-            <div className="relative z-10">
-              <h3 className="text-2xl font-title font-bold text-institucional-blue mb-4">{data.ctaCatalogTitle}</h3>
-              <p className="text-gray-600 mb-10 leading-relaxed">{data.ctaCatalogText}</p>
-            </div>
-            <Link to="/catalogo" className="relative z-10 inline-flex items-center text-sm font-bold text-institucional-blue uppercase tracking-wider group-hover:text-blue-600 transition-colors">
-              {data.ctaCatalogBtn}
-              <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+      {/* 
+        =========================================================================
+        8. SECÇÃO FINAL DE CONVERSÃO B2B (CALL TO ACTION)
+        ========================================================================= 
+      */}
+      <section className="py-24 px-6 bg-institucional-blue text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-950 via-institucional-blue to-blue-900 opacity-90"></div>
+        <div className="max-w-5xl mx-auto text-center relative z-10 space-y-8">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl sm:text-5xl font-title font-bold tracking-tight drop-shadow-md"
+          >
+            {data.ctaFinalTitle}
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-lg sm:text-xl text-blue-100 font-light max-w-3xl mx-auto leading-relaxed"
+          >
+            {data.ctaFinalText}
+          </motion.p>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
+          >
+            <Link
+              to="/contactos"
+              className="w-full sm:w-auto px-8 py-4 bg-white text-institucional-blue hover:bg-blue-50 font-bold uppercase tracking-wider text-sm rounded-xl shadow-xl hover:shadow-2xl transition-all"
+            >
+              {data.ctaFinalBtnContact}
             </Link>
-          </div>
-
-          <div className="bg-institucional-blue p-10 rounded-2xl shadow-sm border border-blue-900 group hover:shadow-xl transition-all duration-300 relative overflow-hidden flex flex-col justify-between h-full">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-bl-full -z-0 transition-transform duration-500 group-hover:scale-125"></div>
-            <div className="relative z-10">
-              <h3 className="text-2xl font-title font-bold text-white mb-4">{data.ctaSusTitle}</h3>
-              <p className="text-blue-100 mb-10 leading-relaxed">{data.ctaSusText}</p>
-            </div>
-            <Link to="/sustentabilidade" className="relative z-10 inline-flex items-center text-sm font-bold text-white uppercase tracking-wider opacity-90 group-hover:opacity-100 transition-opacity">
-              {data.ctaSusBtn}
-              <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+            <Link
+              to="/catalogo"
+              className="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/30 font-bold uppercase tracking-wider text-sm rounded-xl transition-all"
+            >
+              {data.ctaFinalBtnCatalog}
             </Link>
-          </div>
+          </motion.div>
         </div>
-      </motion.section>
+      </section>
 
     </div>
   );
