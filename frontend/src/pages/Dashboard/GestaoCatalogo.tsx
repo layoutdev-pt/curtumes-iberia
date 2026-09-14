@@ -39,7 +39,8 @@ export function GestaoCatalogo() {
     imagem: null as File | null,
     cores: [] as any[],
     detalhes: [] as any[],
-    tags: [] as any[]
+    tags: [] as any[],
+    categorias: [] as string[]
   });
   
   const [loading, setLoading] = useState(false);
@@ -58,6 +59,17 @@ export function GestaoCatalogo() {
     if (e.target.files && e.target.files[0]) {
       setFormData(prev => ({ ...prev, imagem: e.target.files[0] }));
     }
+  };
+
+  const handleCategoriasChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    setFormData(prev => {
+      if (checked) {
+        return { ...prev, categorias: [...prev.categorias, value] };
+      } else {
+        return { ...prev, categorias: prev.categorias.filter(c => c !== value) };
+      }
+    });
   };
 
   // Funções de Adição aos Arrays
@@ -115,14 +127,15 @@ export function GestaoCatalogo() {
         imagem_url: imagemUrl,
         cores: formData.cores,
         detalhes: formData.detalhes,
-        tags: formData.tags
+        tags: formData.tags,
+        categorias: formData.categorias
       }]);
 
       if (dbError) throw dbError;
 
       alert(data.alertSuccess);
       // Reset Total
-      setFormData({ referencia: '', categoria: 'Hidrofogados', titulo_pt: '', titulo_en: '', descricao_pt: '', descricao_en: '', imagem: null, cores: [], detalhes: [], tags: [] });
+      setFormData({ referencia: '', categoria: 'Hidrofogados', titulo_pt: '', titulo_en: '', descricao_pt: '', descricao_en: '', imagem: null, cores: [], detalhes: [], tags: [], categorias: [] });
       (document.getElementById('imagem-input') as HTMLInputElement).value = '';
       
     } catch (error: any) {
@@ -169,7 +182,7 @@ export function GestaoCatalogo() {
                   <input type="text" name="referencia" value={formData.referencia} onChange={handleChange} required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm" placeholder="Ex: CF-005" />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Categoria *</label>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Categoria Principal *</label>
                   <select name="categoria" value={formData.categoria} onChange={handleChange} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm">
                     <option value="Hidrofogados">Hidrofogados</option>
                     <option value="Camurças">Camurças</option>
@@ -180,6 +193,24 @@ export function GestaoCatalogo() {
                     <option value="Floaters">Floaters</option>
                     <option value="Ceras e Óleos">Ceras e Óleos</option>
                   </select>
+                </div>
+              </div>
+
+              <div className="pb-8 border-b border-gray-100">
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Múltiplas Categorias (Opcional)</label>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {['Anilinas', 'Artigos Hidrofugados', 'Camurças', 'Ceras e Óleos', 'Fantasias', 'Floaters', 'Napas', 'Nubucks'].map((cat) => (
+                    <label key={cat} className="flex items-center space-x-2 bg-gray-50 p-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors">
+                      <input 
+                        type="checkbox" 
+                        value={cat} 
+                        checked={formData.categorias.includes(cat)}
+                        onChange={handleCategoriasChange}
+                        className="w-4 h-4 text-institucional-blue bg-white border-gray-300 rounded focus:ring-institucional-blue"
+                      />
+                      <span className="text-sm text-gray-700 select-none">{cat}</span>
+                    </label>
+                  ))}
                 </div>
               </div>
 

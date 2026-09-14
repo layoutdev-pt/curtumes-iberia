@@ -199,7 +199,7 @@ export function Kanban() {
                         }`}></div>
 
                         <div className="flex justify-between items-start mb-4">
-                          <span className="text-[10px] font-mono font-bold bg-gray-100 text-gray-600 px-2 py-1 rounded border border-gray-200 truncate max-w-[120px]" title={pedido.id}>
+                          <span className="text-[10px] font-bold bg-gray-100 text-gray-600 px-2 py-1 rounded border border-gray-200 truncate max-w-[120px]" title={pedido.id}>
                             {pedido.id.split('-')[0]}...
                           </span>
                           <span className="text-[10px] uppercase font-bold font-title text-gray-400 tracking-wider">

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { motion, useInView } from 'framer-motion';
 import { ComposableMap, Geographies, Geography, Line, Marker } from 'react-simple-maps';
+import { GalleryMarquee } from '../components/ui/GalleryMarquee';
 
 const content = {
   PT: {
@@ -317,6 +318,9 @@ export function Home() {
 
         </div>
       </section>
+
+      {/* GALERIA ANIMADA (NOVA INJEÇÃO VISUAL) */}
+      <GalleryMarquee />
 
       {/* 4. SECÇÃO DE NAVEGAÇÃO B2B */}
       <motion.section 

@@ -208,7 +208,7 @@ export function ArtigoDetalhe() {
                 <span className="bg-blue-50 text-institucional-blue text-xs font-bold px-3 py-1.5 rounded-md tracking-wider uppercase">
                   {artigo.categoria}
                 </span>
-                <span className="text-gray-400 font-mono text-sm font-bold">REF: {artigo.referencia}</span>
+                <span className="text-gray-400 text-sm font-bold">REF: {artigo.referencia}</span>
               </div>
               
               <h1 className="text-3xl md:text-5xl font-title font-bold text-gray-900 mb-6">

@@ -14,6 +14,7 @@ interface Artigo {
   descricao_en: string;
   imagem_url: string;
   tags?: any;
+  categorias?: string[];
 }
 
 const categoriasFiltro = [
@@ -44,7 +45,8 @@ export function Catalogo() {
         if (data) {
           const parsedData = data.map(art => ({
             ...art,
-            tags: typeof art.tags === 'string' ? JSON.parse(art.tags) : art.tags || []
+            tags: typeof art.tags === 'string' ? JSON.parse(art.tags) : art.tags || [],
+            categorias: typeof art.categorias === 'string' ? JSON.parse(art.categorias) : art.categorias || []
           }));
           setArtigos(parsedData);
         }

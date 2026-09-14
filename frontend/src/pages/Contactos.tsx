@@ -36,12 +36,19 @@ const content = {
   }
 };
 
-const agentesInternacionais = [
+const agentesInternacionais: any[] = [
   { 
     id: 'pt', 
     paisPT: 'Portugal', 
     paisEN: 'Portugal', 
     agentes: [
+      {
+        localKey: 'contact.agent.rui.location',
+        nomeKey: 'contact.agent.rui.name',
+        moradaKey: 'contact.agent.rui.address',
+        telefone: '+351 925 514 173',
+        email: 'ruimalaca@curtumesiberia.pt'
+      },
       {
         local: 'Felgueiras',
         nome: 'Carlos Alberto Leite',
@@ -55,13 +62,6 @@ const agentesInternacionais = [
         morada: 'Avenida Liberdade, n. 866 - Trás Q, 3700-163 São João da Madeira',
         telefone: '+351 966 002 201',
         email: 'miguel.josapel@gmail.com'
-      },
-      {
-        local: 'Lisboa, Porto',
-        nome: '[Nome do Agente]',
-        morada: '[Morada do Agente]',
-        telefone: '+351 [Inserir Número]',
-        email: '[Email do Agente]'
       }
     ] 
   },
@@ -110,7 +110,7 @@ const agentesInternacionais = [
 ];
 
 export function Contactos() {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const data = content[language];
   const [loading, setLoading] = useState(false);
 
@@ -131,7 +131,7 @@ export function Contactos() {
       <PageHeader 
         title={data.title} 
         subtitle={data.subtitle} 
-        backgroundImage="/imagens/historia_img/img5.avif" // Substitua pela imagem desejada
+        backgroundImage="/tour/DSCF9299.webp" // Substitua pela imagem desejada
       />
 
       {/* Elementos Gráficos de Fundo */}
@@ -213,10 +213,14 @@ export function Contactos() {
                       {language === 'PT' ? pais.paisPT : pais.paisEN}
                     </h3>
                     <div className="space-y-6">
-                      {pais.agentes.map((agente, idx) => (
+                      {pais.agentes.map((agente: any, idx: number) => (
                         <div key={idx} className="space-y-1.5">
-                          <h4 className="font-bold text-gray-900 text-sm">{agente.local} <span className="text-gray-400 font-normal mx-1">|</span> {agente.nome}</h4>
-                          <p className="text-xs text-gray-500 leading-relaxed">{agente.morada}</p>
+                          <h4 className="font-bold text-gray-900 text-sm">
+                            {agente.localKey ? t(agente.localKey as any) : agente.local} <span className="text-gray-400 font-normal mx-1">|</span> {agente.nomeKey ? t(agente.nomeKey as any) : agente.nome}
+                          </h4>
+                          <p className="text-xs text-gray-500 leading-relaxed">
+                            {agente.moradaKey ? t(agente.moradaKey as any) : agente.morada}
+                          </p>
                           <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-bold text-institucional-blue mt-1">
                             <a href={`tel:${agente.telefone.replace(/\s/g, '')}`} className="hover:underline flex items-center">
                               <svg className="w-3 h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>

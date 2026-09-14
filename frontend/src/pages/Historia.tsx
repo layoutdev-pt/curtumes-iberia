@@ -2,6 +2,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { PageHeader } from '../components/ui/PageHeader';
 import { motion } from 'framer-motion';
 import { ComposableMap, Geographies, Geography, Line, Marker } from 'react-simple-maps';
+import { AnimatedCounter } from '../components/ui/AnimatedCounter';
 
 const content = {
   PT: {
@@ -95,16 +96,56 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* SECÇÃO 1: A NOSSA HISTÓRIA (Imagem principal mantida) */}
       {/* ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-6 relative z-10 mt-24 mb-24">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 mt-24 mb-10 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-sm md:text-base font-bold text-gray-500 tracking-[0.3em] uppercase mb-3">
+            Our History and Our Founder
+          </h2>
+          <p className="text-xl md:text-2xl font-title text-institucional-blue italic">
+            - José Maria Cardoso Lopes Rosa -
+          </p>
+          <div className="w-12 h-1 bg-institucional-blue mx-auto mt-6 opacity-20 rounded-full"></div>
+        </motion.div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10 mb-16">
         <motion.img 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          src="/imagens/fotos/Curtumes_Iberia_24.JPG" 
+          src="/tour/DSCF9296.webp" 
           className="w-full aspect-video md:aspect-[21/9] object-cover rounded-2xl shadow-lg border border-gray-100"
           alt="Instalações Curtumes Ibéria"
+          loading="lazy"
         />
+      </div>
+
+      {/* ========================================================================= */}
+      {/* SECÇÃO ESTATÍSTICAS (NÚMEROS ANIMADOS) */}
+      {/* ========================================================================= */}
+      <div className="max-w-6xl mx-auto px-6 relative z-10 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 divide-y md:divide-y-0 md:divide-x divide-gray-200">
+          <AnimatedCounter 
+            value={55} 
+            suffix="+" 
+            text={language === 'PT' ? "Anos de Experiência" : "Years of Experience"} 
+          />
+          <AnimatedCounter 
+            value={13} 
+            text={language === 'PT' ? "Países Alcançados" : "Countries Reached"} 
+          />
+          <AnimatedCounter 
+            value={100} 
+            suffix="%" 
+            text={language === 'PT' ? "Dedicação à Qualidade" : "Commitment to Quality"} 
+          />
+        </div>
       </div>
 
       {/* ========================================================================= */}
@@ -132,9 +173,10 @@ export function Historia() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full lg:w-1/2"
+            className="w-full lg:w-1/2 grid grid-cols-2 gap-4"
           >
-            <img src="/imagens/fotos/DSCF3713.jpg" className="w-full h-80 md:h-96 object-cover rounded-3xl shadow-md" alt="Processos de Inovação" />
+            <img src="/tour/DSCF9288.webp" className="w-full h-48 md:h-80 object-cover rounded-3xl shadow-md mt-8" alt="Processos de Inovação 1" loading="lazy" />
+            <img src="/tour/DSCF9306.webp" className="w-full h-48 md:h-80 object-cover rounded-3xl shadow-md" alt="Processos de Inovação 2" loading="lazy" />
           </motion.div>
         </div>
       </div>
@@ -151,7 +193,7 @@ export function Historia() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="w-full lg:w-1/2"
           >
-            <img src="/imagens/fotos/Curtumes_Iberia_26.JPG" className="w-full h-80 md:h-96 object-cover rounded-3xl shadow-md" alt="Tecnologia e Vanguarda" />
+            <img src="/tour/DSCF9324.webp" className="w-full h-80 md:h-96 object-cover rounded-3xl shadow-md" alt="Tecnologia e Vanguarda" loading="lazy" />
           </motion.div>
           <motion.div 
             initial={{ opacity: 0, x: 40 }}

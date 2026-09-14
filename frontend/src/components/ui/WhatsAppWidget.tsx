@@ -24,7 +24,7 @@ export function WhatsAppWidget() {
 
   // IMPORTANTE: Substitua pelo número real da empresa (com código do país, sem o +)
   // Exemplo para Portugal: 351912345678
-  const phoneNumber = "351000000000"; 
+  const phoneNumber = "351962900019"; 
   const waLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(data.message)}`;
 
   return (

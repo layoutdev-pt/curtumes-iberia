@@ -12,6 +12,9 @@ const translations = {
     'nav.contact': 'Contactos',
     'catalog.title': 'Catálogo de Artigos',
     'catalog.subtitle': 'Explore a nossa gama de peles desenvolvidas sob processos de economia circular.',
+    'contact.agent.rui.location': 'Benedita | Lisboa | Porto',
+    'contact.agent.rui.name': 'Rui Malaca',
+    'contact.agent.rui.address': 'Rua 24 de Junho, 1399, 2380-639 Alcanena',
   },
   EN: {
     'nav.home': 'Home',
@@ -21,6 +24,9 @@ const translations = {
     'nav.contact': 'Contacts',
     'catalog.title': 'Leather Catalog',
     'catalog.subtitle': 'Explore our range of leathers developed under circular economy processes.',
+    'contact.agent.rui.location': 'Benedita | Lisbon | Porto',
+    'contact.agent.rui.name': 'Rui Malaca',
+    'contact.agent.rui.address': 'Rua 24 de Junho, 1399, 2380-639 Alcanena',
   }
 };
 
