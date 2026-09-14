@@ -69,12 +69,8 @@ export function TypewriterText({
           {i < arr.length - 1 && <br />}
         </React.Fragment>
       ))}
-      {cursor && (
-        <span
-          className={`inline-block ml-1 font-normal opacity-80 ${
-            isTypingComplete ? 'animate-pulse opacity-40' : 'animate-ping'
-          }`}
-        >
+      {cursor && !isTypingComplete && (
+        <span className="inline-block ml-1 font-normal opacity-80 animate-pulse">
           |
         </span>
       )}

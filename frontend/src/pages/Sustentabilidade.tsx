@@ -30,7 +30,7 @@ const content = {
       tag: "Certificação Oficial",
       title: "Auditoria — Medalha de Ouro LWG",
       text: "A Curtumes Ibéria SA é medalha de Ouro no Grupo LWG (Leather Working Group).\n\nO objetivo do LWG é melhorar a indústria de curtumes com as melhores práticas e políticas ambientais.",
-      image: "/logos/LWG_GOLD.png",
+      image: "/LWG_temp.jpeg",
       badges: ["Classificação Ouro Oficial", "Melhores Práticas Ambientais"]
     },
     fullWidthSections: [

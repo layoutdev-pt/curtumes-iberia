@@ -6,12 +6,14 @@ const content = {
   PT: {
     cofinanced: "Cofinanciado por:",
     privacy: "Política de Privacidade",
-    terms: "Termos de Utilização"
+    terms: "Termos de Utilização",
+    phoneNotice: "(chamada rede fixa nacional)"
   },
   EN: {
     cofinanced: "Co-financed by:",
     privacy: "Privacy Policy",
-    terms: "Terms of Use"
+    terms: "Terms of Use",
+    phoneNotice: "(national landline call)"
   }
 };
 
@@ -45,8 +47,8 @@ export function Footer() {
             </p>
             <div className="text-sm opacity-80 leading-relaxed">
               <p>Telefone: +351 249 890 676</p>
-              <p>Telemóvel: +351 [Inserir Número]</p>
-              <p>WhatsApp: +351 [Inserir Número]</p>
+              <p className="text-xs opacity-70 mb-1">{data.phoneNotice}</p>
+              <p>WhatsApp: +351 962 900 019</p>
             </div>
           </div>
 
