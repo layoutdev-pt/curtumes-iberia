@@ -263,62 +263,73 @@ export function Sustentabilidade() {
 
       {/* 
         =========================================================================
-        FULL WIDTH SECTIONS (Immersive Parallax/Cover with Overlay)
+        FULL WIDTH SECTIONS (Stacking Cards Scroll Animation)
         ========================================================================= 
       */}
-      <div className="w-full flex flex-col">
-        {data.fullWidthSections.map((section) => {
-          const isLeft = section.align === "left";
-          
-          return (
-            <div key={section.id} className="relative w-full min-h-[70vh] md:min-h-[80vh] flex items-center overflow-hidden group">
-              
-              {/* Background Image */}
-              <div className="absolute inset-0 z-0">
-                <img 
-                  src={section.image} 
-                  alt={section.title} 
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 ease-out"
-                />
-                {/* Overlay gradient based on alignment to ensure text legibility */}
-                <div className={`absolute inset-0 ${
-                  isLeft 
-                    ? 'bg-gradient-to-r from-black/80 via-black/50 to-transparent' 
-                    : 'bg-gradient-to-l from-black/80 via-black/50 to-transparent'
-                }`}></div>
-                {/* Fallback general dark overlay for mobile */}
-                <div className="absolute inset-0 bg-black/40 md:hidden"></div>
-              </div>
-
-              {/* Content Container */}
-              <div className="w-full max-w-7xl mx-auto px-6 relative z-10 flex">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16 relative">
+        <div className="flex flex-col space-y-6 sm:space-y-8">
+          {data.fullWidthSections.map((section, index) => {
+            const isLeft = section.align === "left";
+            
+            return (
+              <div 
+                key={section.id} 
+                className="sticky w-full"
+                style={{ 
+                  top: `calc(90px + ${index * 16}px)`,
+                  zIndex: index + 1 
+                }}
+              >
                 <motion.div 
-                  initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  className={`w-full md:w-1/2 lg:w-5/12 ${isLeft ? 'mr-auto' : 'ml-auto'}`}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="relative w-full h-[65vh] min-h-[480px] max-h-[660px] rounded-3xl overflow-hidden shadow-2xl border border-white/20 group flex items-stretch p-6 sm:p-8 bg-slate-900"
                 >
-                  {/* Glassmorphism card for modern clean look */}
-                  <div className="bg-white/10 backdrop-blur-md border border-white/20 p-8 md:p-12 rounded-3xl shadow-2xl">
-                    <h2 className="text-3xl md:text-5xl font-title font-bold text-white mb-6 drop-shadow-md">
-                      {section.title}
-                    </h2>
-                    
-                    <div className="w-16 h-1 bg-blue-400 mb-8 rounded-full opacity-80"></div>
-                    
-                    <div className="text-gray-100 text-lg md:text-xl font-light leading-relaxed space-y-5 drop-shadow-sm">
-                      {section.text.split('\n\n').map((paragraph, pIdx) => (
-                        <p key={pIdx}>{paragraph}</p>
-                      ))}
+                  
+                  {/* Background Image */}
+                  <div className="absolute inset-0 z-0">
+                    <img 
+                      src={section.image} 
+                      alt={section.title} 
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 ease-out"
+                    />
+                    {/* Overlay gradient based on alignment to ensure text legibility */}
+                    <div className={`absolute inset-0 pointer-events-none ${
+                      isLeft 
+                        ? 'bg-gradient-to-r from-black/60 via-black/30 to-black/10' 
+                        : 'bg-gradient-to-l from-black/60 via-black/30 to-black/10'
+                    }`}></div>
+                    {/* Fallback general dark overlay for mobile */}
+                    <div className="absolute inset-0 bg-black/40 md:hidden pointer-events-none"></div>
+                  </div>
+
+                  {/* Content Container perfeitamente alinhado com as margens simétricas do pai */}
+                  <div className={`relative z-10 w-full h-full flex ${isLeft ? 'justify-start' : 'justify-end'}`}>
+                    <div className="w-full md:w-7/12 lg:w-6/12 h-full">
+                      {/* Glassmorphism card interior com estilo 100% idêntico nos 4 cards */}
+                      <div className="bg-slate-950/60 backdrop-blur-xl border border-white/20 p-6 sm:p-8 lg:p-10 rounded-2xl shadow-2xl h-full flex flex-col justify-center">
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-title font-bold text-white mb-3 sm:mb-4 drop-shadow-md leading-tight flex-shrink-0">
+                          {section.title}
+                        </h2>
+                        
+                        <div className="w-12 sm:w-16 h-1 min-h-[4px] bg-blue-400 mb-4 sm:mb-6 rounded-full opacity-80 flex-shrink-0"></div>
+                        
+                        <div className="text-gray-100 text-sm sm:text-base lg:text-base font-light leading-relaxed space-y-2.5 sm:space-y-3.5 drop-shadow-sm">
+                          {section.text.split('\n\n').map((paragraph, pIdx) => (
+                            <p key={pIdx}>{paragraph}</p>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
+
                 </motion.div>
               </div>
-
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
     </div>

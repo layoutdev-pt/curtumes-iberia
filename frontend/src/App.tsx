@@ -58,7 +58,7 @@ function AppContent() {
       {showPublicLayout && (
         <div className="relative z-50">
           <motion.div key={`nav-${language}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-            <Navbar />
+            {/* <Navbar /> */}
           </motion.div>
         </div>
       )}

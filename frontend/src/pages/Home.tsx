@@ -53,9 +53,22 @@ const content = {
     globalBtn: "Ver Presença Internacional",
     globeTextLeft: "Da tradição ibérica para a alta-costura. Os nossos couros marcam forte presença nos exigentes pólos de calçado em Espanha, vestindo também a elegância singular de mercados como França, Itália e Reino Unido.",
     globeTextRight: "A atravessar oceanos para calçar o mundo. A nossa qualidade superior chega às exigentes linhas de produção da Índia e do Vietname, respondendo com excelência à rigorosa procura dos Estados Unidos.",
-    susTitle: "Compromisso Ambiental & LWG Gold",
-    susSubtitle: "Integramos a economia circular com certificação Gold do Leather Working Group e 100% de energias renováveis.",
-    susBtn: "Saber Mais sobre Sustentabilidade",
+    certTag: "Certificação Oficial",
+    certCategory: "Leather Working Group",
+    certTitle: "LWG Gold Rated",
+    certEdition: "Excelência Ambiental · 2025",
+    certPoint1: "100% de energia renovável e processos de curtimento em ciclo fechado.",
+    certPoint2: "Subprodutos da indústria alimentar com rastreabilidade auditada.",
+    certFooterLeft: "Membro Gold Auditado",
+    certFooterRight: "Ver certificado",
+    reviewsCategory: "Google Reviews",
+    reviewsTitle: "Avaliação Máxima",
+    reviewsSubtitle: "Nota 5.0 estrelas",
+    reviewsScore: "5.0",
+    reviewsPoint1: "Classificação máxima de 5.0 no Google por parceiros e marcas reais.",
+    reviewsPoint2: "Fornecimento de excelência para o mercado em mais de 13 países.",
+    reviewsFooterLeft: "Avaliação verificada",
+    reviewsFooterRight: "GOOGLE.COM",
     ctaFinalTitle: "Pronto para dar vida à sua próxima coleção?",
     ctaFinalText: "A nossa equipa comercial e técnica está pronta para responder às suas especificações com amostras personalizadas e consultoria especializada.",
     ctaFinalBtnContact: "Entrar em Contacto",
@@ -107,9 +120,22 @@ const content = {
     globalBtn: "View International Reach",
     globeTextLeft: "From Iberian tradition to haute couture. Our leathers have a strong presence in Spain's demanding footwear hubs, also dressing the singular elegance of markets like France, Italy, and the United Kingdom.",
     globeTextRight: "Crossing oceans to shoe the world. Our premium quality reaches the demanding production lines of India and Vietnam, responding with excellence to the rigorous requirements of the United States.",
-    susTitle: "Environmental Commitment & LWG Gold",
-    susSubtitle: "We champion the circular economy with Gold Rating certification by the Leather Working Group and 100% renewable energy.",
-    susBtn: "Learn More About Sustainability",
+    certTag: "Official Certification",
+    certCategory: "Leather Working Group",
+    certTitle: "LWG Gold Rated",
+    certEdition: "Environmental Excellence · 2025",
+    certPoint1: "100% green energy and closed-loop water management.",
+    certPoint2: "Food industry by-products with audited traceability.",
+    certFooterLeft: "Audited Gold Member",
+    certFooterRight: "View certificate",
+    reviewsCategory: "Google Reviews",
+    reviewsTitle: "Top Client Rating",
+    reviewsSubtitle: "5.0-star rating",
+    reviewsScore: "5.0",
+    reviewsPoint1: "Maximum 5.0 Google rating based on authentic feedback.",
+    reviewsPoint2: "Premium leather supply to trusted brands across 13+ countries.",
+    reviewsFooterLeft: "Verified review",
+    reviewsFooterRight: "GOOGLE.COM",
     ctaFinalTitle: "Ready to bring your next collection to life?",
     ctaFinalText: "Our commercial and technical team is ready to assist your exact specifications with customized samples and dedicated consulting.",
     ctaFinalBtnContact: "Get in Touch",
@@ -214,31 +240,6 @@ export function Home() {
               </span>
             </div>
           </motion.div>
-
-          {/* Botões de Ação Imediata no Hero */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
-            className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 z-20"
-          >
-            <Link
-              to="/catalogo"
-              className="px-8 py-4 bg-white text-institucional-blue hover:bg-blue-50 font-bold uppercase tracking-wider text-sm rounded-xl shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 group"
-            >
-              <span>{data.heroCtaCatalog}</span>
-              <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
-
-            <Link
-              to="/historia"
-              className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/30 font-bold uppercase tracking-wider text-sm rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
-            >
-              {data.heroCtaHistory}
-            </Link>
-          </motion.div>
         </div>
         
         {/* Seta suave a indicar scroll */}
@@ -256,31 +257,43 @@ export function Home() {
 
       {/* 
         =========================================================================
-        2. FAIXA DE MÉTRICAS & CONFIANÇA (TRUST BADGES)
+        2. FAIXA DE MÉTRICAS & CONFIANÇA (KPIS / TRUST BADGES)
         ========================================================================= 
       */}
-      <section className="relative z-20 -mt-10 sm:-mt-14 max-w-7xl mx-auto px-4 sm:px-6 w-full">
-        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 sm:p-8 grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
-          {data.stats.map((stat, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className={`flex flex-col items-center text-center ${idx > 0 ? 'pt-4 sm:pt-0' : ''}`}
-            >
-              <span className="text-3xl sm:text-4xl font-title font-bold text-institucional-blue mb-1">
-                {stat.number}
-              </span>
-              <span className="text-sm sm:text-base font-bold text-gray-800">
-                {stat.label}
-              </span>
-              <span className="text-xs text-gray-500 mt-0.5">
-                {stat.sub}
-              </span>
-            </motion.div>
-          ))}
+      <section className="py-20 bg-[#F8FAFC] border-b border-gray-100/80 relative z-10 w-full">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {data.stats.map((stat, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                className="bg-white rounded-3xl p-8 border border-gray-100 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden group flex flex-col items-center text-center"
+              >
+                {/* Glow decorativo suave no hover */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-50/60 to-transparent rounded-full blur-2xl group-hover:scale-125 transition-transform pointer-events-none"></div>
+
+                
+
+                {/* Número em destaque */}
+                <span className="text-4xl sm:text-5xl font-title font-bold text-institucional-blue mb-1 tracking-tight">
+                  {stat.number}
+                </span>
+
+                {/* Título do KPI */}
+                <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-1">
+                  {stat.label}
+                </h3>
+
+                {/* Subtítulo explicativo */}
+                <p className="text-xs sm:text-sm text-gray-500 font-light leading-relaxed">
+                  {stat.sub}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -553,53 +566,163 @@ export function Home() {
 
       {/* 
         =========================================================================
-        6. DESTAQUE DE SUSTENTABILIDADE & LWG GOLD
+        6. DESTAQUE DUPLO: SUSTENTABILIDADE LWG GOLD & AVALIAÇÃO DE EXCELÊNCIA
         ========================================================================= 
       */}
-      <section className="py-24 px-6 bg-[#F8FAFC]">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8 }}
-            className="bg-white rounded-3xl p-8 sm:p-12 lg:p-16 border border-gray-100 shadow-md relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16"
-          >
-            <div className="w-full lg:w-7/12 space-y-6 text-center lg:text-left">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-institucional-blue text-xs font-bold uppercase tracking-wider">
-                <span className="w-2 h-2 rounded-full bg-institucional-blue"></span>
-                {language === 'PT' ? 'Economia Circular & Ética' : 'Circular Economy & Ethics'}
-              </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-title font-bold text-institucional-blue tracking-tight">
-                {data.susTitle}
-              </h2>
-              <p className="text-gray-600 text-base sm:text-lg font-light leading-relaxed max-w-2xl">
-                {data.susSubtitle}
-              </p>
-              <div>
-                <Link
+      <section className="py-20 px-6 bg-[#F8FAFC]">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+            
+            {/* Card 1: LWG Gold / Sustentabilidade */}
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6 }}
+              className="bg-white rounded-3xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between"
+            >
+              {/* Top Banner LWG Gold */}
+              <div className="bg-gradient-to-br from-[#06182c] via-institucional-blue to-[#102d4f] p-7 sm:p-8 text-white relative overflow-hidden flex flex-col items-center text-center justify-between min-h-[210px]">
+                {/* Glow decorativo suave */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-2xl p-2 shadow-lg border border-white/20 flex items-center justify-center flex-shrink-0 relative z-10">
+                  <img 
+                    src="/LWG_temp.jpeg" 
+                    alt="LWG Gold Rating" 
+                    className="w-full h-full object-contain"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div className="mt-4 relative z-10 flex flex-col items-center">
+                  <span className="text-[11px] font-bold tracking-widest text-blue-200 uppercase mb-0.5">
+                    {data.certCategory}
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-title font-bold text-white tracking-tight leading-tight">
+                    {data.certTitle}
+                  </h3>
+                  <span className="text-xs sm:text-sm text-cyan-300 font-medium mt-0.5 block">
+                    {data.certEdition}
+                  </span>
+                </div>
+              </div>
+
+              {/* Corpo com Pontos Verificados */}
+              <div className="p-6 sm:p-7 space-y-3.5 flex-1 flex flex-col justify-center items-center text-center bg-white">
+                <div className="flex items-center justify-center gap-2.5 text-center">
+                  <div className="w-5 h-5 rounded-full bg-blue-50 text-institucional-blue flex items-center justify-center flex-shrink-0">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed font-light">
+                    {data.certPoint1}
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-center gap-2.5 text-center">
+                  <div className="w-5 h-5 rounded-full bg-blue-50 text-institucional-blue flex items-center justify-center flex-shrink-0">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed font-light">
+                    {data.certPoint2}
+                  </p>
+                </div>
+              </div>
+
+              {/* Footer do Card */}
+              <div className="border-t border-gray-100 px-6 sm:px-7 py-3.5 flex items-center justify-between text-xs text-gray-500 font-medium bg-slate-50/70">
+                <span>{data.certFooterLeft}</span>
+                <Link 
                   to="/sustentabilidade"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-institucional-blue hover:bg-blue-900 text-white font-bold uppercase tracking-wider text-sm rounded-xl shadow-lg hover:shadow-xl transition-all"
+                  className="inline-flex items-center gap-1.5 text-institucional-blue hover:text-blue-900 font-bold uppercase tracking-wider transition-colors"
                 >
-                  <span>{data.susBtn}</span>
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <span>{data.certFooterRight}</span>
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
                 </Link>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="w-full lg:w-5/12 flex justify-center">
-              <div className="w-48 sm:w-60 aspect-square bg-slate-50 border border-slate-100 rounded-3xl p-6 flex items-center justify-center shadow-inner">
-                <img 
-                  src="/LWG_temp.jpeg" 
-                  alt="LWG Gold Rating" 
-                  className="w-full h-full object-contain"
-                  loading="lazy"
-                />
+            {/* Card 2: 5.0 Google Reviews / Avaliação de Excelência */}
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="bg-white rounded-3xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between"
+            >
+              {/* Top Banner Reviews */}
+              <div className="bg-gradient-to-br from-[#06182c] via-institucional-blue to-[#102d4f] p-7 sm:p-8 text-white relative overflow-hidden flex flex-col items-center text-center justify-between min-h-[210px]">
+                {/* Glow decorativo suave */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                {/* Score badge com 5 estrelas */}
+                <div className="bg-white text-gray-900 shadow-lg px-5 py-2 rounded-2xl flex flex-col items-center justify-center border border-white/30 relative z-10">
+                  <span className="text-2xl sm:text-3xl font-title font-bold text-gray-900 leading-none">
+                    {data.reviewsScore}
+                  </span>
+                  <div className="flex items-center gap-0.5 text-amber-400 text-xs mt-1">
+                    <span>★</span>
+                    <span>★</span>
+                    <span>★</span>
+                    <span>★</span>
+                    <span>★</span>
+                  </div>
+                </div>
+
+                <div className="mt-4 relative z-10 flex flex-col items-center">
+                  <span className="text-[11px] font-bold tracking-widest text-blue-200 uppercase mb-0.5">
+                    {data.reviewsCategory}
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-title font-bold text-white tracking-tight leading-tight">
+                    {data.reviewsTitle}
+                  </h3>
+                  <span className="text-xs sm:text-sm text-cyan-300 font-medium mt-0.5 block">
+                    {data.reviewsSubtitle}
+                  </span>
+                </div>
               </div>
-            </div>
-          </motion.div>
+
+              {/* Corpo com Avaliações & Feedback */}
+              <div className="p-6 sm:p-7 space-y-3.5 flex-1 flex flex-col justify-center items-center text-center bg-white">
+                <div className="flex items-center justify-center gap-2.5 text-center">
+                  <div className="w-5 h-5 rounded-full bg-blue-50 text-institucional-blue flex items-center justify-center flex-shrink-0">
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed font-light">
+                    {data.reviewsPoint1}
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-center gap-2.5 text-center">
+                  <div className="w-5 h-5 rounded-full bg-blue-50 text-institucional-blue flex items-center justify-center flex-shrink-0">
+                    <svg className="w-3.5 h-3.5 fill-none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed font-light">
+                    {data.reviewsPoint2}
+                  </p>
+                </div>
+              </div>
+
+              {/* Footer do Card */}
+              <div className="border-t border-gray-100 px-6 sm:px-7 py-3.5 flex items-center justify-between text-xs text-gray-500 font-medium bg-slate-50/70">
+                <span>{data.reviewsFooterLeft}</span>
+                <span className="text-institucional-blue font-bold uppercase tracking-wider">
+                  {data.reviewsFooterRight}
+                </span>
+              </div>
+            </motion.div>
+
+          </div>
         </div>
       </section>
 

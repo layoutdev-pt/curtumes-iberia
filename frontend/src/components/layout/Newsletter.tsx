@@ -69,7 +69,7 @@ export function Newsletter() {
   };
 
   return (
-    <section className="relative bg-gradient-to-b from-white to-blue-50 py-24 md:py-32 border-t border-gray-100 overflow-hidden">
+    <section className="relative bg-gradient-to-b from-white to-blue-50 py-16 md:py-20 border-t border-gray-100 overflow-hidden">
       
       {/* Elementos Gráficos de Fundo para quebrar a "secura" */}
       <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center opacity-40">
