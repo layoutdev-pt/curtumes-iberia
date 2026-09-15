@@ -2,15 +2,15 @@
 import { motion } from 'framer-motion';
 
 const images = [
-  '/tour/DSCF9048.webp',
+  '/tour/DSCF9039.webp',
   '/tour/DSCF9070.webp',
   '/tour/DSCF9075.webp',
-  '/tour/DSCF9117.webp',
+  '/tour/DSCF9071.webp',
   '/tour/DSCF9223.webp',
   '/tour/DSCF9235.webp',
   '/tour/DSCF9242.webp',
   '/tour/DSCF9245.webp',
-  '/tour/DSCF9253.webp',
+  '/tour/DSCF9082.webp',
   '/tour/DSCF9337.webp'
 ];
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useLanguage } from '../contexts/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { TypewriterText } from '../components/ui/TypewriterText';
 
 interface Artigo {
@@ -32,9 +32,20 @@ const categoriasFiltro = [
 
 export function Catalogo() {
   const { language } = useLanguage();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [artigos, setArtigos] = useState<Artigo[]>([]);
   const [loadingDados, setLoadingDados] = useState(true);
-  const [filtroAtivo, setFiltroAtivo] = useState('all');
+  
+  const filtroAtivo = searchParams.get('categoria') || 'all';
+  const setFiltroAtivo = (id: string) => {
+    if (id === 'all') {
+      searchParams.delete('categoria');
+    } else {
+      searchParams.set('categoria', id);
+    }
+    setSearchParams(searchParams);
+  };
+  
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
