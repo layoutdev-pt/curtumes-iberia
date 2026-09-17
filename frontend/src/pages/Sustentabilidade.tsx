@@ -91,7 +91,7 @@ const content = {
       tag: "Official Certification",
       title: "Audit — LWG Gold Rated Member",
       text: "Curtumes Ibéria S.A. is a Gold Rated LWG (Leather Working Group) Member.\n\nLWG aims to improve the tanning industry with best practices and environmental policies.",
-      image: "/logos/LWG_GOLD.png",
+      image: "/logos/CUR224.png",
       badges: ["Official Gold Rating", "Best Environmental Practices"],
     },
     fullWidthSections: [

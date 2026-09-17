@@ -20,7 +20,7 @@ interface Artigo {
 
 const categoriasFiltro = [
   { id: 'all', labelPT: 'Todas as Categorias', labelEN: 'All Categories' },
-  { id: 'Hidrofogados', labelPT: 'Hidrofogados', labelEN: 'Waterproof' },
+  { id: 'Hidrofugados', labelPT: 'Hidrofugados', labelEN: 'Waterproof' },
   { id: 'Camurças', labelPT: 'Camurças', labelEN: 'Suedes' },
   { id: 'Napas', labelPT: 'Napas', labelEN: 'Nappas' },
   { id: 'Anilinas', labelPT: 'Anilinas', labelEN: 'Anilines' },

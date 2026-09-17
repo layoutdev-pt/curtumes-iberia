@@ -225,7 +225,7 @@ export function ListaCatalogo() {
                   <div>
                     <label className="block text-xs font-title font-bold text-gray-500 uppercase tracking-wider mb-2">Categoria</label>
                     <select value={editingArtigo.categoria} onChange={(e) => setEditingArtigo({...editingArtigo, categoria: e.target.value})} className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium">
-                      <option value="Hidrofogados">Hidrofogados</option>
+                      <option value="Hidrofugados">Hidrofugados</option>
                       <option value="Camurças">Camurças</option>
                       <option value="Napas">Napas</option>
                       <option value="Anilinas">Anilinas</option>

@@ -190,13 +190,36 @@ export function ArtigoDetalhe() {
                   {language === 'PT' ? 'Ficha Técnica' : 'Technical Specifications'}
                 </h3>
                 <div className="divide-y divide-gray-100">
-                  {artigo.detalhes.map((det: any, idx: number) => (
-                    <div key={idx} className="py-3 flex justify-between">
-                      <span className="text-gray-500 font-medium">{language === 'PT' ? det.tipo_pt : det.tipo_en}</span>
-                      <span className="text-gray-900 font-bold text-right ml-4">{language === 'PT' ? det.valor_pt : det.valor_en}</span>
-                    </div>
-                  ))}
+                  {artigo.detalhes.filter((d: any) => d.tipo_pt !== 'Tipo de artigo').map((det: any, idx: number) => {
+                    let valPt = det.valor_pt;
+                    let valEn = det.valor_en;
+                    if (det.tipo_pt === 'Espessura') {
+                      valPt = `${valPt} mm`;
+                      valEn = `${valEn} inches`;
+                    } else if (det.tipo_pt === 'Tamanho médio') {
+                      valPt = `${valPt} m²`;
+                      valEn = `${valEn} sqft`;
+                    }
+                    return (
+                      <div key={idx} className="py-3 flex justify-between items-center">
+                        <span className="text-gray-500 font-medium">{language === 'PT' ? det.tipo_pt : det.tipo_en}</span>
+                        <span className="text-gray-900 font-bold text-right ml-4">{language === 'PT' ? valPt : valEn}</span>
+                      </div>
+                    );
+                  })}
                 </div>
+                {artigo.detalhes.find((d: any) => d.tipo_pt === 'Tipo de artigo') && (
+                  <div className="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
+                    <span className="text-institucional-blue font-title font-bold text-sm tracking-wider uppercase">
+                      {language === 'PT' ? 'Tipo de artigo' : 'Type of article'}
+                    </span>
+                    <span className="text-gray-900 font-bold bg-blue-50 px-3 py-1 rounded-md text-sm">
+                      {language === 'PT' 
+                        ? artigo.detalhes.find((d: any) => d.tipo_pt === 'Tipo de artigo').valor_pt 
+                        : artigo.detalhes.find((d: any) => d.tipo_pt === 'Tipo de artigo').valor_en}
+                    </span>
+                  </div>
+                )}
               </div>
             )}
           </div>

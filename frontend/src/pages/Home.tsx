@@ -17,7 +17,7 @@ const content = {
     heroCtaCatalog: "Explorar Catálogo",
     heroCtaHistory: "A Nossa História",
     stats: [
-      { number: "55+", label: "Anos de Tradição", sub: "Desde 1963 no setor" },
+      { number: "60+", label: "Anos de Tradição", sub: "Desde 1963 no setor" },
       {
         number: "LWG",
         label: "Medalha de Ouro",
@@ -39,7 +39,7 @@ const content = {
         desc: "Máxima resistência à água sem comprometer a flexibilidade e a respirabilidade.",
         image: "/tour/DSCF9039.webp",
         tag: "Impermeabilidade",
-        filterId: "Hidrofogados",
+        filterId: "Hidrofugados",
       },
       {
         title: "Napas & Anilinas",
@@ -106,7 +106,7 @@ const content = {
     heroCtaHistory: "Our Legacy",
     stats: [
       {
-        number: "55+",
+        number: "60+",
         label: "Years of Tradition",
         sub: "Since 1963 in the industry",
       },
@@ -127,7 +127,7 @@ const content = {
         desc: "Maximum water resistance while retaining premium breathability and softness.",
         image: "/tour/DSCF9039.webp",
         tag: "Water Repellent",
-        filterId: "Hidrofogados",
+        filterId: "Hidrofugados",
       },
       {
         title: "Nappas & Anilines",

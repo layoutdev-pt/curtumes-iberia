@@ -31,7 +31,7 @@ export function GestaoCatalogo() {
   // Estado Central de todo o Artigo
   const [formData, setFormData] = useState({
     referencia: '',
-    categoria: 'Hidrofogados',
+    categoria: 'Hidrofugados',
     titulo_pt: '',
     titulo_en: '',
     descricao_pt: '',
@@ -40,7 +40,10 @@ export function GestaoCatalogo() {
     cores: [] as any[],
     detalhes: [] as any[],
     tags: [] as any[],
-    categorias: [] as string[]
+    categorias: [] as string[],
+    espessura: '',
+    tamanho_medio: '',
+    tipo_artigo: ''
   });
   
   const [loading, setLoading] = useState(false);
@@ -116,6 +119,14 @@ export function GestaoCatalogo() {
       const backendData = await backendResponse.json();
       const imagemUrl = backendData.urlImagem; 
 
+      const mandatoryDetalhes = [
+        { tipo_pt: 'Espessura', tipo_en: 'Thickness', valor_pt: formData.espessura, valor_en: formData.espessura },
+        { tipo_pt: 'Tamanho médio', tipo_en: 'Average size', valor_pt: formData.tamanho_medio, valor_en: formData.tamanho_medio },
+        { tipo_pt: 'Tipo de artigo', tipo_en: 'Type of article', valor_pt: formData.tipo_artigo, valor_en: formData.tipo_artigo }
+      ].filter(d => d.valor_pt.trim() !== '');
+
+      const finalDetalhes = [...mandatoryDetalhes, ...formData.detalhes];
+
       // 2. Gravar no Supabase (Com os arrays JSON)
       const { error: dbError } = await supabase.from('artigos').insert([{
         referencia: formData.referencia, 
@@ -126,7 +137,7 @@ export function GestaoCatalogo() {
         descricao_en: formData.descricao_en,
         imagem_url: imagemUrl,
         cores: formData.cores,
-        detalhes: formData.detalhes,
+        detalhes: finalDetalhes,
         tags: formData.tags,
         categorias: formData.categorias
       }]);
@@ -135,7 +146,7 @@ export function GestaoCatalogo() {
 
       alert(data.alertSuccess);
       // Reset Total
-      setFormData({ referencia: '', categoria: 'Hidrofogados', titulo_pt: '', titulo_en: '', descricao_pt: '', descricao_en: '', imagem: null, cores: [], detalhes: [], tags: [], categorias: [] });
+      setFormData({ referencia: '', categoria: 'Hidrofugados', titulo_pt: '', titulo_en: '', descricao_pt: '', descricao_en: '', imagem: null, cores: [], detalhes: [], tags: [], categorias: [], espessura: '', tamanho_medio: '', tipo_artigo: '' });
       (document.getElementById('imagem-input') as HTMLInputElement).value = '';
       
     } catch (error: any) {
@@ -184,7 +195,7 @@ export function GestaoCatalogo() {
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Categoria Principal *</label>
                   <select name="categoria" value={formData.categoria} onChange={handleChange} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm">
-                    <option value="Hidrofogados">Hidrofogados</option>
+                    <option value="Hidrofugados">Hidrofugados</option>
                     <option value="Camurças">Camurças</option>
                     <option value="Napas">Napas</option>
                     <option value="Anilinas">Anilinas</option>
@@ -299,10 +310,29 @@ export function GestaoCatalogo() {
           {/* ======================================================== */}
           {activeTab === 'detalhes' && (
             <div className="space-y-8 animate-[fadeIn_0.3s_ease-out]">
+              
               <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                <h3 className="font-bold text-lg text-gray-800 mb-1">Adicionar Especificação Técnica</h3>
+                <h3 className="font-bold text-lg text-gray-800 mb-4">Especificações Obrigatórias</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 mb-1">Espessura (ex: 1.2 - 1.4)</label>
+                    <input type="text" name="espessura" value={formData.espessura} onChange={handleChange} required className="w-full p-2 border rounded-lg text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 mb-1">Tamanho médio (ex: 12 - 15)</label>
+                    <input type="text" name="tamanho_medio" value={formData.tamanho_medio} onChange={handleChange} required className="w-full p-2 border rounded-lg text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 mb-1">Tipo de artigo (ex: Couro)</label>
+                    <input type="text" name="tipo_artigo" value={formData.tipo_artigo} onChange={handleChange} required className="w-full p-2 border rounded-lg text-sm" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                <h3 className="font-bold text-lg text-gray-800 mb-1">Adicionar Outras Especificações</h3>
                 <p className="text-xs text-gray-500 mb-4">
-                  Nota: Adicione as especificações obrigatórias: <strong>Espessura (Thickness)</strong>, <strong>Tamanho médio (Average size)</strong> e <strong>Tipo de artigo (Type of the article)</strong>.
+                  Nota: As especificações obrigatórias (Espessura, Tamanho médio e Tipo de artigo) já estão preenchidas no quadro acima. Adicione aqui outras se necessário.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                   <div className="space-y-2">
