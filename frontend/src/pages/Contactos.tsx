@@ -15,14 +15,14 @@ const content = {
     quickCallTitle: "Linha Comercial Direta",
     quickCallDesc: "Apoio B2B rápido e especializado.",
     quickCallAction: "Ligar Agora",
-    quickWhatsAppTitle: "WhatsApp B2B",
+    quickWhatsAppTitle: "WhatsApp",
     quickWhatsAppDesc: "Amostras, orçamentos e dúvidas.",
     quickWhatsAppAction: "Enviar Mensagem",
     quickLocationTitle: "Sede Fabril",
     quickLocationDesc: "Visitas técnicas e recolha.",
     quickLocationAction: "Ver no Mapa",
-    formTitle: "Solicitar Contacto Comercial",
-    formSubtitle: "Preencha o formulário para um atendimento personalizado. Garantimos resposta em menos de 24 horas úteis.",
+    formTitle: "Solicitar Contacto",
+    formSubtitle: "Preencha o formulário para um atendimento personalizado.",
     formIntentLabel: "Qual o seu objetivo? *",
     formIntentOptions: [
       "Pedido de Amostras (Catálogo)",
@@ -38,12 +38,12 @@ const content = {
       "Estofos / Mobiliário",
       "Outro"
     ],
-    formName: "Nome Completo / Empresa *",
-    formEmail: "E-mail Profissional *",
+    formName: "Nome / Empresa *",
+    formEmail: "E-mail *",
     formMessage: "Detalhes do Pedido (Ex: Referências, Cores, Quantidades) *",
-    formSubmit: "Enviar Pedido",
+    formSubmit: "ENVIAR PEDIDO",
     formSuccess: "Pedido enviado com sucesso! A nossa equipa entrará em contacto brevemente.",
-    trustTitle: "Garantias B2B",
+    trustTitle: "Garantias",
     trustPoints: [
       { title: "Resposta Rápida", desc: "Acompanhamento comercial dedicado em menos de 24 horas." },
       { title: "Amostragem Global", desc: "Envio rápido de amostras e catálogos para todo o mundo." },
@@ -62,7 +62,7 @@ const content = {
     quickCallTitle: "Direct Commercial Line",
     quickCallDesc: "Fast and specialized B2B support.",
     quickCallAction: "Call Now",
-    quickWhatsAppTitle: "WhatsApp B2B",
+    quickWhatsAppTitle: "WhatsApp",
     quickWhatsAppDesc: "Samples, quotes, and quick queries.",
     quickWhatsAppAction: "Send Message",
     quickLocationTitle: "Headquarters",
@@ -347,10 +347,6 @@ export function Contactos() {
                     )}
                   </button>
                   <div className="flex items-center justify-center gap-4 mt-6">
-                    <div className="flex items-center gap-1.5 text-xs font-medium text-gray-500">
-                      <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                      {language === 'PT' ? 'Resposta em <24h' : 'Response in <24h'}
-                    </div>
                     <div className="flex items-center gap-1.5 text-xs font-medium text-gray-500">
                       <svg className="w-4 h-4 text-institucional-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                       {language === 'PT' ? 'Dados Seguros' : 'Secure Data'}
