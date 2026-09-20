@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 
 const content = {
   PT: {
-    title: "Subscreva A Nossa Newsletter",
-    description: "Fique a par das últimas novidades, inovações sustentáveis e presenças em feiras internacionais da Curtumes Ibéria.",
+    title: "Subscreva a nossa Newsletter",
+    description: "Novos artigos, novidades da Curtumes Ibéria, feiras e tudo o que acontece no mundo do couro.",
     placeholder: "O seu melhor endereço de e-mail",
-    button: "Subscrever Agora",
+    button: "Subscreva",
     success: "✅ Obrigado pela subscrição! Verifique a sua caixa de entrada em breve.",
     error: "❌ Ocorreu um erro. Por favor tente novamente.",
     agreeText: "Li e concordo com a",
@@ -16,9 +16,9 @@ const content = {
   },
   EN: {
     title: "Subscribe to our Newsletter",
-    description: "Stay up to date with the latest news, sustainable innovations, and international exhibitions from Curtumes Ibéria.",
+    description: "New articles, news from Curtumes Ibéria, trade fairs and everything happening in the world of leather.",
     placeholder: "Your best email address",
-    button: "Subscribe Now",
+    button: "Subscribe",
     success: "✅ Thank you for subscribing! Check your inbox soon.",
     error: "❌ An error occurred. Please try again.",
     agreeText: "I have read and agree to the",
@@ -41,7 +41,7 @@ export function Newsletter() {
     setStatus('submitting');
     
     try {
-      // Chamada real ao teu backend Node.js
+      // Chamada real ao backend Node.js
       const response = await fetch('https://curtumes-backend.onrender.com/api/newsletter', {
         method: 'POST',
         headers: {
@@ -85,7 +85,7 @@ export function Newsletter() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="bg-white p-10 md:p-16 rounded-[2.5rem] shadow-2xl shadow-blue-900/5 border border-blue-50 text-center"
+          className="bg-white p-10 md:p-16 shadow-2xl shadow-blue-900/5 border border-blue-50 text-center"
         >
           {/* Ícone Decorativo */}
           <div className="w-16 h-16 bg-blue-50 text-institucional-blue rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
@@ -94,7 +94,7 @@ export function Newsletter() {
             </svg>
           </div>
 
-          <h2 className="font-title font-bold text-3xl md:text-5xl text-institucional-blue mb-6 tracking-tight">
+          <h2 className="font-title font-bold text-3xl md:text-5xl text-institucional-blue uppercase mb-6 tracking-tight">
             {data.title}
           </h2>
           <p className="text-lg md:text-xl text-gray-500 mb-10 max-w-3xl mx-auto leading-relaxed">
@@ -108,7 +108,7 @@ export function Newsletter() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className="bg-green-50 border border-green-200 text-green-700 font-bold text-lg p-6 rounded-2xl max-w-2xl mx-auto"
+                className="bg-green-50 border border-green-200 text-green-700 font-bold text-lg p-6 max-w-2xl mx-auto"
               >
                 {data.success}
               </motion.div>
@@ -118,7 +118,7 @@ export function Newsletter() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className="bg-red-50 border border-red-200 text-red-700 font-bold text-lg p-6 rounded-2xl max-w-2xl mx-auto"
+                className="bg-red-50 border border-red-200 text-red-700 font-bold text-lg p-6 max-w-2xl mx-auto"
               >
                 {data.error}
               </motion.div>
@@ -139,13 +139,13 @@ export function Newsletter() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={data.placeholder}
                     required
-                    className="flex-1 px-6 py-4 md:py-5 text-lg bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-institucional-blue/20 focus:border-institucional-blue focus:bg-white transition-all shadow-sm"
+                    className="flex-1 px-6 py-4 md:py-5 text-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-4 focus:ring-institucional-blue/20 focus:border-institucional-blue focus:bg-white transition-all shadow-sm"
                     disabled={status === 'submitting'}
                   />
                   <button
                     type="submit"
                     disabled={status === 'submitting' || !acceptedTerms}
-                    className="bg-institucional-blue text-white px-8 py-4 md:py-5 rounded-2xl font-bold text-lg hover:bg-blue-900 transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-lg min-w-[200px]"
+                    className="bg-institucional-blue text-white px-8 py-4 md:py-5 font-bold uppercase tracking-[0.2em] text-xs hover:bg-blue-900 transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-lg min-w-[200px]"
                   >
                     {status === 'submitting' ? '...' : data.button}
                   </button>

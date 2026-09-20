@@ -1,131 +1,332 @@
 import { useLanguage } from "../contexts/LanguageContext";
 import { motion } from "framer-motion";
-import { TypewriterText } from "../components/ui/TypewriterText";
+import { PageHeader } from "../components/ui/PageHeader";
+import { PillarsAccordion, type PillarItem } from "../components/ui/PillarsAccordion";
 
 const content = {
   PT: {
-    title: "Sustentabilidade e Responsabilidade",
-    subtitle: "O nosso compromisso com o ambiente",
-    gridSections: [
+    heroTitle: "Sustentabilidade",
+    heroText:
+      "Transformamos um subproduto da indústria alimentar num material durável e de elevado valor, enquanto procuramos reduzir o impacto dos nossos processos e utilizar os recursos de forma cada vez mais eficiente.",
+
+    introTitle: "Sustentabilidade faz parte do processo.",
+    introText:
+      "A responsabilidade ambiental não é uma iniciativa isolada. Faz parte da forma como produzimos, investimos e evoluímos.",
+
+    pillars: [
       {
-        id: "chemicals",
-        title: "Produtos químicos",
-        text: "Seguimos a lista global de Substâncias Restritas alinhadas com o REACH e CADS, que atende e excede os regulamentos mundiais.",
+        id: 1,
+        number: "01",
+        title: "Economia Circular",
+        description:
+          "Damos valor e longevidade a um recurso que já existe: peles provenientes da indústria alimentar que se transformam num material durável e versátil.",
+        // TODO: substituir por fotografia da matéria-prima numa fase inicial do processo.
+        image: "/tour/DSCF9294.webp",
+      },
+      {
+        id: 2,
+        number: "02",
+        title: "Produção Mais Responsável",
+        description:
+          "Produtos químicos selecionados de acordo com os requisitos aplicáveis e processos continuamente otimizados para reduzir consumos e desperdícios.",
         image: "/tour/DSCF9039.webp",
       },
       {
-        id: "waste",
-        title: "Desperdício",
-        text: "O consumo de energia e água é supervisionado de perto com máquinas e tecnologias de ponta. Por exemplo, fórmulas de produção de Spray para Roller reduzindo assim o desperdício de produção.\n\nDiariamente empenhamo-nos para reduzir o uso de plástico.",
+        id: 3,
+        number: "03",
+        title: "Recursos & Ambiente",
+        description:
+          "Energia renovável produzida em Vila Moreira e toda a água encaminhada para a ETAR de Alcanena antes de regressar ao meio ambiente.",
         image: "/tour/DSCF9217.webp",
       },
       {
-        id: "safety",
-        title: "Segurança",
-        text: "Priorizamos em manter um local de trabalho saudável e seguro para os nossos funcionários.\n\nAtuamos em conformidade com as diretrizes de saúde no trabalho.",
+        id: 4,
+        number: "04",
+        title: "Responsabilidade em Toda a Cadeia",
+        description:
+          "Do bem-estar animal às condições de trabalho na fábrica: uma produção responsável começa nas pessoas e nos fornecedores que dela fazem parte.",
         image: "/tour/DSCF9261.webp",
       },
+    ] as PillarItem[],
+
+    blocks: [
+      {
+        id: "economia-circular",
+        eyebrow: "Economia Circular",
+        title: "Uma matéria-prima com uma segunda vida",
+        text: "O couro que produzimos tem origem em peles provenientes da indústria alimentar. Ao transformar este subproduto num material durável e versátil, evitamos que uma matéria-prima existente seja simplesmente descartada.\n\nÉ aqui que começa a economia circular na Curtumes Ibéria: dar valor e longevidade a um recurso que já existe.",
+        // TODO: fotografia da matéria-prima/peles na fábrica, numa fase inicial do processo.
+        image: "/tour/DSCF9294.webp",
+        align: "left",
+      },
+      {
+        id: "produtos-quimicos",
+        eyebrow: "Produção Mais Responsável",
+        title: "Produtos Químicos",
+        text: "Selecionamos e utilizamos produtos químicos de acordo com os requisitos aplicáveis e com as listas de substâncias restritas relevantes para o setor, incluindo REACH e CADS.\n\nTrabalhamos continuamente para tornar os nossos processos mais eficientes e responsáveis.",
+        image: "/tour/DSCF9039.webp",
+        align: "right",
+      },
+      {
+        id: "desperdicio",
+        eyebrow: "Produção Mais Responsável",
+        title: "Redução de Desperdício",
+        text: "Monitorizamos os consumos de água e energia e investimos em equipamentos e processos que permitem otimizar recursos e reduzir desperdícios na produção.\n\nProcuramos também reduzir o consumo de plástico e encontrar soluções mais eficientes no dia a dia da fábrica.",
+        image: "/tour/DSCF9217.webp",
+        align: "left",
+      },
     ],
-    audit: {
-      tag: "Certificação Oficial",
-      title: "Auditoria — Medalha de Ouro LWG",
-      text: "A Curtumes Ibéria SA é medalha de Ouro no Grupo LWG (Leather Working Group).\n\nO objetivo do LWG é melhorar a indústria de curtumes com as melhores práticas e políticas ambientais.",
-      image: "/logos/CUR224.png",
-      badges: ["Classificação Ouro Oficial", "Melhores Práticas Ambientais"],
+
+    lwg: {
+      eyebrow: "Um Compromisso Reconhecido",
+      title: "LWG Gold Rated",
+      text: "A Curtumes Ibéria alcançou a classificação Gold da Leather Working Group (LWG), na sequência da auditoria às suas práticas e desempenho ambiental.\n\nEsta classificação reconhece o trabalho desenvolvido em áreas como gestão ambiental, consumo de recursos e processos de produção.",
+      footer: "LWG Gold Rated | Desempenho Ambiental",
+      image: "/tour/DSCF9337.webp",
+      badge: "/logos/CUR224.png",
     },
-    fullWidthSections: [
+
+    blocks2: [
       {
-        id: "energy",
-        title: "Energias renováveis",
-        text: "A Curtumes Ibéria SA utiliza em toda a sua produção 100% de energias renováveis.\n\nTrabalhamos para fazer parte do compromisso ético e de respeito pelo meio ambiente.",
-        image: "/imagens/historia_img/img2.avif",
+        id: "energia",
+        eyebrow: "Recursos & Ambiente",
+        title: "Energias Renováveis",
+        text: "A Curtumes Ibéria investe na produção de energia renovável através de painéis solares instalados em Vila Moreira.\n\nA produção de energia solar permite reduzir o consumo de energia proveniente da rede e contribuir para uma produção mais eficiente e responsável.",
+        // TODO: substituir pela fotografia dos painéis solares em Vila Moreira
+        // (Google Drive: 1UHuC5rukP7T9p5SySnjfHLcaAFlkK2dI). A imagem anterior
+        // era uma foto de stock de turbinas eólicas — não corresponde à empresa.
+        image: "/tour/DSCF9740.webp",
         align: "right",
       },
       {
-        id: "water",
-        title: "Tratamento de águas | ETAR",
-        text: "Toda a água utilizada em todo o processo é encaminhada para uma estação de tratamento de água - ETAR. A água é tratada e enviada para o rio local Ribeira do Carvalho, que é usado para diversas culturas.\n\nA Curtumes Ibéria SA tem orgulho de trabalhar com uma das melhores estações de tratamento de água - ETAR do mundo.",
-        image: "/imagens/historia_img/img3.avif",
+        id: "agua",
+        eyebrow: "Recursos & Ambiente",
+        title: "Gestão e Tratamento da Água",
+        text: "Toda a água utilizada nos nossos processos é encaminhada para a Estação de Tratamento de Águas Residuais de Alcanena, reconhecida como uma referência no tratamento de águas residuais da indústria de curtumes.\n\nApós o tratamento, a água é devolvida ao meio ambiente, contribuindo para a proteção da Ribeira do Carvalho e do ecossistema envolvente.\n\nA Curtumes Ibéria trabalha em articulação com a ETAR de Alcanena, num processo essencial para uma produção mais responsável.",
+        image: "/tour/DSCF9071.webp",
         align: "left",
       },
       {
-        id: "animal-welfare",
-        title: "Bem estar animal",
-        text: "Na Curtumes Ibéria, o bem-estar animal é basilar. Integramos uma economia circular ao utilizar exclusivamente subprodutos da indústria alimentar, rejeitando categoricamente espécies ameaçadas, fauna da Amazónia ou animais listados na CITES.\n\nAlinhados com os nossos fornecedores, asseguramos o cumprimento rigoroso dos padrões internacionais da OIE desde a origem da cadeia produtiva.",
-        image: "/imagens/historia_img/img4.avif",
+        id: "bem-estar-animal",
+        eyebrow: "Responsabilidade em Toda a Cadeia",
+        title: "Bem-estar Animal",
+        text: "A Curtumes Ibéria utiliza exclusivamente peles provenientes da indústria alimentar, integrando uma cadeia de economia circular que dá uma nova utilização a este subproduto.\n\nEm colaboração com os nossos fornecedores, asseguramos o cumprimento dos padrões internacionais da OIE relativos ao bem-estar animal e dos requisitos da CITES, excluindo espécies ameaçadas ou protegidas.",
+        image: "/tour/DSCF9242.webp",
         align: "right",
       },
       {
-        id: "responsibility",
-        title: "Responsabilidade Corporativa",
-        text: "A Curtumes Ibéria compromete-se em manter uma produção, flexível, limpa e profissional.\n\nAo longo dos anos temos investido para reduzir o nosso impacto ambiental.\n\nCom o nosso programa de responsabilidade corporativa, funcionários, fornecedores e stakeholders trabalham em comformidade com as boas práticas e responsabilidade ambiental.",
-        image: "/imagens/historia_img/img5.avif",
+        id: "pessoas",
+        eyebrow: "Responsabilidade em Toda a Cadeia",
+        title: "As Nossas Pessoas",
+        text: "Uma produção responsável começa pelas pessoas que fazem parte dela.\n\nInvestimos na segurança, nas condições de trabalho e na melhoria contínua dos processos, promovendo um ambiente de trabalho seguro e responsável.",
+        // TODO: substituir por fotografia real da equipa dentro da fábrica (não posada).
+        image: "/tour/DSCF9365.webp",
         align: "left",
       },
     ],
+
+    closingTitle: "Fazer melhor é um processo contínuo.",
+    closingText:
+      "Continuamos a investir, testar e melhorar a forma como produzimos, com o objetivo de reduzir o impacto da nossa atividade e contribuir para uma indústria do couro cada vez mais responsável.",
   },
+
   EN: {
-    title: "Sustainability and Responsibility",
-    subtitle: "Our commitment to the environment",
-    gridSections: [
+    heroTitle: "Sustainability",
+    heroText:
+      "We transform a by-product of the food industry into a durable, high-value material, while working to reduce the impact of our processes and use resources ever more efficiently.",
+
+    introTitle: "Sustainability is part of the process.",
+    introText:
+      "Environmental responsibility is not an isolated initiative. It is part of the way we produce, invest and evolve.",
+
+    pillars: [
       {
-        id: "chemicals",
-        title: "Chemicals",
-        text: "We follow a global Product Restricted Substances lists such as REACH and CADS that meets and exceeds worldwide regulations.",
+        id: 1,
+        number: "01",
+        title: "Circular Economy",
+        description:
+          "We give value and longevity to a resource that already exists: hides from the food industry turned into a durable, versatile material.",
+        image: "/tour/DSCF9294.webp",
+      },
+      {
+        id: 2,
+        number: "02",
+        title: "More Responsible Production",
+        description:
+          "Chemicals selected in line with applicable requirements, and processes continuously optimised to reduce consumption and waste.",
         image: "/tour/DSCF9039.webp",
       },
       {
-        id: "waste",
-        title: "Waste",
-        text: "Energy and water consumption is closely monitored with state-of-the-art machines and technologies. For example, Spray production formulas for Roller thus reducing production waste.\n\nDaily we strive to reduce the use of plastic.",
+        id: 3,
+        number: "03",
+        title: "Resources & Environment",
+        description:
+          "Renewable energy produced in Vila Moreira and all water routed to the Alcanena treatment plant before returning to the environment.",
         image: "/tour/DSCF9217.webp",
       },
       {
-        id: "safety",
-        title: "Safety",
-        text: "A healthy and safe workplace is a priority and we aim to guarantee that our employees will act in a safe and responsible way.\n\nWe ensure compliance with all applicable health laws where we operate.",
+        id: 4,
+        number: "04",
+        title: "Responsibility Across the Chain",
+        description:
+          "From animal welfare to working conditions in the factory: responsible production starts with the people and suppliers who are part of it.",
         image: "/tour/DSCF9261.webp",
       },
+    ] as PillarItem[],
+
+    blocks: [
+      {
+        id: "economia-circular",
+        eyebrow: "Circular Economy",
+        title: "A raw material with a second life",
+        text: "The leather we produce comes from hides sourced from the food industry. By transforming this by-product into a durable and versatile material, we prevent an existing raw material from simply being discarded.\n\nThis is where the circular economy begins at Curtumes Ibéria: giving value and longevity to a resource that already exists.",
+        image: "/tour/DSCF9294.webp",
+        align: "left",
+      },
+      {
+        id: "produtos-quimicos",
+        eyebrow: "More Responsible Production",
+        title: "Chemicals",
+        text: "We select and use chemicals in accordance with applicable requirements and with the restricted substances lists relevant to the sector, including REACH and CADS.\n\nWe work continuously to make our processes more efficient and responsible.",
+        image: "/tour/DSCF9039.webp",
+        align: "right",
+      },
+      {
+        id: "desperdicio",
+        eyebrow: "More Responsible Production",
+        title: "Waste Reduction",
+        text: "We monitor water and energy consumption and invest in equipment and processes that optimise resources and reduce waste in production.\n\nWe also work to reduce plastic consumption and to find more efficient solutions in the factory's day-to-day operations.",
+        image: "/tour/DSCF9217.webp",
+        align: "left",
+      },
     ],
-    audit: {
-      tag: "Official Certification",
-      title: "Audit — LWG Gold Rated Member",
-      text: "Curtumes Ibéria S.A. is a Gold Rated LWG (Leather Working Group) Member.\n\nLWG aims to improve the tanning industry with best practices and environmental policies.",
-      image: "/logos/CUR224.png",
-      badges: ["Official Gold Rating", "Best Environmental Practices"],
+
+    lwg: {
+      eyebrow: "A Recognised Commitment",
+      title: "LWG Gold Rated",
+      text: "Curtumes Ibéria achieved the Gold rating from the Leather Working Group (LWG), following an audit of its practices and environmental performance.\n\nThis rating recognises the work developed in areas such as environmental management, resource consumption and production processes.",
+      footer: "LWG Gold Rated | Environmental Performance",
+      image: "/tour/DSCF9337.webp",
+      badge: "/logos/CUR224.png",
     },
-    fullWidthSections: [
+
+    blocks2: [
       {
-        id: "energy",
-        title: "Green Energy",
-        text: "Curtumes Ibéria S.A. is proud to confirm that uses 100% of its energy consumption from renewable energies and as a result being more sustainable, clean and reducing our environmental footprint.",
-        image: "/imagens/historia_img/img2.avif",
+        id: "energia",
+        eyebrow: "Resources & Environment",
+        title: "Renewable Energy",
+        text: "Curtumes Ibéria invests in renewable energy production through solar panels installed in Vila Moreira.\n\nSolar energy production reduces the consumption of grid electricity and contributes to a more efficient and responsible production.",
+        image: "/tour/DSCF9740.webp",
         align: "right",
       },
       {
-        id: "water",
-        title: "Water Treatment",
-        text: "100% of the water used in the tannery, goes to a water treatment facility, where water is treated under a meticulous processes. Water is treated and sent to the local river Ribeira do Carvalho, which is then used for several possibilities such as irrigation.\n\nCurtumes Ibéria S.A. is proud to work with one of the best water treatment stations in the world.",
-        image: "/imagens/historia_img/img3.avif",
+        id: "agua",
+        eyebrow: "Resources & Environment",
+        title: "Water Management and Treatment",
+        text: "All the water used in our processes is routed to the Alcanena Wastewater Treatment Plant, recognised as a benchmark in the treatment of wastewater from the tanning industry.\n\nAfter treatment, the water is returned to the environment, contributing to the protection of the Ribeira do Carvalho and the surrounding ecosystem.\n\nCurtumes Ibéria works together with the Alcanena treatment plant, in a process that is essential to a more responsible production.",
+        image: "/tour/DSCF9071.webp",
         align: "left",
       },
       {
-        id: "animal-welfare",
+        id: "bem-estar-animal",
+        eyebrow: "Responsibility Across the Chain",
         title: "Animal Welfare",
-        text: "At Curtumes Ibéria, animal welfare is fundamental. We actively drive a circular economy by sourcing exclusively by-products of the food industry, strictly prohibiting endangered species, Amazon wildlife, and CITES-listed fauna.\n\nIn close collaboration with our suppliers, we enforce full compliance with international standards, such as WOAH guidelines, right from the origin of our supply chain.",
-        image: "/imagens/historia_img/img4.avif",
+        text: "Curtumes Ibéria uses exclusively hides sourced from the food industry, forming part of a circular economy chain that gives this by-product a new use.\n\nIn collaboration with our suppliers, we ensure compliance with the international OIE standards on animal welfare and with CITES requirements, excluding endangered or protected species.",
+        image: "/tour/DSCF9242.webp",
         align: "right",
       },
       {
-        id: "responsibility",
-        title: "Corporate Responsability",
-        text: "At Curtumes Ibéria we strive to have a clean, flexible and professional production.\n\nIn the last years we have been working to improve our environmental footprint.\n\nThrough our corporate responsability programm our employees aim for good practices and environmental responsibility and we also demand suppliers and all stakeholders to operate in the same standards.",
-        image: "/imagens/historia_img/img5.avif",
+        id: "pessoas",
+        eyebrow: "Responsibility Across the Chain",
+        title: "Our People",
+        text: "Responsible production starts with the people who are part of it.\n\nWe invest in safety, in working conditions and in the continuous improvement of our processes, promoting a safe and responsible working environment.",
+        image: "/tour/DSCF9365.webp",
         align: "left",
       },
     ],
+
+    closingTitle: "Doing better is a continuous process.",
+    closingText:
+      "We continue to invest, test and improve the way we produce, with the goal of reducing the impact of our activity and contributing to an increasingly responsible leather industry.",
   },
 };
+
+type Bloco = {
+  id: string;
+  eyebrow: string;
+  title: string;
+  text: string;
+  image: string;
+  align: string;
+};
+
+/** Bloco full-width com fotografia por inteiro — o formato escolhido para toda a página. */
+function ContentBlock({ block, index }: { block: Bloco; index: number }) {
+  const isLeft = block.align === "left";
+
+  return (
+    <div
+      // Afastado do topo para os cards não colarem à navbar enquanto empilham.
+      // Em ecrãs baixos o recuo encolhe, para o card não sair fora do viewport.
+      className="sticky w-full"
+      style={{
+        top: `calc(max(96px, min(160px, 18vh)) + ${index * 18}px)`,
+        zIndex: index + 1,
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative w-full h-[75vh] min-h-[540px] max-h-[760px] overflow-hidden group flex items-stretch p-6 sm:p-8 bg-institucional-blue"
+      >
+        {/* Fotografia de fundo, por inteiro e sem moldura */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src={block.image}
+            alt={block.title}
+            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 ease-out"
+            loading="lazy"
+          />
+          <div
+            className={`absolute inset-0 pointer-events-none ${
+              isLeft
+                ? "bg-gradient-to-r from-black/70 via-black/35 to-black/10"
+                : "bg-gradient-to-l from-black/70 via-black/35 to-black/10"
+            }`}
+          ></div>
+          <div className="absolute inset-0 bg-black/45 md:hidden pointer-events-none"></div>
+        </div>
+
+        {/* Aro de vidro no rebordo do card. Sem desfoque: a fotografia fica nítida. */}
+        <div className="absolute inset-0 z-[1] pointer-events-none ring-1 ring-inset ring-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"></div>
+
+        <div
+          className={`relative z-10 w-full h-full flex ${isLeft ? "justify-start" : "justify-end"}`}
+        >
+          <div className="w-full md:w-7/12 lg:w-6/12 h-full">
+            <div className="bg-institucional-blue/55 backdrop-blur-2xl ring-1 ring-inset ring-white/20 p-6 sm:p-8 lg:p-12 h-full flex flex-col justify-center">
+              <span className="text-[11px] font-bold tracking-[0.3em] text-blue-200 uppercase mb-4">
+                {block.eyebrow}
+              </span>
+
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-title font-bold text-white uppercase tracking-tight mb-6 drop-shadow-md leading-tight flex-shrink-0">
+                {block.title}
+              </h2>
+
+              <div className="text-blue-50 text-sm sm:text-base font-light leading-relaxed space-y-3.5 drop-shadow-sm">
+                {block.text.split("\n\n").map((paragraph, pIdx) => (
+                  <p key={pIdx}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 export function Sustentabilidade() {
   const { language } = useLanguage();
@@ -133,212 +334,131 @@ export function Sustentabilidade() {
 
   return (
     <div className="bg-[#F8FAFC] min-h-screen relative">
-      {/* 
-        =========================================================================
-        HERO SECTION / PAGE HEADER 
-        ========================================================================= 
-      */}
-      <div className="relative w-full h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/tour/DSCF9337.webp"
-            alt="Sustainability Background"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/40"></div>
-        </div>
+      {/* Hero igual ao de Sobre Nós */}
+      {/* TODO: substituir pela imagem de capa indicada pelo cliente
+          (Google Drive: 1oTZKDKX_VSELWdkR3TAMCjZG7IiuWoA0). */}
+      <PageHeader
+        title={data.heroTitle}
+        subtitle={data.heroText}
+        backgroundImage="/tour/DSCF9337.webp"
+      />
 
-        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto mt-20">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-title font-bold text-white mb-6 tracking-tight drop-shadow-lg min-h-[1.2em]">
-            <TypewriterText text={data.subtitle} speed={40} />
-          </h1>
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="w-24 h-1 bg-white mx-auto rounded-full opacity-80"
-          ></motion.div>
-        </div>
+      {/* ===================================================================== */}
+      {/* PILARES — ACORDEÃO LOGO A SEGUIR AO HERO */}
+      {/* ===================================================================== */}
+      <div className="pt-16 md:pt-20">
+        <PillarsAccordion items={data.pillars} />
       </div>
 
-      {/* 
-        =========================================================================
-        3-COLUMN GRID (Chemicals, Waste, Safety)
-        ========================================================================= 
-      */}
-      <div className="max-w-7xl mx-auto px-6 pt-24 pb-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-          {data.gridSections.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="flex flex-col h-full group"
-            >
-              <div className="w-full aspect-square mb-8 overflow-hidden rounded-2xl bg-white shadow-sm border border-gray-100 flex items-center justify-center relative">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover rounded-xl transform group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-institucional-blue/0 group-hover:bg-institucional-blue/5 transition-colors duration-500 rounded-2xl pointer-events-none"></div>
-              </div>
+      {/* ===================================================================== */}
+      {/* INTRODUÇÃO */}
+      {/* ===================================================================== */}
+      <div className="max-w-4xl mx-auto px-6 py-20 md:py-28 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-title font-bold text-institucional-blue uppercase tracking-tight mb-8 leading-[1.1]">
+            {data.introTitle}
+          </h2>
+          <p className="text-gray-700 text-lg md:text-xl font-light leading-relaxed">
+            {data.introText}
+          </p>
+        </motion.div>
+      </div>
 
-              <h3 className="text-2xl font-title font-bold text-institucional-blue mb-4 tracking-wide">
-                {item.title}
-              </h3>
-
-              <div className="text-gray-600 text-base font-light leading-relaxed flex-grow">
-                {item.text.split("\n\n").map((p, pIdx) => (
-                  <p key={pIdx} className="mb-3 last:mb-0">
-                    {p}
-                  </p>
-                ))}
-              </div>
-            </motion.div>
+      {/* ===================================================================== */}
+      {/* BLOCOS: ECONOMIA CIRCULAR + PRODUÇÃO MAIS RESPONSÁVEL */}
+      {/* ===================================================================== */}
+      <div className="w-full max-w-[1500px] mx-auto px-4 sm:px-6 pb-12 relative">
+        <div className="flex flex-col space-y-6 sm:space-y-8">
+          {data.blocks.map((block, index) => (
+            <ContentBlock key={block.id} block={block} index={index} />
           ))}
         </div>
       </div>
 
-      {/* 
-        =========================================================================
-        DESTAQUE DISCRETO: AUDITORIA / MEDALHA DE OURO LWG
-        ========================================================================= 
-      */}
-      <div className="max-w-7xl mx-auto px-6 pb-24 pt-4 relative z-10">
+      {/* ===================================================================== */}
+      {/* LWG — GRANDE BLOCO CENTRAL */}
+      {/* ===================================================================== */}
+      <div className="w-full max-w-[1500px] mx-auto px-4 sm:px-6 py-16 md:py-24 relative z-20">
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="bg-white rounded-3xl border border-gray-200/70 shadow-sm p-8 sm:p-10 lg:p-12 relative overflow-hidden"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative w-full min-h-[70vh] overflow-hidden bg-institucional-blue flex items-center justify-center"
         >
-          <div className="flex flex-col md:flex-row items-center gap-8 lg:gap-12">
-            {/* Logo LWG em container clean */}
-            <div className="flex-shrink-0 w-36 h-36 sm:w-44 sm:h-44 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center p-4">
-              <img
-                src={data.audit.image}
-                alt="Leather Working Group Gold Rating"
-                className="w-full h-full object-contain"
-              />
+          <img
+            src={data.lwg.image}
+            alt="Produção Curtumes Ibéria"
+            className="absolute inset-0 w-full h-full object-cover opacity-30"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-institucional-blue/60"></div>
+
+          <div className="relative z-10 max-w-4xl mx-auto text-center px-6 py-20 md:py-28 flex flex-col items-center">
+            <img
+              src={data.lwg.badge}
+              alt="LWG Gold Rated"
+              className="w-32 h-32 md:w-44 md:h-44 object-contain mb-10 drop-shadow-2xl"
+              loading="lazy"
+            />
+
+            <span className="text-[11px] font-bold tracking-[0.35em] text-blue-200 uppercase mb-5">
+              {data.lwg.eyebrow}
+            </span>
+
+            <h2 className="text-4xl md:text-6xl font-title font-bold text-white uppercase tracking-tight mb-8 leading-[1.05]">
+              {data.lwg.title}
+            </h2>
+
+            <div className="text-blue-50 text-base md:text-lg font-light leading-relaxed space-y-4 max-w-3xl">
+              {data.lwg.text.split("\n\n").map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
             </div>
 
-            {/* Texto & Badges discretos */}
-            <div className="flex-1 text-center md:text-left space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold tracking-wider uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                {data.audit.tag}
-              </div>
-
-              <h3 className="text-2xl sm:text-3xl font-title font-bold text-institucional-blue tracking-tight">
-                {data.audit.title}
-              </h3>
-
-              <div className="text-gray-600 text-base sm:text-lg font-light leading-relaxed space-y-2 max-w-3xl">
-                {data.audit.text.split("\n\n").map((p, idx) => (
-                  <p key={idx}>{p}</p>
-                ))}
-              </div>
-
-              <div className="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-3">
-                {data.audit.badges.map((badge, bIdx) => (
-                  <span
-                    key={bIdx}
-                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs sm:text-sm font-medium text-slate-700"
-                  >
-                    <svg
-                      className="w-3.5 h-3.5 text-amber-500"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    {badge}
-                  </span>
-                ))}
-              </div>
+            <div className="mt-12 pt-8 border-t border-white/25 w-full max-w-2xl">
+              <span className="text-xs md:text-sm font-bold uppercase tracking-[0.25em] text-white">
+                {data.lwg.footer}
+              </span>
             </div>
           </div>
         </motion.div>
       </div>
 
-      {/* 
-        =========================================================================
-        FULL WIDTH SECTIONS (Stacking Cards Scroll Animation)
-        ========================================================================= 
-      */}
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16 relative">
+      {/* ===================================================================== */}
+      {/* BLOCOS: RECURSOS & AMBIENTE + RESPONSABILIDADE EM TODA A CADEIA */}
+      {/* ===================================================================== */}
+      <div className="w-full max-w-[1500px] mx-auto px-4 sm:px-6 pb-16 relative">
         <div className="flex flex-col space-y-6 sm:space-y-8">
-          {data.fullWidthSections.map((section, index) => {
-            const isLeft = section.align === "left";
-
-            return (
-              <div
-                key={section.id}
-                className="sticky w-full"
-                style={{
-                  top: `calc(90px + ${index * 16}px)`,
-                  zIndex: index + 1,
-                }}
-              >
-                <motion.div
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="relative w-full h-[65vh] min-h-[480px] max-h-[660px] rounded-3xl overflow-hidden shadow-2xl border border-white/20 group flex items-stretch p-6 sm:p-8 bg-slate-900"
-                >
-                  {/* Background Image */}
-                  <div className="absolute inset-0 z-0">
-                    <img
-                      src={section.image}
-                      alt={section.title}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 ease-out"
-                    />
-                    {/* Overlay gradient based on alignment to ensure text legibility */}
-                    <div
-                      className={`absolute inset-0 pointer-events-none ${
-                        isLeft
-                          ? "bg-gradient-to-r from-black/60 via-black/30 to-black/10"
-                          : "bg-gradient-to-l from-black/60 via-black/30 to-black/10"
-                      }`}
-                    ></div>
-                    {/* Fallback general dark overlay for mobile */}
-                    <div className="absolute inset-0 bg-black/40 md:hidden pointer-events-none"></div>
-                  </div>
-
-                  {/* Content Container perfeitamente alinhado com as margens simétricas do pai */}
-                  <div
-                    className={`relative z-10 w-full h-full flex ${isLeft ? "justify-start" : "justify-end"}`}
-                  >
-                    <div className="w-full md:w-7/12 lg:w-6/12 h-full">
-                      {/* Glassmorphism card interior com estilo 100% idêntico nos 4 cards */}
-                      <div className="bg-slate-950/60 backdrop-blur-xl border border-white/20 p-6 sm:p-8 lg:p-10 rounded-2xl shadow-2xl h-full flex flex-col justify-center">
-                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-title font-bold text-white mb-3 sm:mb-4 drop-shadow-md leading-tight flex-shrink-0">
-                          {section.title}
-                        </h2>
-
-                        <div className="w-12 sm:w-16 h-1 min-h-[4px] bg-blue-400 mb-4 sm:mb-6 rounded-full opacity-80 flex-shrink-0"></div>
-
-                        <div className="text-gray-100 text-sm sm:text-base lg:text-base font-light leading-relaxed space-y-2.5 sm:space-y-3.5 drop-shadow-sm">
-                          {section.text.split("\n\n").map((paragraph, pIdx) => (
-                            <p key={pIdx}>{paragraph}</p>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            );
-          })}
+          {data.blocks2.map((block, index) => (
+            <ContentBlock key={block.id} block={block} index={index} />
+          ))}
         </div>
+      </div>
+
+      {/* ===================================================================== */}
+      {/* FECHO */}
+      {/* ===================================================================== */}
+      <div className="w-full bg-institucional-blue text-white py-24 md:py-32 relative z-20">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto px-6 text-center"
+        >
+          <h2 className="text-3xl md:text-5xl font-title font-bold text-white uppercase tracking-tight mb-8 leading-[1.1]">
+            {data.closingTitle}
+          </h2>
+          <p className="text-blue-50 text-lg md:text-xl font-light leading-relaxed">
+            {data.closingText}
+          </p>
+        </motion.div>
       </div>
     </div>
   );

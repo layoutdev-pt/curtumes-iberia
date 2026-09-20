@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { CATEGORIAS } from '../../lib/categorias';
 
 const content = {
   PT: {
@@ -23,6 +24,8 @@ const content = {
   }
 };
 
+const UPLOAD_ENDPOINT = 'https://curtumes-backend.onrender.com/api/upload-catalogo';
+
 export function GestaoCatalogo() {
   const { language } = useLanguage();
   const data = content[language];
@@ -43,13 +46,17 @@ export function GestaoCatalogo() {
     categorias: [] as string[],
     espessura: '',
     tamanho_medio: '',
-    tipo_artigo: ''
+    tipo_artigo: '',
+    destaque: false
   });
   
   const [loading, setLoading] = useState(false);
 
   // Estados temporários para adicionar novos arrays
-  const [tempCor, setTempCor] = useState({ hex: '#000000', nome_pt: '', nome_en: '', desc_pt: '', desc_en: '', img_url: '' });
+  const corVazia = { referencia: '', hex: '#000000', nome_pt: '', nome_en: '', desc_pt: '', desc_en: '', img_url: '' };
+  const [tempCor, setTempCor] = useState(corVazia);
+  const [tempCorImagem, setTempCorImagem] = useState<File | null>(null);
+  const [uploadingCor, setUploadingCor] = useState(false);
   const [tempDetalhe, setTempDetalhe] = useState({ tipo_pt: '', tipo_en: '', valor_pt: '', valor_en: '' });
   const [tempTag, setTempTag] = useState({ pt: '', en: '', icone: '♻️' });
 
@@ -76,10 +83,40 @@ export function GestaoCatalogo() {
   };
 
   // Funções de Adição aos Arrays
-  const addCor = () => {
-    if(!tempCor.nome_pt) return;
-    setFormData(prev => ({ ...prev, cores: [...prev.cores, tempCor] }));
-    setTempCor({ hex: '#000000', nome_pt: '', nome_en: '', desc_pt: '', desc_en: '', img_url: '' });
+  // Cada cor tem referência própria e fotografia obrigatória (não é uma cor standard).
+  // A fotografia é arrumada numa pasta por cor dentro da pasta do artigo.
+  const addCor = async () => {
+    if (!tempCor.nome_pt || !tempCor.referencia) {
+      alert('Indique a referência e o nome PT da cor.');
+      return;
+    }
+    if (!tempCorImagem) {
+      alert('Cada cor tem de ter uma fotografia associada.');
+      return;
+    }
+
+    setUploadingCor(true);
+    try {
+      const corFormData = new FormData();
+      corFormData.append('imagem', tempCorImagem);
+      corFormData.append('artigo', formData.referencia || 'sem-referencia');
+      corFormData.append('pasta', tempCor.referencia || tempCor.nome_pt);
+
+      const resposta = await fetch(UPLOAD_ENDPOINT, { method: 'POST', body: corFormData });
+      if (!resposta.ok) throw new Error(data.alertFail);
+      const { urlImagem } = await resposta.json();
+
+      setFormData(prev => ({ ...prev, cores: [...prev.cores, { ...tempCor, img_url: urlImagem }] }));
+      setTempCor(corVazia);
+      setTempCorImagem(null);
+      const input = document.getElementById('cor-imagem-input') as HTMLInputElement | null;
+      if (input) input.value = '';
+    } catch (error: any) {
+      console.error(error);
+      alert('Não foi possível carregar a fotografia da cor: ' + error.message);
+    } finally {
+      setUploadingCor(false);
+    }
   };
 
   const addDetalhe = () => {
@@ -108,9 +145,9 @@ export function GestaoCatalogo() {
       // 1. Upload da Imagem Principal
       const imageFormData = new FormData();
       imageFormData.append('imagem', formData.imagem);
+      imageFormData.append('artigo', formData.referencia || 'sem-referencia');
 
-      // CORREÇÃO: URL a apontar para a rota exata de upload do backend
-      const backendResponse = await fetch('https://curtumes-backend.onrender.com/api/upload-catalogo', {
+      const backendResponse = await fetch(UPLOAD_ENDPOINT, {
         method: 'POST',
         body: imageFormData,
       });
@@ -139,14 +176,15 @@ export function GestaoCatalogo() {
         cores: formData.cores,
         detalhes: finalDetalhes,
         tags: formData.tags,
-        categorias: formData.categorias
+        categorias: formData.categorias,
+        destaque: formData.destaque
       }]);
 
       if (dbError) throw dbError;
 
       alert(data.alertSuccess);
       // Reset Total
-      setFormData({ referencia: '', categoria: 'Hidrofugados', titulo_pt: '', titulo_en: '', descricao_pt: '', descricao_en: '', imagem: null, cores: [], detalhes: [], tags: [], categorias: [], espessura: '', tamanho_medio: '', tipo_artigo: '' });
+      setFormData({ referencia: '', categoria: 'Hidrofugados', titulo_pt: '', titulo_en: '', descricao_pt: '', descricao_en: '', imagem: null, cores: [], detalhes: [], tags: [], categorias: [], espessura: '', tamanho_medio: '', tipo_artigo: '', destaque: false });
       (document.getElementById('imagem-input') as HTMLInputElement).value = '';
       
     } catch (error: any) {
@@ -195,14 +233,7 @@ export function GestaoCatalogo() {
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Categoria Principal *</label>
                   <select name="categoria" value={formData.categoria} onChange={handleChange} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm">
-                    <option value="Hidrofugados">Hidrofugados</option>
-                    <option value="Camurças">Camurças</option>
-                    <option value="Napas">Napas</option>
-                    <option value="Anilinas">Anilinas</option>
-                    <option value="Fantasia">Fantasia</option>
-                    <option value="Nubucks">Nubucks</option>
-                    <option value="Floaters">Floaters</option>
-                    <option value="Ceras e Óleos">Ceras e Óleos</option>
+                    {CATEGORIAS.map(cat => <option key={cat.id} value={cat.id}>{cat.labelPT}</option>)}
                   </select>
                 </div>
               </div>
@@ -246,6 +277,22 @@ export function GestaoCatalogo() {
                 <label className="block text-sm font-bold text-institucional-blue mb-1">Imagem de Capa (Catálogo) *</label>
                 <input id="imagem-input" type="file" accept="image/*" onChange={handleImageChange} required className="block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:bg-institucional-blue file:text-white" />
               </div>
+
+              {/* Escolha dos artigos que aparecem na secção "Artigos em Destaque" da homepage */}
+              <label className="flex items-start gap-3 bg-amber-50/60 p-6 rounded-xl border border-amber-200 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.destaque}
+                  onChange={e => setFormData(prev => ({ ...prev, destaque: e.target.checked }))}
+                  className="w-5 h-5 mt-0.5 text-institucional-blue bg-white border-gray-300 rounded focus:ring-institucional-blue"
+                />
+                <span>
+                  <span className="block text-sm font-bold text-gray-800">Mostrar em "Artigos em Destaque" (homepage)</span>
+                  <span className="block text-xs text-gray-500 mt-1">
+                    A homepage mostra 3 destaques. Se assinalar mais do que 3, aparecem os 3 mais recentes.
+                  </span>
+                </span>
+              </label>
             </div>
           )}
 
@@ -255,17 +302,19 @@ export function GestaoCatalogo() {
           {activeTab === 'cores' && (
             <div className="space-y-8 animate-[fadeIn_0.3s_ease-out]">
               <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                <h3 className="font-bold text-lg mb-4 text-gray-800">Adicionar Nova Cor</h3>
+                <h3 className="font-bold text-lg mb-1 text-gray-800">Adicionar Nova Cor</h3>
+                <p className="text-xs text-gray-500 mb-4">
+                  Cada cor tem referência própria e fotografia obrigatória — não são cores standard.
+                  A fotografia fica arrumada numa pasta por cor, dentro da pasta do artigo.
+                </p>
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                  <div className="col-span-1">
-                    <label className="block text-xs font-bold text-gray-500 mb-1">Cor Hex</label>
-                    <div className="flex items-center space-x-2">
-                      <input type="color" value={tempCor.hex} onChange={e => setTempCor({...tempCor, hex: e.target.value})} className="h-10 w-10 cursor-pointer" />
-                      <input type="text" value={tempCor.hex} onChange={e => setTempCor({...tempCor, hex: e.target.value})} className="w-full p-2 border rounded-lg text-sm uppercase" />
-                    </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 mb-1">Referência da Cor *</label>
+                    <input type="text" value={tempCor.referencia} onChange={e => setTempCor({...tempCor, referencia: e.target.value})} placeholder="Ex: 1024" className="w-full p-2 border rounded-lg text-sm uppercase" />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-gray-500 mb-1">Nome Cor PT</label>
+                    <label className="block text-xs font-bold text-gray-500 mb-1">Nome Cor PT *</label>
                     <input type="text" value={tempCor.nome_pt} onChange={e => setTempCor({...tempCor, nome_pt: e.target.value})} placeholder="Ex: Castanho Escuro" className="w-full p-2 border rounded-lg text-sm" />
                   </div>
                   <div>
@@ -273,11 +322,35 @@ export function GestaoCatalogo() {
                     <input type="text" value={tempCor.nome_en} onChange={e => setTempCor({...tempCor, nome_en: e.target.value})} placeholder="Ex: Dark Brown" className="w-full p-2 border rounded-lg text-sm" />
                   </div>
                 </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  <div className="md:col-span-2">
+                    <label className="block text-xs font-bold text-gray-500 mb-1">Fotografia da Cor *</label>
+                    <input
+                      id="cor-imagem-input"
+                      type="file"
+                      accept="image/*"
+                      onChange={e => setTempCorImagem(e.target.files?.[0] ?? null)}
+                      className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-institucional-blue file:text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 mb-1">Cor Hex (recurso)</label>
+                    <div className="flex items-center space-x-2">
+                      <input type="color" value={tempCor.hex} onChange={e => setTempCor({...tempCor, hex: e.target.value})} className="h-10 w-10 cursor-pointer" />
+                      <input type="text" value={tempCor.hex} onChange={e => setTempCor({...tempCor, hex: e.target.value})} className="w-full p-2 border rounded-lg text-sm uppercase" />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <textarea placeholder="Descrição Específica desta Cor (Opcional - PT)" value={tempCor.desc_pt} onChange={e => setTempCor({...tempCor, desc_pt: e.target.value})} className="w-full p-2 border rounded-lg text-sm resize-none" rows={2}></textarea>
                   <textarea placeholder="Specific Color Description (Optional - EN)" value={tempCor.desc_en} onChange={e => setTempCor({...tempCor, desc_en: e.target.value})} className="w-full p-2 border rounded-lg text-sm resize-none" rows={2}></textarea>
                 </div>
-                <button type="button" onClick={addCor} className="bg-green-600 text-white px-4 py-2 rounded font-bold text-sm hover:bg-green-700">+ Adicionar à Lista</button>
+
+                <button type="button" onClick={addCor} disabled={uploadingCor} className={`text-white px-4 py-2 rounded font-bold text-sm ${uploadingCor ? 'bg-green-400 cursor-wait' : 'bg-green-600 hover:bg-green-700'}`}>
+                  {uploadingCor ? 'A carregar fotografia...' : '+ Adicionar à Lista'}
+                </button>
               </div>
 
               {/* Lista de Cores Adicionadas */}
@@ -285,12 +358,17 @@ export function GestaoCatalogo() {
                 <div className="border border-gray-200 rounded-xl overflow-x-auto">
                   <table className="w-full text-sm text-left">
                     <thead className="bg-gray-100 text-xs uppercase font-bold text-gray-500">
-                      <tr><th className="p-3">Cor</th><th className="p-3">Nome PT</th><th className="p-3">Nome EN</th><th className="p-3">Ação</th></tr>
+                      <tr><th className="p-3">Foto</th><th className="p-3">Referência</th><th className="p-3">Nome PT</th><th className="p-3">Nome EN</th><th className="p-3">Ação</th></tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {formData.cores.map((cor, idx) => (
                         <tr key={idx}>
-                          <td className="p-3"><div className="w-6 h-6 rounded-full border border-gray-300" style={{backgroundColor: cor.hex}}></div></td>
+                          <td className="p-3">
+                            {cor.img_url
+                              ? <img src={cor.img_url} alt={cor.nome_pt} className="w-12 h-12 object-cover border border-gray-200" />
+                              : <div className="w-12 h-12 border border-gray-300" style={{backgroundColor: cor.hex}}></div>}
+                          </td>
+                          <td className="p-3 font-bold uppercase">{cor.referencia}</td>
                           <td className="p-3">{cor.nome_pt}</td>
                           <td className="p-3">{cor.nome_en}</td>
                           <td className="p-3">

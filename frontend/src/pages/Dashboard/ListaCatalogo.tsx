@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { CATEGORIAS, labelCategoria } from '../../lib/categorias';
 
 const content = {
   PT: {
@@ -11,6 +12,8 @@ const content = {
     ref: "Referência",
     article: "Artigo",
     category: "Categoria",
+    featured: "Destaque",
+    featuredHint: "Mostrar na secção \"Artigos em Destaque\" da homepage (mostra os 3 mais recentes).",
     actions: "Ações",
     edit: "Editar",
     delete: "Apagar",
@@ -29,6 +32,8 @@ const content = {
     ref: "Reference",
     article: "Article",
     category: "Category",
+    featured: "Featured",
+    featuredHint: "Show in the homepage \"Featured Articles\" section (shows the 3 most recent).",
     actions: "Actions",
     edit: "Edit",
     delete: "Delete",
@@ -72,6 +77,19 @@ export function ListaCatalogo() {
   useEffect(() => {
     fetchArtigos();
   }, []);
+
+  // Alterna o destaque na homepage. A homepage mostra os 3 destaques mais recentes.
+  const toggleDestaque = async (artigo: any) => {
+    const novo = !artigo.destaque;
+    setArtigos(prev => prev.map(a => (a.id === artigo.id ? { ...a, destaque: novo } : a)));
+
+    const { error } = await supabase.from('artigos').update({ destaque: novo }).eq('id', artigo.id);
+    if (error) {
+      // Reverte o estado otimista se a gravação falhar
+      setArtigos(prev => prev.map(a => (a.id === artigo.id ? { ...a, destaque: !novo } : a)));
+      alert('Não foi possível alterar o destaque: ' + error.message);
+    }
+  };
 
   const handleDelete = async (id: string) => {
     if (!window.confirm(data.deleteConfirm)) return;
@@ -154,6 +172,7 @@ export function ListaCatalogo() {
                   <th className="p-4 text-xs font-title font-bold text-gray-500 uppercase tracking-wider">{data.ref}</th>
                   <th className="p-4 text-xs font-title font-bold text-gray-500 uppercase tracking-wider">{data.article}</th>
                   <th className="p-4 text-xs font-title font-bold text-gray-500 uppercase tracking-wider">{data.category}</th>
+                  <th className="p-4 text-xs font-title font-bold text-gray-500 uppercase tracking-wider text-center">{data.featured}</th>
                   <th className="p-4 text-xs font-title font-bold text-gray-500 uppercase tracking-wider text-right">{data.actions}</th>
                 </tr>
               </thead>
@@ -178,8 +197,19 @@ export function ListaCatalogo() {
                     </td>
                     <td className="p-4">
                       <span className="bg-blue-50 text-institucional-blue text-xs font-title font-bold px-3 py-1.5 rounded-md uppercase tracking-wider">
-                        {artigo.categoria}
+                        {labelCategoria(artigo.categoria, language)}
                       </span>
+                    </td>
+                    <td className="p-4 text-center">
+                      <button
+                        type="button"
+                        onClick={() => toggleDestaque(artigo)}
+                        title={data.featuredHint}
+                        aria-pressed={!!artigo.destaque}
+                        className={`text-2xl leading-none transition-transform hover:scale-125 ${artigo.destaque ? 'text-amber-400' : 'text-gray-300'}`}
+                      >
+                        {artigo.destaque ? '★' : '☆'}
+                      </button>
                     </td>
                     <td className="p-4 text-right space-x-3">
                       <button onClick={() => setEditingArtigo(artigo)} className="text-sm font-title font-bold text-blue-500 hover:text-blue-700 transition-colors uppercase tracking-wider">
@@ -225,14 +255,7 @@ export function ListaCatalogo() {
                   <div>
                     <label className="block text-xs font-title font-bold text-gray-500 uppercase tracking-wider mb-2">Categoria</label>
                     <select value={editingArtigo.categoria} onChange={(e) => setEditingArtigo({...editingArtigo, categoria: e.target.value})} className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium">
-                      <option value="Hidrofugados">Hidrofugados</option>
-                      <option value="Camurças">Camurças</option>
-                      <option value="Napas">Napas</option>
-                      <option value="Anilinas">Anilinas</option>
-                      <option value="Fantasia">Fantasia</option>
-                      <option value="Nubucks">Nubucks</option>
-                      <option value="Floaters">Floaters</option>
-                      <option value="Ceras e Óleos">Ceras e Óleos</option>
+                      {CATEGORIAS.map(cat => <option key={cat.id} value={cat.id}>{cat.labelPT}</option>)}
                     </select>
                   </div>
                 </div>

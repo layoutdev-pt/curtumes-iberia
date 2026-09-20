@@ -1,7 +1,7 @@
 // PoliticaPrivacidade.tsx
 import { useLanguage } from '../../contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { TypewriterText } from '../../components/ui/TypewriterText';
+import { RevealText } from '../../components/ui/RevealText';
 
 const content = {
   PT: {
@@ -33,7 +33,7 @@ export function PoliticaPrivacidade() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-title font-bold text-institucional-blue mb-8 md:mb-12 min-h-[1.2em]">
-            <TypewriterText text={data.title} speed={40} />
+            <RevealText text={data.title} />
           </h1>
         </motion.div>
         

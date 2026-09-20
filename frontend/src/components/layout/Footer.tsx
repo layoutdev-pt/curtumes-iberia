@@ -4,13 +4,11 @@ import { motion } from 'framer-motion';
 
 const content = {
   PT: {
-    cofinanced: "Cofinanciado por:",
     privacy: "Política de Privacidade",
     terms: "Termos de Utilização",
     phoneNotice: "(chamada rede fixa nacional)"
   },
   EN: {
-    cofinanced: "Co-financed by:",
     privacy: "Privacy Policy",
     terms: "Terms of Use",
     phoneNotice: "(national landline call)"
@@ -36,7 +34,7 @@ export function Footer() {
           
           {/* 1. Identidade e Redes Sociais (Esquerda) */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left md:pt-4">
-            <h3 className="font-title font-bold text-xl mb-4 tracking-wider">CURTUMES IBÉRIA</h3>
+            <h3 className="font-title font-bold text-xl mb-4 tracking-wider uppercase">Curtumes Ibéria</h3>
             <div className="flex justify-center md:justify-start space-x-6 mb-4 text-sm font-medium">
               <a href="https://www.facebook.com/curtumesiberia" target="_blank" rel="noreferrer" className="hover:opacity-75 transition-opacity">Facebook</a>
               <a href="https://www.instagram.com/curtumesiberia/" target="_blank" rel="noreferrer" className="hover:opacity-75 transition-opacity">Instagram</a>
@@ -73,7 +71,17 @@ export function Footer() {
           
         </div>
 
-        
+        {/* BARRA DE LOGOS DE FINANCIAMENTO (sem o texto "Cofinanciado por") */}
+        <div className="pt-8 mt-4 border-t border-white/10">
+          <div className="bg-white px-4 py-3 md:px-8 md:py-4">
+            <img
+              src="/logos/Logos_Curtumes.avif"
+              alt="Portugal 2020 · Compete 2020 · União Europeia"
+              className="w-full max-w-4xl mx-auto h-auto object-contain"
+              loading="lazy"
+            />
+          </div>
+        </div>
 
       </div>
     </motion.footer>
