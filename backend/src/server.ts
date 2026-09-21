@@ -23,8 +23,25 @@ const supabase = createClient(
 // 1. Interceção do ficheiro: Multer configurado para guardar na memória RAM (não no disco)
 const upload = multer({ storage: multer.memoryStorage() });
 
+/**
+ * Normaliza um nome (referência de artigo, nome de cor) para ser usado como
+ * segmento de caminho no Storage: sem acentos, sem espaços, em minúsculas.
+ */
+function slugify(valor: string): string {
+  return valor
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .toLowerCase();
+}
+
 // ============================================================================
 // ENDPOINT 1: UPLOAD DE IMAGENS DO CATÁLOGO
+// ----------------------------------------------------------------------------
+// Aceita um campo opcional `pasta` (ex.: "castanho-escuro") para arrumar as
+// fotografias das variantes em subpastas por cor, em vez de ficarem todas
+// à mistura em public/.
 // ============================================================================
 app.post('/api/upload-catalogo', upload.single('imagem'), async (req, res): Promise<any> => {
   try {
@@ -33,9 +50,19 @@ app.post('/api/upload-catalogo', upload.single('imagem'), async (req, res): Prom
     }
 
     const nomeOriginal = req.file.originalname.split('.')[0];
-    const nomeFicheiroWebp = `${nomeOriginal}-${Date.now()}.webp`;
+    const nomeFicheiroWebp = `${slugify(nomeOriginal)}-${Date.now()}.webp`;
 
-    console.log(`A processar imagem: ${nomeOriginal}`);
+    // Segmentos opcionais de pasta: artigo e/ou cor
+    const segmentos = ['public'];
+    if (typeof req.body.artigo === 'string' && req.body.artigo.trim()) {
+      segmentos.push(slugify(req.body.artigo));
+    }
+    if (typeof req.body.pasta === 'string' && req.body.pasta.trim()) {
+      segmentos.push(slugify(req.body.pasta));
+    }
+    const caminho = `${segmentos.join('/')}/${nomeFicheiroWebp}`;
+
+    console.log(`A processar imagem: ${nomeOriginal} -> ${caminho}`);
 
     // Processamento com Sharp: Conversão para WebP, redimensionamento e compressão
     const bufferOtimizado = await sharp(req.file.buffer)
@@ -49,10 +76,10 @@ app.post('/api/upload-catalogo', upload.single('imagem'), async (req, res): Prom
       .toBuffer();
 
     // Exportação para o serviço de Object Storage nativo (Supabase Storage)
-    const { data: uploadData, error: uploadError } = await supabase
+    const { error: uploadError } = await supabase
       .storage
       .from('catalogo-imagens')
-      .upload(`public/${nomeFicheiroWebp}`, bufferOtimizado, {
+      .upload(caminho, bufferOtimizado, {
         contentType: 'image/webp',
         upsert: false
       });
@@ -65,7 +92,7 @@ app.post('/api/upload-catalogo', upload.single('imagem'), async (req, res): Prom
     const { data: publicUrlData } = supabase
       .storage
       .from('catalogo-imagens')
-      .getPublicUrl(`public/${nomeFicheiroWebp}`);
+      .getPublicUrl(caminho);
 
     return res.status(200).json({ 
       mensagem: 'Pipeline executado com sucesso',

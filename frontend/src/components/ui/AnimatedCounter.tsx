@@ -10,6 +10,7 @@ interface AnimatedCounterProps {
   display?: string;
   /** Linha de apoio por baixo do rótulo, como nos KPIs da homepage. */
   sub?: string;
+  className?: string;
 }
 
 /**
@@ -17,13 +18,14 @@ interface AnimatedCounterProps {
  * homepage: número grande em azul institucional, rótulo em caixa alta com
  * tracking largo e uma linha de apoio em cinzento leve.
  */
-export function AnimatedCounter({ value = 0, text, suffix = '', display, sub }: AnimatedCounterProps) {
+export function AnimatedCounter({ value = 0, text, suffix = '', display, sub, className }: AnimatedCounterProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (isInView && !display) {
+      let animationFrameId: number;
       const duration = 2000;
       const startTime = performance.now();
 
@@ -37,18 +39,24 @@ export function AnimatedCounter({ value = 0, text, suffix = '', display, sub }: 
         setCount(Math.floor(easeOut * value));
 
         if (progress < 1) {
-          requestAnimationFrame(updateCount);
+          animationFrameId = requestAnimationFrame(updateCount);
         } else {
           setCount(value);
         }
       };
 
-      requestAnimationFrame(updateCount);
+      animationFrameId = requestAnimationFrame(updateCount);
+
+      return () => {
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+        }
+      };
     }
   }, [isInView, value, display]);
 
   return (
-    <div ref={ref} className="flex flex-col items-center text-center">
+    <div ref={ref} className={`flex flex-col items-center text-center ${className ?? ''}`}>
       <div className="flex items-baseline mb-3">
         <span className="text-5xl sm:text-6xl lg:text-7xl font-title font-bold text-institucional-blue tracking-tight tabular-nums uppercase">
           {display ?? count}

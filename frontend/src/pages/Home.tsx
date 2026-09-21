@@ -13,6 +13,7 @@ import { supabase } from "../lib/supabase";
 import { labelCategoria } from "../lib/categorias";
 import { GalleryMarquee } from "../components/ui/GalleryMarquee";
 import { RevealText } from "../components/ui/RevealText";
+import { AnimatedCounter } from "../components/ui/AnimatedCounter";
 
 interface ArtigoDestaque {
   id: string;
@@ -26,10 +27,10 @@ interface ArtigoDestaque {
 const content = {
   PT: {
     stats: [
-      { number: "60+", label: "Anos de Experiência", sub: "Desde 1963 em Vila Moreira" },
-      { number: "3", label: "Gerações", sub: "Uma empresa familiar" },
-      { number: "LWG", label: "Classificação Gold", sub: "Classificação ambiental máxima" },
-      { number: "13+", label: "Mercados", sub: "Da Europa ao resto do mundo" },
+      { value: 60, suffix: "+", label: "Anos de Experiência", sub: "Desde 1963 em Vila Moreira" },
+      { value: 3, label: "Gerações", sub: "Uma empresa familiar" },
+      { display: "LWG", label: "Classificação Gold", sub: "Classificação ambiental máxima" },
+      { value: 13, suffix: "+", label: "Mercados", sub: "Da Europa ao resto do mundo" },
     ],
     featuredTitle: "Artigos em Destaque",
     featuredSubtitle:
@@ -68,10 +69,10 @@ const content = {
   },
   EN: {
     stats: [
-      { number: "60+", label: "Years of Experience", sub: "Since 1963 in Vila Moreira" },
-      { number: "3", label: "Generations", sub: "A family-owned company" },
-      { number: "LWG", label: "Gold Rated", sub: "Top environmental rating" },
-      { number: "13+", label: "Markets", sub: "From Europe to the rest of the world" },
+      { value: 60, suffix: "+", label: "Years of Experience", sub: "Since 1963 in Vila Moreira" },
+      { value: 3, label: "Generations", sub: "A family-owned company" },
+      { display: "LWG", label: "Gold Rated", sub: "Top environmental rating" },
+      { value: 13, suffix: "+", label: "Markets", sub: "From Europe to the rest of the world" },
     ],
     featuredTitle: "Featured Articles",
     featuredSubtitle:
@@ -301,17 +302,14 @@ export function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="flex flex-col items-center text-center"
               >
-                <span className="text-5xl sm:text-6xl lg:text-7xl font-title font-bold text-institucional-blue mb-3 tracking-tight">
-                  {stat.number}
-                </span>
-                <h3 className="text-xs sm:text-sm font-bold text-gray-900 uppercase tracking-[0.25em] mb-2">
-                  {stat.label}
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-500 font-light leading-relaxed max-w-[220px]">
-                  {stat.sub}
-                </p>
+                <AnimatedCounter
+                  value={stat.value}
+                  suffix={stat.suffix}
+                  display={stat.display}
+                  text={stat.label}
+                  sub={stat.sub}
+                />
               </motion.div>
             ))}
           </div>
@@ -441,13 +439,14 @@ export function Home() {
           </div>
 
           {/* Destaque visual da fábrica — uma única imagem grande, sem moldura */}
-          <div className="relative w-full">
+          <div className="relative w-full overflow-hidden group">
             <img
               src="/imagens/fotos/Curtumes_Iberia_23.JPG"
               alt="Produção Curtumes Ibéria"
-              className="w-full h-[420px] sm:h-[560px] lg:h-[680px] object-cover"
+              className="w-full h-[420px] sm:h-[560px] lg:h-[680px] object-cover transform transition-transform duration-[1200ms] ease-out group-hover:scale-105"
               loading="lazy"
             />
+            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
           </div>
         </div>
       </motion.section>

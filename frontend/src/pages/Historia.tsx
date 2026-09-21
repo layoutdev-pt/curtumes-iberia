@@ -231,23 +231,34 @@ function SplitSection({
   const imageRight = imageSide === 'right';
 
   return (
-    <section className="w-full grid grid-cols-1 lg:grid-cols-2 items-center">
-      <div
+    <section className="w-full grid grid-cols-1 lg:grid-cols-2 items-center overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, x: imageRight ? -90 : 90 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         className={`px-6 md:px-12 lg:px-20 py-16 lg:py-28 ${imageRight ? 'lg:order-1' : 'lg:order-2'}`}
       >
         <div className={`max-w-xl space-y-8 ${imageRight ? 'lg:ml-auto' : 'lg:mr-auto'}`}>
           {children}
         </div>
-      </div>
+      </motion.div>
 
-      <div className={`w-full ${imageRight ? 'lg:order-2' : 'lg:order-1'}`}>
+      <motion.div
+        initial={{ opacity: 0, x: imageRight ? 90 : -90 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        className={`relative w-full overflow-hidden group ${imageRight ? 'lg:order-2' : 'lg:order-1'}`}
+      >
         <img
           src={image}
           alt={alt}
-          className="w-full h-[420px] md:h-[620px] lg:h-[820px] object-cover"
+          className="w-full h-[420px] md:h-[620px] lg:h-[820px] object-cover transform transition-transform duration-[1200ms] ease-out group-hover:scale-105"
           loading="lazy"
         />
-      </div>
+        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+      </motion.div>
     </section>
   );
 }
@@ -315,26 +326,28 @@ export function Historia() {
 
         {/* O texto fundador fica repartido a duas colunas com uma fotografia,
             para a secção não abrir com um bloco de texto tão longo. */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center overflow-hidden">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -100 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full overflow-hidden group shadow-sm"
           >
             <img
               src="/imagens/fotos/Curtumes_Iberia_26.JPG"
               alt="Curtumes Ibéria, Vila Moreira"
-              className="w-full h-[420px] md:h-[640px] object-cover"
+              className="w-full h-[420px] md:h-[640px] object-cover transform transition-transform duration-[1200ms] ease-out group-hover:scale-105"
               loading="lazy"
             />
+            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 100 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.8, delay: 0.1 }}
+            transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="space-y-6"
           >
             {data.originText.map((p, i) => (
