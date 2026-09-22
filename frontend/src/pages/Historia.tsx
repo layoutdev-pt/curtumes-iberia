@@ -361,7 +361,7 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* IMAGEM GRANDE 1 — POR INTEIRO, SEM MOLDURA */}
       {/* ========================================================================= */}
-      <div className="w-full pb-24 overflow-hidden">
+      <div className="w-full overflow-hidden">
         <motion.div
           initial={{ opacity: 0, scale: 1.05 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -383,7 +383,7 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* Mesmo tratamento da faixa de métricas da homepage: sem caixas nem
           divisórias, a ocupar a largura da página. */}
-      <section className="py-16 md:py-24 bg-white border-y border-gray-200 relative z-10 w-full mb-24">
+      <section className="py-16 md:py-24 bg-white relative z-10 w-full">
         <div className="w-full px-6 md:px-12 lg:px-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 gap-x-8 lg:gap-x-16">
             <motion.div
