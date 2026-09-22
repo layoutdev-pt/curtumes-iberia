@@ -362,15 +362,21 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* IMAGEM GRANDE 1 — POR INTEIRO, SEM MOLDURA */}
       {/* ========================================================================= */}
-      <div className="w-full pb-24">
-        <div className="w-full relative h-[60vh] md:h-[80vh]">
+      <div className="w-full pb-24 overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, scale: 1.05 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="w-full relative h-[60vh] md:h-[80vh] overflow-hidden"
+        >
           <img
             src="/tour/DSCF9296.webp"
             className="w-full h-full object-cover"
             alt="Instalações Curtumes Ibéria"
             loading="lazy"
           />
-        </div>
+        </motion.div>
       </div>
 
       {/* ========================================================================= */}
@@ -381,9 +387,30 @@ export function Historia() {
       <section className="py-16 md:py-24 bg-white border-y border-gray-200 relative z-10 w-full mb-24">
         <div className="w-full px-6 md:px-12 lg:px-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 gap-x-8 lg:gap-x-16">
-            <AnimatedCounter value={60} suffix="+" text={data.stats.anos} sub={data.stats.anosSub} />
-            <AnimatedCounter value={3} text={data.stats.geracoes} sub={data.stats.geracoesSub} />
-            <AnimatedCounter display="LWG Gold" text={data.stats.lwg} sub={data.stats.lwgSub} />
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, delay: 0 }}
+            >
+              <AnimatedCounter value={60} suffix="+" text={data.stats.anos} sub={data.stats.anosSub} />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+            >
+              <AnimatedCounter value={3} text={data.stats.geracoes} sub={data.stats.geracoesSub} />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <AnimatedCounter display="LWG Gold" text={data.stats.lwg} sub={data.stats.lwgSub} />
+            </motion.div>
           </div>
         </div>
       </section>
@@ -579,13 +606,30 @@ export function Historia() {
       {/* O título fica encostado ao topo e o carrossel ao fundo: nenhum deles
           se sobrepõe ao mapa, que ocupa a faixa central da secção. */}
       <div id="presenca-internacional" className="w-full relative bg-institucional-blue overflow-hidden border-t border-blue-900 shadow-inner scroll-mt-24 flex flex-col">
-        <div className="max-w-7xl mx-auto px-6 relative z-20 text-center pt-20 pb-10">
-          <h2 className="text-4xl md:text-5xl font-title font-bold text-white uppercase tracking-tight drop-shadow-md">{data.salesTitle}</h2>
+        {/* Brilho atmosférico para dar profundidade e sofisticação */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[900px] h-[360px] bg-blue-400/10 rounded-full blur-[120px] pointer-events-none z-0" />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-20 text-center pt-8 md:pt-12 pb-3 md:pb-5">
+          <p className="text-blue-300 text-xs md:text-sm font-bold uppercase tracking-[0.25em] mb-2 drop-shadow-sm">
+            {language === 'PT' ? 'Alcance Internacional' : 'International Reach'}
+          </p>
+          <h2 className="text-4xl md:text-5xl font-title font-bold text-white uppercase tracking-tight drop-shadow-md">
+            {data.salesTitle}
+          </h2>
         </div>
 
-        {/* MAPA MUNDI — recortado numa faixa de altura fixa, sem margens negativas */}
-        <div className="w-full max-w-6xl mx-auto opacity-70 pointer-events-none relative z-10 h-[300px] md:h-[440px] lg:h-[520px] overflow-hidden flex items-center justify-center">
-          <ComposableMap projection="geoMercator" projectionConfig={{ scale: 120 }}>
+        {/* MAPA MUNDI — suavizado nas margens superior e inferior com máscara gradiente e enquadramento equilibrado */}
+        <div
+          className="w-full max-w-6xl mx-auto opacity-75 pointer-events-none relative z-10 h-[320px] md:h-[460px] lg:h-[540px] overflow-hidden flex items-center justify-center [mask-image:linear-gradient(to_bottom,transparent_0%,black_16%,black_84%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_16%,black_84%,transparent_100%)]"
+        >
+          {/* Camada extra de suavização no topo e fundo */}
+          <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-institucional-blue via-institucional-blue/60 to-transparent pointer-events-none z-20" />
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-institucional-blue via-institucional-blue/60 to-transparent pointer-events-none z-20" />
+
+          <ComposableMap
+            projection="geoMercator"
+            projectionConfig={{ scale: 122, center: [10, 16] }}
+          >
             <Geographies geography={geoUrl}>
               {({ geographies }) =>
                 geographies.map((geo) => (

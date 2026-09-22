@@ -15,6 +15,7 @@ interface Artigo {
   descricao_pt: string;
   descricao_en: string;
   imagem_url: string;
+  cores?: any[];
   tags?: any;
   categorias?: string[];
 }
@@ -62,6 +63,7 @@ export function Catalogo() {
         if (data) {
           const parsedData = data.map(art => ({
             ...art,
+            cores: typeof art.cores === 'string' ? JSON.parse(art.cores) : art.cores || [],
             tags: typeof art.tags === 'string' ? JSON.parse(art.tags) : art.tags || [],
             categorias: typeof art.categorias === 'string' ? JSON.parse(art.categorias) : art.categorias || []
           }));
@@ -89,7 +91,7 @@ export function Catalogo() {
         backgroundImage="/tour/DSCF9288.webp"
       />
 
-      <div className="max-w-[1500px] mx-auto px-6 relative z-10 pt-16 md:pt-20 pb-24">
+      <div className="max-w-[1500px] mx-auto px-6 relative z-10 pt-16 md:pt-20 pb-0">
 
         {/* Filtro por categoria */}
         <motion.div
@@ -135,10 +137,11 @@ export function Catalogo() {
                   <Link to={`/produto/${artigo.id}`} key={artigo.id} className="group">
                     <motion.div
                       layoutId={`card-${artigo.id}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      initial={{ opacity: 0, y: 25 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-40px" }}
                       exit={{ opacity: 0, y: 20 }}
-                      transition={{ duration: 0.4, delay: index * 0.04 }}
+                      transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3) }}
                       className="h-full flex flex-col cursor-pointer"
                     >
                       <div className="aspect-[4/5] bg-slate-100 overflow-hidden relative">
@@ -166,6 +169,29 @@ export function Catalogo() {
                         <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-5 flex-grow font-light">
                           {language === 'PT' ? artigo.descricao_pt : artigo.descricao_en}
                         </p>
+                        {/* Variantes de Cor — pequenos círculos */}
+                        {artigo.cores && artigo.cores.length > 0 && (
+                          <div className="flex items-center gap-2 mb-4">
+                            <div className="flex -space-x-1.5 items-center">
+                              {artigo.cores.slice(0, 5).map((c: any, i: number) => (
+                                <span
+                                  key={i}
+                                  className="w-3.5 h-3.5 rounded-full border border-white shadow-xs overflow-hidden inline-block bg-slate-200"
+                                  title={language === 'PT' ? c.nome_pt : c.nome_en}
+                                  style={
+                                    c.img_url
+                                      ? { backgroundImage: `url(${c.img_url})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+                                      : { backgroundColor: c.hex || '#cbd5e1' }
+                                  }
+                                />
+                              ))}
+                            </div>
+                            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                              {artigo.cores.length} {language === 'PT' ? (artigo.cores.length === 1 ? 'cor' : 'cores') : (artigo.cores.length === 1 ? 'colour' : 'colours')}
+                            </span>
+                          </div>
+                        )}
+
                         <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-institucional-blue group-hover:gap-3 transition-all">
                           <span>{data.cta}</span>
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

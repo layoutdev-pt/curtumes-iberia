@@ -53,7 +53,7 @@ function AppContent() {
         {isInitialLoading && <Loader />}
       </AnimatePresence>
       
-      <ScrollToTop />
+      <ScrollToTop isInitialLoading={isInitialLoading} />
       
       {showPublicLayout && (
         <div className="relative z-50">
@@ -65,40 +65,38 @@ function AppContent() {
       
       <main className="flex-grow flex flex-col relative z-0">
         <AnimatePresence mode="wait">
-          {!isInitialLoading && (
-            <motion.div
-              key={`${location.pathname}-${language}`} 
-              initial={{ opacity: 0, y: 5 }}    
-              animate={{ opacity: 1, y: 0 }}     
-              exit={{ opacity: 0, y: -10 }}      
-              transition={{ duration: 0.3, ease: "easeOut" }} 
-              className="flex-grow flex flex-col"
-            >
-              <Routes location={location}>
-                {/* Frontend Público */}
-                <Route path="/" element={<Home />} />
-                <Route path="/historia" element={<Historia />} />
-                <Route path="/sustentabilidade" element={<Sustentabilidade />} />
-                <Route path="/catalogo" element={<CatalogoPublico />} />
-                <Route path="/produto/:id" element={<ArtigoDetalhe />} />
-                <Route path="/contactos" element={<Contactos />} />
-                <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
-                <Route path="/termos-utilizacao" element={<TermosUtilizacao />} />
-                
-                {/* Login Isolado */}
-                <Route path="/login" element={<Login />} />
-                
-                {/* Rotas Agrupadas do Dashboard com Sidebar */}
-                <Route element={<ProtectedRoute />}>
-                  <Route path="/dashboard" element={<DashboardLayout />}>
-                    <Route index element={<Kanban />} />
-                    <Route path="lista-catalogo" element={<ListaCatalogo />} />
-                    <Route path="catalogo" element={<GestaoCatalogo />} />
-                  </Route>
+          <motion.div
+            key={`${location.pathname}-${language}`} 
+            initial={{ opacity: 0, y: 5 }}    
+            animate={{ opacity: 1, y: 0 }}     
+            exit={{ opacity: 0, y: -10 }}      
+            transition={{ duration: 0.3, ease: "easeOut" }} 
+            className="flex-grow flex flex-col"
+          >
+            <Routes location={location}>
+              {/* Frontend Público */}
+              <Route path="/" element={<Home />} />
+              <Route path="/historia" element={<Historia />} />
+              <Route path="/sustentabilidade" element={<Sustentabilidade />} />
+              <Route path="/catalogo" element={<CatalogoPublico />} />
+              <Route path="/produto/:id" element={<ArtigoDetalhe />} />
+              <Route path="/contactos" element={<Contactos />} />
+              <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
+              <Route path="/termos-utilizacao" element={<TermosUtilizacao />} />
+              
+              {/* Login Isolado */}
+              <Route path="/login" element={<Login />} />
+              
+              {/* Rotas Agrupadas do Dashboard com Sidebar */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="/dashboard" element={<DashboardLayout />}>
+                  <Route index element={<Kanban />} />
+                  <Route path="lista-catalogo" element={<ListaCatalogo />} />
+                  <Route path="catalogo" element={<GestaoCatalogo />} />
                 </Route>
-              </Routes>
-            </motion.div>
-          )}
+              </Route>
+            </Routes>
+          </motion.div>
         </AnimatePresence>
       </main>
 

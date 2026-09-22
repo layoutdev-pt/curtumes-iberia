@@ -117,11 +117,16 @@ export function ArtigoDetalhe() {
     : artigo.imagem_url;
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen pt-32 pb-24 relative overflow-x-hidden">
+    <div className="bg-[#F8FAFC] min-h-screen pt-32 pb-0 relative overflow-x-clip">
       <div className="max-w-[1500px] mx-auto px-6 relative z-10">
 
         {/* BREADCRUMBS — a referência do artigo é o próprio nome da pele */}
-        <nav className="flex items-center text-xs uppercase tracking-[0.2em] text-gray-500 mb-10 font-bold space-x-3">
+        <motion.nav
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center text-xs uppercase tracking-[0.2em] text-gray-500 mb-10 font-bold space-x-3"
+        >
           <Link to="/catalogo" className="hover:text-institucional-blue transition-colors">
             {language === 'PT' ? 'Artigos' : 'Articles'}
           </Link>
@@ -129,7 +134,7 @@ export function ArtigoDetalhe() {
           <span className="text-gray-400">{labelCategoria(artigo.categoria, language)}</span>
           <span>/</span>
           <span className="text-institucional-blue font-title">{titulo}</span>
-        </nav>
+        </motion.nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20">
 
@@ -139,6 +144,9 @@ export function ArtigoDetalhe() {
             {/* Imagem principal — grande, por inteiro, sem moldura */}
             <motion.div
               layoutId={`img-${artigo.id}`}
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="overflow-hidden aspect-[4/5] relative bg-slate-100"
             >
               <AnimatePresence mode="wait">
@@ -155,43 +163,79 @@ export function ArtigoDetalhe() {
               </AnimatePresence>
             </motion.div>
 
-            {/* SELEÇÃO DE CORES — cada cor tem referência e imagem própria */}
+            {/* SELEÇÃO DE CORES — círculos pequenos com nome e referência por baixo */}
             {artigo.cores && artigo.cores.length > 0 && (
-              <div className="bg-white p-6 border border-gray-200">
-                <h3 className="text-xs font-title font-bold uppercase tracking-[0.25em] text-gray-400 mb-6">
-                  {language === 'PT' ? 'Cores Disponíveis' : 'Available Colours'}
-                </h3>
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
-                  {artigo.cores.map((cor: any, idx: number) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setCorAtiva(idx)}
-                      className={`group text-left transition-all ${corAtiva === idx ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
-                    >
-                      <div className={`aspect-square overflow-hidden bg-slate-100 border-2 transition-colors ${corAtiva === idx ? 'border-institucional-blue' : 'border-transparent group-hover:border-gray-300'}`}>
-                        {cor.img_url ? (
-                          <img
-                            src={cor.img_url}
-                            alt={language === 'PT' ? cor.nome_pt : cor.nome_en}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        ) : (
-                          // Sem fotografia carregada: mostra o hex apenas como recurso de último caso
-                          <div className="w-full h-full" style={{ backgroundColor: cor.hex }}></div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                className="bg-white p-6 border border-gray-200"
+              >
+                <div className="flex items-center justify-between mb-5">
+                  <h3 className="text-xs font-title font-bold uppercase tracking-[0.25em] text-gray-400">
+                    {language === 'PT' ? 'Cores Disponíveis' : 'Available Colours'}
+                  </h3>
+                  <span className="text-[11px] text-gray-400 font-medium">
+                    {artigo.cores.length} {language === 'PT' ? (artigo.cores.length === 1 ? 'variante' : 'variantes') : (artigo.cores.length === 1 ? 'variant' : 'variants')}
+                  </span>
+                </div>
+
+                {/* Grelha de círculos com nome por baixo */}
+                <div className="flex flex-wrap gap-4 py-1">
+                  {artigo.cores.map((cor: any, idx: number) => {
+                    const isSelected = corAtiva === idx;
+                    const nomeCor = language === 'PT' ? cor.nome_pt : cor.nome_en;
+
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setCorAtiva(idx)}
+                        className={`group flex flex-col items-center text-center transition-all focus:outline-none ${
+                          isSelected ? 'opacity-100' : 'opacity-70 hover:opacity-100'
+                        }`}
+                      >
+                        {/* Círculo da cor */}
+                        <div
+                          className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full p-0.5 transition-all duration-200 ${
+                            isSelected
+                              ? 'ring-2 ring-institucional-blue ring-offset-2 scale-105 shadow-sm'
+                              : 'border border-gray-300 group-hover:border-institucional-blue group-hover:scale-105'
+                          }`}
+                        >
+                          <div className="w-full h-full rounded-full overflow-hidden bg-slate-100 shadow-inner flex items-center justify-center">
+                            {cor.img_url ? (
+                              <img
+                                src={cor.img_url}
+                                alt={nomeCor}
+                                className="w-full h-full object-cover rounded-full"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div
+                                className="w-full h-full rounded-full"
+                                style={{ backgroundColor: cor.hex || '#cbd5e1' }}
+                              />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Referência e Nome por baixo */}
+                        {cor.referencia && (
+                          <span className="block mt-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                            {cor.referencia}
+                          </span>
                         )}
-                      </div>
-                      {cor.referencia && (
-                        <span className="block mt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
-                          {cor.referencia}
+                        <span
+                          className={`block text-xs mt-0.5 max-w-[85px] truncate ${
+                            isSelected ? 'text-institucional-blue font-bold' : 'text-gray-600 group-hover:text-gray-900'
+                          }`}
+                        >
+                          {nomeCor}
                         </span>
-                      )}
-                      <span className={`block text-xs mt-0.5 ${corAtiva === idx ? 'text-institucional-blue font-bold' : 'text-gray-600'}`}>
-                        {language === 'PT' ? cor.nome_pt : cor.nome_en}
-                      </span>
-                    </button>
-                  ))}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 {/* Descrição específica da cor (se existir) */}
@@ -202,18 +246,23 @@ export function ArtigoDetalhe() {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="mt-6 text-sm text-gray-500 bg-gray-50 p-4 border border-gray-100"
+                      className="mt-5 text-xs md:text-sm text-gray-500 bg-gray-50 p-3.5 border border-gray-100 leading-relaxed"
                     >
                       {language === 'PT' ? artigo.cores[corAtiva].desc_pt : artigo.cores[corAtiva].desc_en}
                     </motion.p>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             )}
 
             {/* FICHA TÉCNICA (DETALHES) */}
             {artigo.detalhes && artigo.detalhes.length > 0 && (
-              <div className="bg-white p-6 border border-gray-200">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                className="bg-white p-6 border border-gray-200"
+              >
                 <h3 className="text-xs font-title font-bold uppercase tracking-[0.25em] text-gray-400 mb-4">
                   {language === 'PT' ? 'Ficha Técnica' : 'Technical Specifications'}
                 </h3>
@@ -249,20 +298,42 @@ export function ArtigoDetalhe() {
                     </span>
                   </div>
                 )}
-              </div>
+              </motion.div>
             )}
           </div>
 
           {/* LADO DIREITO: Informação de Venda e Formulário */}
-          <div className="flex flex-col h-full">
-            <div className="mb-10">
+          <div className="relative">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+              className="mb-10"
+            >
               <span className="inline-block bg-institucional-blue text-white text-[10px] font-bold px-3 py-1.5 tracking-[0.2em] uppercase mb-6">
                 {labelCategoria(artigo.categoria, language)}
               </span>
 
-              <h1 className="text-4xl md:text-6xl font-title font-bold text-institucional-blue uppercase tracking-tight mb-8 leading-[1.05]">
+              <h1 className="text-4xl md:text-6xl font-title font-bold text-institucional-blue uppercase tracking-tight mb-4 leading-[1.05]">
                 {titulo}
               </h1>
+
+              {/* Nome da cor ativa por baixo do nome do produto */}
+              {corAtiva !== null && artigo.cores && artigo.cores[corAtiva] && (
+                <div className="flex items-center gap-2 mb-8 text-sm">
+                  <span className="text-xs uppercase tracking-wider font-bold text-gray-400">
+                    {language === 'PT' ? 'Cor selecionada:' : 'Selected colour:'}
+                  </span>
+                  <span className="font-bold text-institucional-blue text-base">
+                    {language === 'PT' ? artigo.cores[corAtiva].nome_pt : artigo.cores[corAtiva].nome_en}
+                  </span>
+                  {artigo.cores[corAtiva].referencia && (
+                    <span className="text-xs font-bold uppercase tracking-wider text-gray-500 bg-gray-100 px-2.5 py-0.5 rounded">
+                      {artigo.cores[corAtiva].referencia}
+                    </span>
+                  )}
+                </div>
+              )}
 
               <p className="text-lg text-gray-600 font-light leading-relaxed mb-8">
                 {language === 'PT' ? artigo.descricao_pt : artigo.descricao_en}
@@ -279,10 +350,15 @@ export function ArtigoDetalhe() {
                   ))}
                 </div>
               )}
-            </div>
+            </motion.div>
 
-            {/* FORMULÁRIO DE ENCOMENDA INTEGRADO */}
-            <div className="bg-white p-8 md:p-10 border border-gray-200 mt-auto relative overflow-hidden">
+            {/* FORMULÁRIO DE ENCOMENDA INTEGRADO — Sticky que acompanha o scroll até ao fundo */}
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+              className="bg-white p-8 md:p-10 border border-gray-200 relative overflow-hidden lg:sticky lg:top-28"
+            >
 
               {/* Alerta de Sucesso Animado */}
               <AnimatePresence>
@@ -342,7 +418,7 @@ export function ArtigoDetalhe() {
                   }
                 </button>
               </form>
-            </div>
+            </motion.div>
 
           </div>
         </div>

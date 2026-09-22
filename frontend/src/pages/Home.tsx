@@ -157,8 +157,7 @@ export function Home() {
         .from("artigos")
         .select(COLUNAS)
         .eq("destaque", true)
-        .order("created_at", { ascending: false })
-        .limit(3);
+        .order("created_at", { ascending: false });
 
       if (!marcados.error && marcados.data?.length) {
         setDestaques(marcados.data as ArtigoDestaque[]);
@@ -167,7 +166,7 @@ export function Home() {
 
       if (marcados.error) {
         console.warn(
-          "Coluna `destaque` indisponível, a usar os artigos mais recentes:",
+          "Coluna `destaque` indisponível, a usar os artigos:",
           marcados.error.message
         );
       }
@@ -175,11 +174,10 @@ export function Home() {
       const recentes = await supabase
         .from("artigos")
         .select(COLUNAS)
-        .order("created_at", { ascending: false })
-        .limit(3);
+        .order("created_at", { ascending: false });
 
       if (recentes.error) {
-        console.error("Erro ao carregar artigos em destaque:", recentes.error);
+        console.error("Erro ao carregar artigos:", recentes.error);
         return;
       }
       if (recentes.data) setDestaques(recentes.data as ArtigoDestaque[]);
@@ -350,17 +348,17 @@ export function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {destaques.map((artigo, idx) => (
               <motion.div
                 key={artigo.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, delay: idx * 0.1 }}
+                transition={{ duration: 0.6, delay: Math.min(idx * 0.06, 0.4) }}
               >
                 <Link to={`/produto/${artigo.id}`} className="group block">
-                  <div className="relative w-full h-[280px] md:h-[360px] overflow-hidden bg-slate-100">
+                  <div className="relative w-full aspect-[4/5] overflow-hidden bg-slate-100">
                     <img
                       src={artigo.imagem_url}
                       alt={language === "PT" ? artigo.titulo_pt : artigo.titulo_en}
@@ -369,18 +367,18 @@ export function Home() {
                     />
                   </div>
 
-                  <div className="pt-5 flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.25em] mb-1.5">
+                  <div className="pt-3 sm:pt-4 flex items-start justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[9px] sm:text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] mb-1 line-clamp-1">
                         {labelCategoria(artigo.categoria, language)}
                       </p>
-                      <h3 className="text-xl md:text-2xl font-title font-bold text-institucional-blue uppercase tracking-tight">
+                      <h3 className="text-base sm:text-lg md:text-xl font-title font-bold text-institucional-blue uppercase tracking-tight truncate">
                         {language === "PT" ? artigo.titulo_pt : artigo.titulo_en}
                       </h3>
                     </div>
 
-                    <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-institucional-blue whitespace-nowrap pt-1.5 group-hover:gap-3 transition-all">
-                      <span>{data.featuredCta}</span>
+                    <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-institucional-blue whitespace-nowrap pt-1 group-hover:gap-2 transition-all shrink-0">
+                      <span className="hidden sm:inline">{data.featuredCta}</span>
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>

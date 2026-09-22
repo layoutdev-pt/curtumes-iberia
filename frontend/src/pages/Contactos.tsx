@@ -193,7 +193,7 @@ export function Contactos() {
         backgroundImage="/tour/DSCF9299.webp"
       />
 
-      <div className="max-w-[1300px] mx-auto px-6 w-full relative z-10 py-16 lg:py-20 space-y-16 lg:space-y-24">
+      <div className="max-w-[1300px] mx-auto px-6 w-full relative z-10 pt-16 lg:pt-20 pb-0 space-y-16 lg:space-y-24">
 
         {/* CANAIS DE CONTACTO RÁPIDO */}
         <motion.div
@@ -353,26 +353,48 @@ export function Contactos() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="lg:col-span-1 h-full"
           >
             <div className="bg-institucional-blue text-white p-8 md:p-10 relative overflow-hidden h-full flex flex-col">
               <div className="absolute -top-24 -right-24 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
 
-              <h2 className="text-xl md:text-2xl font-title font-bold uppercase tracking-tight mb-10 relative z-10">
+              <motion.h2
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="text-xl md:text-2xl font-title font-bold uppercase tracking-tight mb-10 relative z-10"
+              >
                 {data.whyTitle}
-              </h2>
+              </motion.h2>
 
               <div className="space-y-7 relative z-10">
                 {data.whyPoints.map((point, i) => (
-                  <div key={i} className="flex gap-4">
-                    <span className="flex-shrink-0 font-title font-bold text-lg text-white/40 tabular-nums pt-0.5">
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 0.55,
+                      delay: 0.2 + i * 0.16,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className="flex gap-4 group cursor-default p-2 -m-2 rounded-sm hover:bg-white/[0.04] transition-colors"
+                  >
+                    <span className="flex-shrink-0 font-title font-bold text-lg text-white/40 tabular-nums pt-0.5 group-hover:text-blue-300 transition-colors">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <div>
-                      <h3 className="font-bold text-sm uppercase tracking-[0.15em] mb-1.5">{point.title}</h3>
-                      <p className="text-sm text-blue-100/70 leading-relaxed font-light">{point.desc}</p>
+                      <h3 className="font-bold text-sm uppercase tracking-[0.15em] mb-1.5 group-hover:text-blue-100 transition-colors">
+                        {point.title}
+                      </h3>
+                      <p className="text-sm text-blue-100/70 leading-relaxed font-light group-hover:text-blue-100/90 transition-colors">
+                        {point.desc}
+                      </p>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>

@@ -24,7 +24,7 @@ export function PoliticaPrivacidade() {
 
   return (
     <div className="bg-[#F8FAFC] min-h-screen">
-      <div className="max-w-4xl mx-auto pt-28 pb-20 px-4 sm:px-6 md:px-8 relative z-10">
+      <div className="max-w-4xl mx-auto pt-28 pb-0 px-4 sm:px-6 md:px-8 relative z-10">
         
         <motion.div
           initial={{ opacity: 0, y: 40 }}

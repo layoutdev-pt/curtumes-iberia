@@ -6,7 +6,9 @@ export function Loader() {
       key="loader"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.6, ease: "easeInOut" } }}
-      className="fixed inset-0 z-[9999] bg-[#F8FAFC] flex flex-col items-center justify-center overflow-hidden"
+      className="fixed inset-0 z-[9999] bg-[#F8FAFC] flex flex-col items-center justify-center overflow-hidden touch-none select-none"
+      onWheel={(e) => e.preventDefault()}
+      onTouchMove={(e) => e.preventDefault()}
     >
       {/* Sombra de fundo subtil para dar profundidade */}
       <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center opacity-30">

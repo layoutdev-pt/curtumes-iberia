@@ -397,7 +397,7 @@ export function GestaoCatalogo() {
                     <input type="text" name="espessura" value={formData.espessura} onChange={handleChange} required className="w-full p-2 border rounded-lg text-sm" />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-gray-500 mb-1">Tamanho médio (ex: 12 - 15)</label>
+                    <label className="block text-xs font-bold text-gray-500 mb-1">Tamanho médio em pés quadrados (ex: 20)</label>
                     <input type="text" name="tamanho_medio" value={formData.tamanho_medio} onChange={handleChange} required className="w-full p-2 border rounded-lg text-sm" />
                   </div>
                   <div>

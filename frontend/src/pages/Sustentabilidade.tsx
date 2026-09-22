@@ -346,9 +346,15 @@ export function Sustentabilidade() {
       {/* ===================================================================== */}
       {/* PILARES — ACORDEÃO LOGO A SEGUIR AO HERO */}
       {/* ===================================================================== */}
-      <div className="pt-16 md:pt-20">
+      <motion.div
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="pt-16 md:pt-20"
+      >
         <PillarsAccordion items={data.pillars} />
-      </div>
+      </motion.div>
 
       {/* ===================================================================== */}
       {/* INTRODUÇÃO */}

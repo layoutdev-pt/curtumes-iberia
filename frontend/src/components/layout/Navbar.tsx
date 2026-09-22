@@ -11,8 +11,10 @@ export function Navbar() {
   const { language, toggleLanguage, t } = useLanguage();
 
   // DEFINIR QUAIS PÁGINAS TÊM O HEADER ESCURO NO TOPO
-  const darkHeaderPaths = ['/', '/historia', '/sustentabilidade', '/contactos'];
-  const hasDarkHeader = darkHeaderPaths.includes(location.pathname);
+  const darkHeaderPaths = ['/', '/historia', '/sustentabilidade', '/contactos', '/catalogo'];
+  const hasDarkHeader = darkHeaderPaths.some(p => 
+    p === '/' ? location.pathname === '/' : (location.pathname === p || location.pathname.startsWith(`${p}/`))
+  );
 
   const LOGO_CONFIG = {
     transparente_escuro: {
