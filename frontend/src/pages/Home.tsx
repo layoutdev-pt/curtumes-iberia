@@ -401,10 +401,10 @@ export function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="py-24 md:py-32 px-6 relative overflow-hidden bg-white border-y border-gray-200"
+        className="w-full grid grid-cols-1 lg:grid-cols-2 items-center overflow-hidden bg-white border-y border-gray-200"
       >
-        <div className="max-w-[1500px] mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
-          <div>
+        <div className="px-6 md:px-12 lg:px-20 py-16 lg:py-28 lg:order-1">
+          <div className="max-w-xl lg:ml-auto">
             <h2 className="font-title font-bold text-institucional-blue text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight mb-10 leading-[1.05]">
               {data.missionTitle}
             </h2>
@@ -435,17 +435,17 @@ export function Home() {
               </svg>
             </Link>
           </div>
+        </div>
 
-          {/* Destaque visual da fábrica — uma única imagem grande, sem moldura */}
-          <div className="relative w-full overflow-hidden group">
-            <img
-              src="/imagens/fotos/Curtumes_Iberia_23.JPG"
-              alt="Produção Curtumes Ibéria"
-              className="w-full h-[420px] sm:h-[560px] lg:h-[680px] object-cover transform transition-transform duration-[1200ms] ease-out group-hover:scale-105"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-          </div>
+        {/* Destaque visual da fábrica — uma única imagem grande, sem moldura */}
+        <div className="relative w-full h-full min-h-[420px] md:min-h-[560px] lg:min-h-[680px] overflow-hidden group lg:order-2">
+          <img
+            src="/imagens/fotos/Curtumes_Iberia_23.JPG"
+            alt="Produção Curtumes Ibéria"
+            className="absolute inset-0 w-full h-full object-cover transform transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
         </div>
       </motion.section>
 
@@ -618,36 +618,36 @@ export function Home() {
         6. LEATHER WORKING GROUP — BLOCO ÚNICO A OCUPAR TUDO
         =========================================================================
       */}
-      <section className="py-20 md:py-24 px-6 bg-[#F8FAFC]">
+      <section className="w-full bg-[#F8FAFC]">
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.7 }}
-          className="max-w-[1500px] mx-auto bg-institucional-blue text-white overflow-hidden"
+          className="w-full grid grid-cols-1 lg:grid-cols-2 bg-institucional-blue text-white overflow-hidden"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2">
-            {/* Visual */}
-            <div className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[620px] bg-[#06182c]">
+          {/* Visual */}
+          <div className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[620px] bg-[#06182c] w-full">
+            <img
+              src="/tour/DSCF9337.webp"
+              alt="Produção Curtumes Ibéria"
+              className="absolute inset-0 w-full h-full object-cover opacity-40"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 flex items-center justify-center p-6 md:p-10">
               <img
-                src="/tour/DSCF9337.webp"
-                alt="Produção Curtumes Ibéria"
-                className="absolute inset-0 w-full h-full object-cover opacity-40"
+                src="/logos/CUR224.png"
+                alt="LWG Gold Rated"
+                className="w-64 h-64 md:w-[22rem] md:h-[22rem] lg:w-[26rem] lg:h-[26rem] max-w-full max-h-full object-contain drop-shadow-2xl"
                 loading="lazy"
               />
-              <div className="absolute inset-0 flex items-center justify-center p-6 md:p-10">
-                <img
-                  src="/logos/CUR224.png"
-                  alt="LWG Gold Rated"
-                  className="w-64 h-64 md:w-[22rem] md:h-[22rem] lg:w-[26rem] lg:h-[26rem] max-w-full max-h-full object-contain drop-shadow-2xl"
-                  loading="lazy"
-                />
-              </div>
             </div>
+          </div>
 
-            {/* Conteúdo */}
-            <div className="p-10 md:p-16 lg:p-20 flex flex-col justify-center">
-              <span className="text-[11px] font-bold tracking-[0.3em] text-blue-300 uppercase mb-4">
+          {/* Conteúdo */}
+          <div className="px-6 md:px-12 lg:px-20 py-16 lg:py-20 flex flex-col justify-center">
+            <div className="max-w-xl lg:mr-auto">
+              <span className="text-[11px] font-bold tracking-[0.3em] text-blue-300 uppercase mb-4 block">
                 {data.certCategory}
               </span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-title font-bold text-white uppercase tracking-tight leading-[1.05] mb-3">

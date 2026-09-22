@@ -289,14 +289,6 @@ function ContentBlock({ block, index }: { block: Bloco; index: number }) {
             className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 ease-out"
             loading="lazy"
           />
-          <div
-            className={`absolute inset-0 pointer-events-none ${
-              isLeft
-                ? "bg-gradient-to-r from-black/70 via-black/35 to-black/10"
-                : "bg-gradient-to-l from-black/70 via-black/35 to-black/10"
-            }`}
-          ></div>
-          <div className="absolute inset-0 bg-black/45 md:hidden pointer-events-none"></div>
         </div>
 
         {/* Aro de vidro no rebordo do card. Sem desfoque: a fotografia fica nítida. */}
@@ -306,7 +298,7 @@ function ContentBlock({ block, index }: { block: Bloco; index: number }) {
           className={`relative z-10 w-full h-full flex ${isLeft ? "justify-start" : "justify-end"}`}
         >
           <div className="w-full md:w-7/12 lg:w-6/12 h-full">
-            <div className="bg-institucional-blue/55 backdrop-blur-2xl ring-1 ring-inset ring-white/20 p-6 sm:p-8 lg:p-12 h-full flex flex-col justify-center">
+            <div className="bg-institucional-blue/30 backdrop-blur-md ring-1 ring-inset ring-white/20 p-6 sm:p-8 lg:p-12 h-full flex flex-col justify-center">
               <span className="text-[11px] font-bold tracking-[0.3em] text-blue-200 uppercase mb-4">
                 {block.eyebrow}
               </span>
@@ -378,8 +370,8 @@ export function Sustentabilidade() {
       {/* ===================================================================== */}
       {/* BLOCOS: ECONOMIA CIRCULAR + PRODUÇÃO MAIS RESPONSÁVEL */}
       {/* ===================================================================== */}
-      <div className="w-full max-w-[1500px] mx-auto px-4 sm:px-6 pb-12 relative">
-        <div className="flex flex-col space-y-6 sm:space-y-8">
+      <div className="w-full pb-12 relative">
+        <div className="flex flex-col">
           {data.blocks.map((block, index) => (
             <ContentBlock key={block.id} block={block} index={index} />
           ))}
@@ -439,8 +431,8 @@ export function Sustentabilidade() {
       {/* ===================================================================== */}
       {/* BLOCOS: RECURSOS & AMBIENTE + RESPONSABILIDADE EM TODA A CADEIA */}
       {/* ===================================================================== */}
-      <div className="w-full max-w-[1500px] mx-auto px-4 sm:px-6 pb-16 relative">
-        <div className="flex flex-col space-y-6 sm:space-y-8">
+      <div className="w-full pb-16 relative">
+        <div className="flex flex-col">
           {data.blocks2.map((block, index) => (
             <ContentBlock key={block.id} block={block} index={index} />
           ))}

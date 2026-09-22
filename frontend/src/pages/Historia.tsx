@@ -307,54 +307,53 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* ONDE TUDO COMEÇOU */}
       {/* ========================================================================= */}
-      <div className="max-w-[1500px] mx-auto px-6 relative z-10 pt-24 md:pt-32 pb-20">
+      <div className="w-full pt-24 md:pt-32 pb-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-16 px-6"
         >
           <h2 className="text-sm md:text-base font-bold text-gray-400 tracking-[0.4em] uppercase mb-6">
             {data.originEyebrow}
           </h2>
-          {/* Sem itálico, conforme indicação do cliente */}
-          <p className="text-2xl md:text-3xl font-title text-institucional-blue font-light">
+          <p className="text-2xl md:text-3xl font-title text-institucional-blue font-light max-w-[1500px] mx-auto">
             {data.originFounder}
           </p>
         </motion.div>
 
-        {/* O texto fundador fica repartido a duas colunas com uma fotografia,
-            para a secção não abrir com um bloco de texto tão longo. */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center overflow-hidden">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-center overflow-hidden">
           <motion.div
-            initial={{ opacity: 0, x: -100 }}
+            initial={{ opacity: 0, x: -90 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full overflow-hidden group shadow-sm"
+            className="relative w-full overflow-hidden group shadow-sm lg:order-1"
           >
             <img
               src="/imagens/fotos/Curtumes_Iberia_26.JPG"
               alt="Curtumes Ibéria, Vila Moreira"
-              className="w-full h-[420px] md:h-[640px] object-cover transform transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+              className="w-full h-[420px] md:h-[620px] lg:h-[820px] object-cover transform transition-transform duration-[1200ms] ease-out group-hover:scale-105"
               loading="lazy"
             />
             <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 100 }}
+            initial={{ opacity: 0, x: 90 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-6"
+            className="px-6 md:px-12 lg:px-20 py-16 lg:py-28 lg:order-2"
           >
-            {data.originText.map((p, i) => (
-              <p key={i} className="text-gray-800 text-base md:text-lg font-light leading-relaxed">
-                {p}
-              </p>
-            ))}
+            <div className="max-w-xl lg:mr-auto space-y-6">
+              {data.originText.map((p, i) => (
+                <p key={i} className="text-gray-800 text-base md:text-lg font-light leading-relaxed">
+                  {p}
+                </p>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>
@@ -563,33 +562,35 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* 2026 — NOVA IMAGEM */}
       {/* ========================================================================= */}
-      <div className="max-w-[1500px] mx-auto px-6 py-24 md:py-32">
+      <div className="w-full overflow-hidden">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center"
+          className="w-full grid grid-cols-1 lg:grid-cols-2 items-center"
         >
-          <div className="space-y-8">
-            <SectionTitle>{data.rebrandTitle}</SectionTitle>
-            {data.rebrandText.map((p, i) => (
-              <p key={i} className="text-gray-700 text-lg font-light leading-relaxed">
-                {p}
-              </p>
-            ))}
-            <div className="pt-4 space-y-1">
-              {data.rebrandClaim.map((line, i) => (
-                <p key={i} className="text-institucional-blue font-title font-bold text-xl md:text-2xl uppercase tracking-tight">
-                  {line}
+          <div className="px-6 md:px-12 lg:px-20 py-16 lg:py-28 lg:order-1">
+            <div className="max-w-xl lg:ml-auto space-y-8">
+              <SectionTitle>{data.rebrandTitle}</SectionTitle>
+              {data.rebrandText.map((p, i) => (
+                <p key={i} className="text-gray-700 text-lg font-light leading-relaxed">
+                  {p}
                 </p>
               ))}
+              <div className="pt-4 space-y-1">
+                {data.rebrandClaim.map((line, i) => (
+                  <p key={i} className="text-institucional-blue font-title font-bold text-xl md:text-2xl uppercase tracking-tight">
+                    {line}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* TODO: substituir pela imagem oficial da nova identidade 2026
               (Google Drive: 1yGEWVunzF8qka3dy18OJnzq9OBG50us1). */}
-          <div className="bg-institucional-blue flex items-center justify-center p-16 md:p-24 aspect-[4/3]">
+          <div className="bg-institucional-blue flex items-center justify-center p-16 md:p-24 w-full h-[420px] md:h-[620px] lg:h-[820px] lg:order-2">
             <img
               src="/logos/VersaoPrincipal_CoresOriginais.svg"
               alt="Nova identidade Curtumes Ibéria"
