@@ -221,18 +221,20 @@ export function ArtigoDetalhe() {
                         </div>
 
                         {/* Referência e Nome por baixo */}
-                        {cor.referencia && (
-                          <span className="block mt-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                            {cor.referencia}
+                        <div className="mt-3">
+                          {cor.referencia && (
+                            <span className="block text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-0.5">
+                              {cor.referencia}
+                            </span>
+                          )}
+                          <span
+                            className={`block text-xs max-w-[85px] truncate ${
+                              isSelected ? 'text-institucional-blue font-bold' : 'text-gray-600 group-hover:text-gray-900'
+                            }`}
+                          >
+                            {nomeCor}
                           </span>
-                        )}
-                        <span
-                          className={`block text-xs mt-0.5 max-w-[85px] truncate ${
-                            isSelected ? 'text-institucional-blue font-bold' : 'text-gray-600 group-hover:text-gray-900'
-                          }`}
-                        >
-                          {nomeCor}
-                        </span>
+                        </div>
                       </button>
                     );
                   })}

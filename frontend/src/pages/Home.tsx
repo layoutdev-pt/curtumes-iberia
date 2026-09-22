@@ -396,14 +396,14 @@ export function Home() {
         4. ALL ABOUT LEATHER. SINCE 1963.
         =========================================================================
       */}
-      <motion.section
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full grid grid-cols-1 lg:grid-cols-2 items-center overflow-hidden bg-white border-y border-gray-200"
-      >
-        <div className="px-6 md:px-12 lg:px-20 py-16 lg:py-28 lg:order-1">
+      <section className="w-full grid grid-cols-1 lg:grid-cols-2 items-center overflow-hidden bg-white border-t border-gray-200">
+        <motion.div
+          initial={{ opacity: 0, x: -90 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="px-6 md:px-12 lg:px-20 py-16 lg:py-28 lg:order-1"
+        >
           <div className="max-w-xl lg:ml-auto">
             <h2 className="font-title font-bold text-institucional-blue text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight mb-10 leading-[1.05]">
               {data.missionTitle}
@@ -435,10 +435,16 @@ export function Home() {
               </svg>
             </Link>
           </div>
-        </div>
+        </motion.div>
 
         {/* Destaque visual da fábrica — uma única imagem grande, sem moldura */}
-        <div className="relative w-full h-full min-h-[420px] md:min-h-[560px] lg:min-h-[680px] overflow-hidden group lg:order-2">
+        <motion.div
+          initial={{ opacity: 0, x: 90 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="relative w-full h-full min-h-[420px] md:min-h-[560px] lg:min-h-[680px] overflow-hidden group lg:order-2"
+        >
           <img
             src="/imagens/fotos/Curtumes_Iberia_23.JPG"
             alt="Produção Curtumes Ibéria"
@@ -446,15 +452,15 @@ export function Home() {
             loading="lazy"
           />
           <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-        </div>
-      </motion.section>
+        </motion.div>
+      </section>
 
       {/*
         =========================================================================
         5. DE PORTUGAL PARA O MUNDO (GLOBO INTERATIVO)
         =========================================================================
       */}
-      <section className="w-full relative bg-institucional-blue py-24 overflow-hidden border-t border-blue-900 shadow-inner">
+      <section className="w-full relative bg-institucional-blue py-24 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative z-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -619,15 +625,15 @@ export function Home() {
         =========================================================================
       */}
       <section className="w-full bg-[#F8FAFC]">
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.7 }}
-          className="w-full grid grid-cols-1 lg:grid-cols-2 bg-institucional-blue text-white overflow-hidden"
-        >
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 bg-institucional-blue text-white overflow-hidden">
           {/* Visual */}
-          <div className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[620px] bg-[#06182c] w-full">
+          <motion.div
+            initial={{ opacity: 0, x: -90 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[620px] bg-[#06182c] w-full"
+          >
             <img
               src="/tour/DSCF9337.webp"
               alt="Produção Curtumes Ibéria"
@@ -642,10 +648,16 @@ export function Home() {
                 loading="lazy"
               />
             </div>
-          </div>
+          </motion.div>
 
           {/* Conteúdo */}
-          <div className="px-6 md:px-12 lg:px-20 py-16 lg:py-20 flex flex-col justify-center">
+          <motion.div
+            initial={{ opacity: 0, x: 90 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="px-6 md:px-12 lg:px-20 py-16 lg:py-20 flex flex-col justify-center"
+          >
             <div className="max-w-xl lg:mr-auto">
               <span className="text-[11px] font-bold tracking-[0.3em] text-blue-300 uppercase mb-4 block">
                 {data.certCategory}
@@ -705,8 +717,8 @@ export function Home() {
                 </Link>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </section>
 
       {/*

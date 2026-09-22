@@ -562,44 +562,48 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* 2026 — NOVA IMAGEM */}
       {/* ========================================================================= */}
-      <div className="w-full overflow-hidden">
+      <section className="w-full grid grid-cols-1 lg:grid-cols-2 items-center overflow-hidden">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="w-full grid grid-cols-1 lg:grid-cols-2 items-center"
+          initial={{ opacity: 0, x: -90 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="px-6 md:px-12 lg:px-20 py-16 lg:py-28 lg:order-1"
         >
-          <div className="px-6 md:px-12 lg:px-20 py-16 lg:py-28 lg:order-1">
-            <div className="max-w-xl lg:ml-auto space-y-8">
-              <SectionTitle>{data.rebrandTitle}</SectionTitle>
-              {data.rebrandText.map((p, i) => (
-                <p key={i} className="text-gray-700 text-lg font-light leading-relaxed">
-                  {p}
+          <div className="max-w-xl lg:ml-auto space-y-8">
+            <SectionTitle>{data.rebrandTitle}</SectionTitle>
+            {data.rebrandText.map((p, i) => (
+              <p key={i} className="text-gray-700 text-lg font-light leading-relaxed">
+                {p}
+              </p>
+            ))}
+            <div className="pt-4 space-y-1">
+              {data.rebrandClaim.map((line, i) => (
+                <p key={i} className="text-institucional-blue font-title font-bold text-xl md:text-2xl uppercase tracking-tight">
+                  {line}
                 </p>
               ))}
-              <div className="pt-4 space-y-1">
-                {data.rebrandClaim.map((line, i) => (
-                  <p key={i} className="text-institucional-blue font-title font-bold text-xl md:text-2xl uppercase tracking-tight">
-                    {line}
-                  </p>
-                ))}
-              </div>
             </div>
           </div>
-
-          {/* TODO: substituir pela imagem oficial da nova identidade 2026
-              (Google Drive: 1yGEWVunzF8qka3dy18OJnzq9OBG50us1). */}
-          <div className="bg-institucional-blue flex items-center justify-center p-16 md:p-24 w-full h-[420px] md:h-[620px] lg:h-[820px] lg:order-2">
-            <img
-              src="/logos/VersaoPrincipal_CoresOriginais.svg"
-              alt="Nova identidade Curtumes Ibéria"
-              className="w-full max-w-md object-contain brightness-0 invert"
-              loading="lazy"
-            />
-          </div>
         </motion.div>
-      </div>
+
+        {/* TODO: substituir pela imagem oficial da nova identidade 2026
+            (Google Drive: 1yGEWVunzF8qka3dy18OJnzq9OBG50us1). */}
+        <motion.div
+          initial={{ opacity: 0, x: 90 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="bg-institucional-blue flex items-center justify-center p-16 md:p-24 w-full h-[420px] md:h-[620px] lg:h-[820px] lg:order-2"
+        >
+          <img
+            src="/logos/VersaoPrincipal_CoresOriginais.svg"
+            alt="Nova identidade Curtumes Ibéria"
+            className="w-full max-w-md object-contain brightness-0 invert"
+            loading="lazy"
+          />
+        </motion.div>
+      </section>
 
       {/* ========================================================================= */}
       {/* PRESENÇA GLOBAL -> MAPA */}

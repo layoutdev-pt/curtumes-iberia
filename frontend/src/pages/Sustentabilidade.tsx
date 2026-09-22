@@ -279,7 +279,7 @@ function ContentBlock({ block, index }: { block: Bloco; index: number }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative w-full h-[75vh] min-h-[540px] max-h-[760px] overflow-hidden group flex items-stretch p-6 sm:p-8 bg-institucional-blue"
+        className="relative w-full h-[75vh] min-h-[540px] max-h-[760px] overflow-hidden group flex items-stretch bg-institucional-blue"
       >
         {/* Fotografia de fundo, por inteiro e sem moldura */}
         <div className="absolute inset-0 z-0">
@@ -291,8 +291,7 @@ function ContentBlock({ block, index }: { block: Bloco; index: number }) {
           />
         </div>
 
-        {/* Aro de vidro no rebordo do card. Sem desfoque: a fotografia fica nítida. */}
-        <div className="absolute inset-0 z-[1] pointer-events-none ring-1 ring-inset ring-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"></div>
+
 
         <div
           className={`relative z-10 w-full h-full flex ${isLeft ? "justify-start" : "justify-end"}`}
@@ -370,7 +369,7 @@ export function Sustentabilidade() {
       {/* ===================================================================== */}
       {/* BLOCOS: ECONOMIA CIRCULAR + PRODUÇÃO MAIS RESPONSÁVEL */}
       {/* ===================================================================== */}
-      <div className="w-full pb-12 relative">
+      <div className="w-full relative">
         <div className="flex flex-col">
           {data.blocks.map((block, index) => (
             <ContentBlock key={block.id} block={block} index={index} />
@@ -381,7 +380,7 @@ export function Sustentabilidade() {
       {/* ===================================================================== */}
       {/* LWG — GRANDE BLOCO CENTRAL */}
       {/* ===================================================================== */}
-      <div className="w-full max-w-[1500px] mx-auto px-4 sm:px-6 py-16 md:py-24 relative z-20">
+      <div className="w-full relative z-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -431,7 +430,7 @@ export function Sustentabilidade() {
       {/* ===================================================================== */}
       {/* BLOCOS: RECURSOS & AMBIENTE + RESPONSABILIDADE EM TODA A CADEIA */}
       {/* ===================================================================== */}
-      <div className="w-full pb-16 relative">
+      <div className="w-full relative">
         <div className="flex flex-col">
           {data.blocks2.map((block, index) => (
             <ContentBlock key={block.id} block={block} index={index} />
