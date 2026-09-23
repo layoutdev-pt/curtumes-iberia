@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { PageHeader } from '../components/ui/PageHeader';
+import { CustomSelect } from '../components/ui/CustomSelect';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const content = {
@@ -172,6 +173,8 @@ export function Contactos() {
   const data = content[language];
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('pt');
+  const [intent, setIntent] = useState('');
+  const [sector, setSector] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -180,6 +183,8 @@ export function Contactos() {
       alert(data.formSuccess);
       setLoading(false);
       (e.target as HTMLFormElement).reset();
+      setIntent('');
+      setSector('');
     }, 1500);
   };
 
@@ -267,29 +272,25 @@ export function Contactos() {
                     <label className="block text-[10px] font-bold text-gray-700 uppercase tracking-[0.2em] mb-2">
                       {data.formIntentLabel}
                     </label>
-                    <div className="relative">
-                      <select required defaultValue="" className="w-full p-3.5 bg-gray-50/50 border border-gray-200 focus:bg-white focus:border-institucional-blue outline-none transition-all text-sm appearance-none">
-                        <option value="" disabled>{data.formIntentPlaceholder}</option>
-                        {data.formIntentOptions.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
-                      </select>
-                      <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                      </div>
-                    </div>
+                    <CustomSelect
+                      required
+                      placeholder={data.formIntentPlaceholder}
+                      options={data.formIntentOptions}
+                      value={intent}
+                      onChange={setIntent}
+                    />
                   </div>
                   <div>
                     <label className="block text-[10px] font-bold text-gray-700 uppercase tracking-[0.2em] mb-2">
                       {data.formSectorLabel}
                     </label>
-                    <div className="relative">
-                      <select required defaultValue="" className="w-full p-3.5 bg-gray-50/50 border border-gray-200 focus:bg-white focus:border-institucional-blue outline-none transition-all text-sm appearance-none">
-                        <option value="" disabled>{data.formSectorPlaceholder}</option>
-                        {data.formSectorOptions.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
-                      </select>
-                      <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                      </div>
-                    </div>
+                    <CustomSelect
+                      required
+                      placeholder={data.formSectorPlaceholder}
+                      options={data.formSectorOptions}
+                      value={sector}
+                      onChange={setSector}
+                    />
                   </div>
                 </div>
 

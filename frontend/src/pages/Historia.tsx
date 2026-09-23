@@ -237,7 +237,7 @@ function SplitSection({
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-        className={`px-6 md:px-12 lg:px-20 py-16 lg:py-28 ${imageRight ? 'lg:order-1' : 'lg:order-2'}`}
+        className={`px-6 md:px-12 lg:px-20 ${imageRight ? 'lg:order-1' : 'lg:order-2'}`}
       >
         <div className={`max-w-xl space-y-8 ${imageRight ? 'lg:ml-auto' : 'lg:mr-auto'}`}>
           {children}
@@ -307,7 +307,7 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* ONDE TUDO COMEÇOU */}
       {/* ========================================================================= */}
-      <div className="w-full pt-24 md:pt-32 pb-20">
+      <div className="w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -345,7 +345,7 @@ export function Historia() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="px-6 md:px-12 lg:px-20 py-16 lg:py-28 lg:order-2"
+            className="px-6 md:px-12 lg:px-20 lg:order-2"
           >
             <div className="max-w-xl lg:mr-auto space-y-6">
               {data.originText.map((p, i) => (
@@ -383,7 +383,7 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* Mesmo tratamento da faixa de métricas da homepage: sem caixas nem
           divisórias, a ocupar a largura da página. */}
-      <section className="py-16 md:py-24 bg-white relative z-10 w-full">
+      <section className="bg-white relative z-10 w-full">
         <div className="w-full px-6 md:px-12 lg:px-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 gap-x-8 lg:gap-x-16">
             <motion.div
@@ -448,7 +448,7 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* EVOLUIR FAZ PARTE DO PROCESSO — SECÇÃO MUITO VISUAL */}
       {/* ========================================================================= */}
-      <div className="max-w-[1500px] mx-auto px-6 py-24">
+      <div className="max-w-[1500px] mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -537,7 +537,7 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* PRODUZIR MELHOR TAMBÉM FAZ PARTE DA HISTÓRIA */}
       {/* ========================================================================= */}
-      <div className="w-full bg-institucional-blue text-white py-24 md:py-32">
+      <div className="w-full bg-institucional-blue text-white">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -568,7 +568,7 @@ export function Historia() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="px-6 md:px-12 lg:px-20 py-16 lg:py-28 lg:order-1"
+          className="px-6 md:px-12 lg:px-20 lg:order-1"
         >
           <div className="max-w-xl lg:ml-auto space-y-8">
             <SectionTitle>{data.rebrandTitle}</SectionTitle>
