@@ -5,6 +5,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { labelCategoria } from '../lib/categorias';
 
+import { Helmet } from 'react-helmet-async';
+
 export function ArtigoDetalhe() {
   const { id } = useParams<{ id: string }>();
   const { language } = useLanguage();
@@ -116,8 +118,26 @@ export function ArtigoDetalhe() {
     ? artigo.cores[corAtiva].img_url
     : artigo.imagem_url;
 
+  const productSchema = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": titulo,
+    "image": [imagemAtiva],
+    "description": language === 'PT' ? artigo.descricao_pt : artigo.descricao_en,
+    "sku": artigo.referencia,
+    "brand": {
+      "@type": "Brand",
+      "name": "Curtumes Ibéria"
+    }
+  };
+
   return (
     <div className="bg-[#F8FAFC] min-h-screen pt-32 pb-0 relative overflow-x-clip">
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(productSchema)}
+        </script>
+      </Helmet>
       <div className="max-w-[1500px] mx-auto px-6 relative z-10">
 
         {/* BREADCRUMBS — a referência do artigo é o próprio nome da pele */}

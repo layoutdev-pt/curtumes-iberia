@@ -133,6 +133,8 @@ const destinations = [
   { name: "Vietname", coordinates: [108.2021, 14.0583] as [number, number] },
 ];
 
+import { Helmet } from 'react-helmet-async';
+
 export function Home() {
   const { language } = useLanguage();
   const data = content[language];
@@ -215,8 +217,35 @@ export function Home() {
     };
   }, [isGlobeInView]);
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Curtumes Ibéria",
+    "url": "https://curtumes-iberia.pt",
+    "logo": "https://curtumes-iberia.pt/logos/Icone_CoresOriginais_FundoBranco_copy.svg",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+351-962-900-019",
+      "contactType": "customer service",
+      "availableLanguage": ["Portuguese", "English"]
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rua 24 de Junho, 1399",
+      "addressLocality": "Vila Moreira",
+      "postalCode": "2380-639",
+      "addressCountry": "PT"
+    },
+    "foundingDate": "1963"
+  };
+
   return (
     <div className="w-full flex flex-col bg-[#F8FAFC]">
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(organizationSchema)}
+        </script>
+      </Helmet>
       <style>{`
         @keyframes flowLine {
           to { stroke-dashoffset: -24; }

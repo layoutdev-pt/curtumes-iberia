@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
@@ -47,6 +48,10 @@ function AppContent() {
 
   return (
     <div className="flex flex-col min-h-screen relative">
+      <Helmet htmlAttributes={{ lang: language.toLowerCase() }}>
+        <title>Curtumes Ibéria</title>
+        <meta name="description" content="Produção de couro sustentável de excelência, unindo tradição e inovação desde 1963. Sustainable leather production uniting tradition and innovation." />
+      </Helmet>
       
       {/* O Loader é mostrado por cima de tudo enquanto isInitialLoading for true */}
       <AnimatePresence>
@@ -115,11 +120,13 @@ function AppContent() {
 
 function App() {
   return (
-    <LanguageProvider>
-      <Router>
-        <AppContent />
-      </Router>
-    </LanguageProvider>
+    <HelmetProvider>
+      <LanguageProvider>
+        <Router>
+          <AppContent />
+        </Router>
+      </LanguageProvider>
+    </HelmetProvider>
   );
 }
 
