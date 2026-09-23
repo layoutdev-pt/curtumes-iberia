@@ -119,6 +119,16 @@ where cores is not null
     where not (c ? 'referencia')
   );
 
+-- -----------------------------------------------------------------------------
+-- 6. Quantidade deixa de ser obrigatória
+-- -----------------------------------------------------------------------------
+-- Pedido no PDF: "Quantidade (P²) - facultativo". O campo já é opcional no
+-- formulário do site; se a coluna estiver como NOT NULL, qualquer pedido
+-- enviado sem quantidade é rejeitado pela base de dados.
+
+alter table public.encomendas
+  alter column quantidade_m2 drop not null;
+
 commit;
 
 
