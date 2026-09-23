@@ -198,7 +198,7 @@ export function Contactos() {
         backgroundImage="/tour/DSCF9299.webp"
       />
 
-      <div className="max-w-[1300px] mx-auto px-6 w-full relative z-10 pt-16 lg:pt-20 pb-0 space-y-16 lg:space-y-24">
+      <div className="max-w-[1300px] mx-auto px-6 w-full relative z-10 pt-16 lg:pt-20 pb-16 lg:pb-24 space-y-16 lg:space-y-24">
 
         {/* CANAIS DE CONTACTO RÁPIDO */}
         <motion.div

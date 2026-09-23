@@ -237,7 +237,7 @@ function SplitSection({
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-        className={`px-6 md:px-12 lg:px-20 ${imageRight ? 'lg:order-1' : 'lg:order-2'}`}
+        className={`px-6 md:px-12 lg:px-20 py-16 lg:py-24 ${imageRight ? 'lg:order-1' : 'lg:order-2'}`}
       >
         <div className={`max-w-xl space-y-8 ${imageRight ? 'lg:ml-auto' : 'lg:mr-auto'}`}>
           {children}
@@ -383,7 +383,7 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* Mesmo tratamento da faixa de métricas da homepage: sem caixas nem
           divisórias, a ocupar a largura da página. */}
-      <section className="bg-white relative z-10 w-full">
+      <section className="bg-white relative z-10 w-full py-16 lg:py-24">
         <div className="w-full px-6 md:px-12 lg:px-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 gap-x-8 lg:gap-x-16">
             <motion.div
@@ -448,7 +448,7 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* EVOLUIR FAZ PARTE DO PROCESSO — SECÇÃO MUITO VISUAL */}
       {/* ========================================================================= */}
-      <div className="max-w-[1500px] mx-auto px-6">
+      <div className="max-w-[1500px] mx-auto px-6 py-16 md:py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -537,7 +537,7 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* PRODUZIR MELHOR TAMBÉM FAZ PARTE DA HISTÓRIA */}
       {/* ========================================================================= */}
-      <div className="w-full bg-institucional-blue text-white">
+      <div className="w-full bg-institucional-blue text-white py-16 lg:py-24">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -568,7 +568,7 @@ export function Historia() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="px-6 md:px-12 lg:px-20 lg:order-1"
+          className="px-6 md:px-12 lg:px-20 py-16 lg:py-24 lg:order-1"
         >
           <div className="max-w-xl lg:ml-auto space-y-8">
             <SectionTitle>{data.rebrandTitle}</SectionTitle>
