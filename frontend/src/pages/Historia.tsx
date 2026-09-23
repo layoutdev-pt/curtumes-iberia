@@ -307,7 +307,7 @@ export function Historia() {
       {/* ========================================================================= */}
       {/* ONDE TUDO COMEÇOU */}
       {/* ========================================================================= */}
-      <div className="w-full">
+      <div className="w-full pt-16 md:pt-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

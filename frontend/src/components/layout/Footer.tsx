@@ -6,11 +6,15 @@ const content = {
   PT: {
     privacy: "Política de Privacidade",
     terms: "Termos de Utilização",
+    complaints: "Livro de Reclamações",
+    developedBy: "Desenvolvido por",
     phoneNotice: "(chamada rede fixa nacional)"
   },
   EN: {
     privacy: "Privacy Policy",
     terms: "Terms of Use",
+    complaints: "Complaints Book",
+    developedBy: "Developed by",
     phoneNotice: "(national landline call)"
   }
 };
@@ -64,9 +68,11 @@ export function Footer() {
           <div className="flex flex-col items-center md:items-end text-center md:text-right space-y-2 text-sm pt-4 md:pt-16 border-t border-white/10 md:border-t-0 h-full md:justify-start">
             <Link to="/politica-privacidade" className="hover:underline py-1 md:py-0">{data.privacy}</Link>
             <Link to="/termos-utilizacao" className="hover:underline py-1 md:py-0">{data.terms}</Link>
-            <p className="mt-4 opacity-60 text-xs sm:text-sm">
-              © {new Date().getFullYear()} Curtumes Ibéria, S.A.
-            </p>
+            <a href="https://www.livroreclamacoes.pt/inicio/" target="_blank" rel="noreferrer" className="hover:underline py-1 md:py-0">{data.complaints}</a>
+            <div className="mt-4 opacity-60 text-xs sm:text-sm flex flex-col space-y-1 items-center md:items-end">
+              <p>© {new Date().getFullYear()} Curtumes Ibéria, S.A.</p>
+              <p>{data.developedBy} <a href="https://layoutagency.pt/" target="_blank" rel="noreferrer" className="hover:underline font-medium">LayoutAgency</a></p>
+            </div>
           </div>
           
         </div>
