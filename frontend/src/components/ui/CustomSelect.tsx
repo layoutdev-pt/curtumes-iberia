@@ -73,7 +73,7 @@ export function CustomSelect({ options, placeholder, required, value, onChange }
                   onChange(opt);
                   setIsOpen(false);
                 }}
-                className={`w-full text-left px-4 py-3 text-sm transition-colors hover:bg-gray-50 hover:text-institucional-blue ${value === opt ? 'bg-blue-50/50 text-institucional-blue font-medium' : 'text-gray-700'}`}
+                className={`w-full text-left px-4 py-3 text-sm transition-colors hover:bg-institucional-blue hover:text-white ${value === opt ? 'bg-blue-50/50 text-institucional-blue font-medium' : 'text-gray-700'}`}
               >
                 {opt}
               </button>
