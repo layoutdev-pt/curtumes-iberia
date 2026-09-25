@@ -653,22 +653,20 @@ export function Home() {
         6. LEATHER WORKING GROUP — BLOCO ÚNICO A OCUPAR TUDO
         =========================================================================
       */}
-      <section className="w-full bg-[#F8FAFC]">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 bg-institucional-blue text-white overflow-hidden">
+      <section className="w-full bg-[#F8FAFC] relative">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 text-white overflow-hidden relative">
+          <div className="absolute inset-0 z-0">
+            <img src="/imagens/fotos/LWG.JPG" alt="LWG" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-institucional-blue/80"></div>
+          </div>
           {/* Visual */}
           <motion.div
             initial={{ opacity: 0, x: -90 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[620px] bg-[#06182c] w-full"
+            className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[620px] w-full z-10"
           >
-            <img
-              src="/tour/DSCF9337.webp"
-              alt="Produção Curtumes Ibéria"
-              className="absolute inset-0 w-full h-full object-cover opacity-40"
-              loading="lazy"
-            />
             <div className="absolute inset-0 flex items-center justify-center p-6 md:p-10">
               <img
                 src="/logos/CUR224.png"
@@ -685,7 +683,7 @@ export function Home() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="px-6 md:px-12 lg:px-20 py-16 lg:py-20 flex flex-col justify-center"
+            className="px-6 md:px-12 lg:px-20 py-16 lg:py-20 flex flex-col justify-center relative z-10"
           >
             <div className="max-w-xl lg:mr-auto">
               <span className="text-[11px] font-bold tracking-[0.3em] text-blue-300 uppercase mb-4 block">

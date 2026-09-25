@@ -37,7 +37,8 @@ const content = {
         title: "Recursos & Ambiente",
         description:
           "Energia renovável produzida em Vila Moreira e toda a água encaminhada para a ETAR de Alcanena antes de regressar ao meio ambiente.",
-        image: "/tour/DSCF9217.webp",
+        image: "/imagens/fotos/energia_renovavel.JPG",
+        darkTheme: true,
       },
       {
         id: 4,
@@ -45,7 +46,8 @@ const content = {
         title: "Responsabilidade em Toda a Cadeia",
         description:
           "Do bem-estar animal às condições de trabalho na fábrica: uma produção responsável começa nas pessoas e nos fornecedores que dela fazem parte.",
-        image: "/tour/DSCF9261.webp",
+        image: "/imagens/fotos/responsabilidade_cadeia.jpg",
+        wrapText: true,
       },
     ] as PillarItem[],
 
@@ -82,7 +84,7 @@ const content = {
       title: "LWG Gold Rated",
       text: "A Curtumes Ibéria alcançou a classificação Gold da Leather Working Group (LWG), na sequência da auditoria às suas práticas e desempenho ambiental.\n\nEsta classificação reconhece o trabalho desenvolvido em áreas como gestão ambiental, consumo de recursos e processos de produção.",
       footer: "LWG Gold Rated | Desempenho Ambiental",
-      image: "/tour/DSCF9337.webp",
+      image: "/imagens/fotos/LWG.JPG",
       badge: "/logos/CUR224.png",
     },
 
@@ -162,7 +164,8 @@ const content = {
         title: "Resources & Environment",
         description:
           "Renewable energy produced in Vila Moreira and all water routed to the Alcanena treatment plant before returning to the environment.",
-        image: "/tour/DSCF9217.webp",
+        image: "/imagens/fotos/energia_renovavel.JPG",
+        darkTheme: true,
       },
       {
         id: 4,
@@ -170,7 +173,8 @@ const content = {
         title: "Responsibility Across the Chain",
         description:
           "From animal welfare to working conditions in the factory: responsible production starts with the people and suppliers who are part of it.",
-        image: "/tour/DSCF9261.webp",
+        image: "/imagens/fotos/responsabilidade_cadeia.jpg",
+        wrapText: true,
       },
     ] as PillarItem[],
 
@@ -206,7 +210,7 @@ const content = {
       title: "LWG Gold Rated",
       text: "Curtumes Ibéria achieved the Gold rating from the Leather Working Group (LWG), following an audit of its practices and environmental performance.\n\nThis rating recognises the work developed in areas such as environmental management, resource consumption and production processes.",
       footer: "LWG Gold Rated | Environmental Performance",
-      image: "/tour/DSCF9337.webp",
+      image: "/imagens/fotos/LWG.JPG",
       badge: "/logos/CUR224.png",
     },
 
@@ -331,7 +335,7 @@ export function Sustentabilidade() {
       <PageHeader
         title={data.heroTitle}
         subtitle={data.heroText}
-        backgroundImage="/tour/DSCF9337.webp"
+        backgroundImage="/imagens/fotos/Sustentabilidade.JPG"
       />
 
       {/* ===================================================================== */}

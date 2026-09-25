@@ -195,7 +195,7 @@ export function Contactos() {
       <PageHeader
         title={data.title}
         subtitle={data.subtitle}
-        backgroundImage="/tour/DSCF9299.webp"
+        backgroundImage="/imagens/fotos/contactos_principal.JPG"
       />
 
       <div className="max-w-[1300px] mx-auto px-6 w-full relative z-10 pt-16 lg:pt-20 pb-16 lg:pb-24 space-y-16 lg:space-y-24">

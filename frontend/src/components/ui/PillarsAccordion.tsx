@@ -6,6 +6,8 @@ export interface PillarItem {
   title: string;
   description: string;
   image: string;
+  darkTheme?: boolean;
+  wrapText?: boolean;
 }
 
 /**
@@ -68,7 +70,7 @@ export function PillarsAccordion({ items }: { items: PillarItem[] }) {
                 className={`
                   group cursor-pointer transition-colors duration-500 ease-in-out overflow-hidden relative flex-1
                   ${!isLast ? 'border-b md:border-b-0 md:border-r border-white/20' : ''}
-                  ${isActive ? 'bg-white' : 'bg-transparent hover:bg-black/20'}
+                  ${isActive ? (item.darkTheme ? 'bg-black/70' : 'bg-white') : 'bg-transparent hover:bg-black/20'}
                 `}
               >
                 {/* Conteúdo do painel ativo */}
@@ -80,10 +82,10 @@ export function PillarsAccordion({ items }: { items: PillarItem[] }) {
                   <span className="font-title text-5xl md:text-6xl leading-none font-bold text-institucional-blue/20 mb-4">
                     {item.number}
                   </span>
-                  <h3 className="font-title text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4 text-institucional-blue">
+                  <h3 className={`font-title text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4 ${item.darkTheme ? 'text-white' : 'text-institucional-blue'} ${item.wrapText ? 'break-words hyphens-auto' : ''}`}>
                     {item.title}
                   </h3>
-                  <p className="text-sm md:text-base lg:text-lg font-light leading-relaxed text-gray-600">
+                  <p className={`text-sm md:text-base lg:text-lg font-light leading-relaxed ${item.darkTheme ? 'text-blue-50' : 'text-gray-600'}`}>
                     {item.description}
                   </p>
                 </div>
@@ -97,7 +99,7 @@ export function PillarsAccordion({ items }: { items: PillarItem[] }) {
                   <span className="font-title text-7xl md:text-8xl lg:text-[120px] leading-none font-bold text-white/70 mb-2 md:mb-4">
                     {item.number}
                   </span>
-                  <h3 className="font-title text-xl md:text-2xl font-bold uppercase tracking-tight text-white">
+                  <h3 className={`font-title text-xl md:text-2xl font-bold uppercase tracking-tight text-white ${item.wrapText ? 'break-words hyphens-auto' : ''}`}>
                     {item.title}
                   </h3>
                 </div>

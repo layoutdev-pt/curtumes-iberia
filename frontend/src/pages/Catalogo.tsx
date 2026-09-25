@@ -88,7 +88,7 @@ export function Catalogo() {
       <PageHeader
         title={data.heroTitle}
         subtitle={data.heroText}
-        backgroundImage="/tour/DSCF9288.webp"
+        backgroundImage="/imagens/fotos/Artigos.JPG"
       />
 
       <div className="max-w-[1500px] mx-auto px-6 relative z-10 pt-16 md:pt-20 pb-24 md:pb-32">
