@@ -38,7 +38,6 @@ const content = {
         description:
           "Energia renovável produzida em Vila Moreira e toda a água encaminhada para a ETAR de Alcanena antes de regressar ao meio ambiente.",
         image: "/imagens/fotos/energia_renovavel.JPG",
-        darkTheme: true,
       },
       {
         id: 4,
@@ -97,7 +96,7 @@ const content = {
         // TODO: substituir pela fotografia dos painéis solares em Vila Moreira
         // (Google Drive: 1UHuC5rukP7T9p5SySnjfHLcaAFlkK2dI). A imagem anterior
         // era uma foto de stock de turbinas eólicas — não corresponde à empresa.
-        image: "/tour/DSCF9740.webp",
+        image: "/imagens/fotos/energia_renovavel.JPG",
         align: "right",
       },
       {
@@ -165,7 +164,6 @@ const content = {
         description:
           "Renewable energy produced in Vila Moreira and all water routed to the Alcanena treatment plant before returning to the environment.",
         image: "/imagens/fotos/energia_renovavel.JPG",
-        darkTheme: true,
       },
       {
         id: 4,
@@ -295,8 +293,6 @@ function ContentBlock({ block, index }: { block: Bloco; index: number }) {
           />
         </div>
 
-
-
         <div
           className={`relative z-10 w-full h-full flex ${isLeft ? "justify-start" : "justify-end"}`}
         >
@@ -382,7 +378,7 @@ export function Sustentabilidade() {
       </div>
 
       {/* ===================================================================== */}
-      {/* LWG — GRANDE BLOCO CENTRAL */}
+      {/* LWG — CARD DIVIDIDO AO MEIO (FOTO LWG VERTICAL COM SELO + COR SÓLIDA) */}
       {/* ===================================================================== */}
       <div className="w-full relative z-20">
         <motion.div
@@ -390,42 +386,50 @@ export function Sustentabilidade() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative w-full min-h-[70vh] overflow-hidden bg-institucional-blue flex items-center justify-center"
+          className="relative w-full grid grid-cols-1 lg:grid-cols-2 overflow-hidden bg-institucional-blue text-white"
         >
-          <img
-            src={data.lwg.image}
-            alt="Produção Curtumes Ibéria"
-            className="absolute inset-0 w-full h-full object-cover opacity-30"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-institucional-blue/60"></div>
-
-          <div className="relative z-10 max-w-4xl mx-auto text-center px-6 py-20 md:py-28 flex flex-col items-center">
+          {/* Lado da Imagem: Fotografia LWG.JPG ao alto como background do selo oficial Gold */}
+          <div className="relative min-h-[460px] md:min-h-[560px] lg:min-h-[660px] w-full overflow-hidden group">
             <img
-              src={data.lwg.badge}
-              alt="LWG Gold Rated"
-              className="w-32 h-32 md:w-44 md:h-44 object-contain mb-10 drop-shadow-2xl"
+              src={data.lwg.image}
+              alt="Instalações Curtumes Ibéria — Certificação LWG"
+              className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[1200ms] ease-out"
               loading="lazy"
             />
-
-            <span className="text-[11px] font-bold tracking-[0.35em] text-blue-200 uppercase mb-5">
-              {data.lwg.eyebrow}
-            </span>
-
-            <h2 className="text-4xl md:text-6xl font-title font-bold text-white uppercase tracking-tight mb-8 leading-[1.05]">
-              {data.lwg.title}
-            </h2>
-
-            <div className="text-blue-50 text-base md:text-lg font-light leading-relaxed space-y-4 max-w-3xl">
-              {data.lwg.text.split("\n\n").map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
+            {/* Overlay suave para destacar o selo Gold sobre a fotografia */}
+            <div className="absolute inset-0 bg-institucional-blue/20 backdrop-brightness-[0.88] transition-opacity duration-500" />
+            <div className="absolute inset-0 flex items-center justify-center p-6 md:p-10 z-10">
+              <img
+                src={data.lwg.badge}
+                alt="LWG Gold Rated"
+                className="w-56 h-56 md:w-[20rem] md:h-[20rem] lg:w-[24rem] lg:h-[24rem] max-w-full max-h-full object-contain drop-shadow-2xl transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                loading="lazy"
+              />
             </div>
+          </div>
 
-            <div className="mt-12 pt-8 border-t border-white/25 w-full max-w-2xl">
-              <span className="text-xs md:text-sm font-bold uppercase tracking-[0.25em] text-white">
-                {data.lwg.footer}
+          {/* Lado do Conteúdo: Cor sólida institucional-blue */}
+          <div className="bg-institucional-blue px-6 md:px-12 lg:px-20 py-16 lg:py-24 flex flex-col justify-center relative z-10">
+            <div className="max-w-xl">
+              <span className="text-[11px] font-bold tracking-[0.35em] text-gray-300 uppercase mb-4 block">
+                {data.lwg.eyebrow}
               </span>
+
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-title font-bold text-white uppercase tracking-tight mb-8 leading-[1.05]">
+                {data.lwg.title}
+              </h2>
+
+              <div className="text-blue-50 text-base md:text-lg font-light leading-relaxed space-y-4">
+                {data.lwg.text.split("\n\n").map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+
+              <div className="mt-12 pt-8 border-t border-white/20">
+                <span className="text-xs md:text-sm font-bold uppercase tracking-[0.25em] text-white">
+                  {data.lwg.footer}
+                </span>
+              </div>
             </div>
           </div>
         </motion.div>

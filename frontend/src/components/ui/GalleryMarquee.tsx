@@ -41,7 +41,7 @@ export function GalleryMarquee() {
           animate={{ x: ["0%", "-50%"] }}
           transition={{
             ease: "linear",
-            duration: 45,
+            duration: 60,
             repeat: Infinity,
           }}
         >

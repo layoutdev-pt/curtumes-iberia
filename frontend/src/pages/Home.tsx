@@ -650,49 +650,53 @@ export function Home() {
 
       {/*
         =========================================================================
-        6. LEATHER WORKING GROUP — BLOCO ÚNICO A OCUPAR TUDO
+        6. LEATHER WORKING GROUP — CARD DIVIDIDO AO MEIO
         =========================================================================
       */}
       <section className="w-full bg-[#F8FAFC] relative">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 text-white overflow-hidden relative">
-          <div className="absolute inset-0 z-0">
-            <img src="/imagens/fotos/LWG.JPG" alt="LWG" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-institucional-blue/80"></div>
-          </div>
-          {/* Visual */}
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 text-white overflow-hidden bg-institucional-blue">
+          {/* Visual: Fotografia LWG.JPG ao alto como background do selo oficial Gold */}
           <motion.div
             initial={{ opacity: 0, x: -90 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="relative min-h-[420px] md:min-h-[520px] lg:min-h-[620px] w-full z-10"
+            className="relative min-h-[460px] md:min-h-[560px] lg:min-h-[660px] w-full overflow-hidden group"
           >
-            <div className="absolute inset-0 flex items-center justify-center p-6 md:p-10">
+            <img
+              src="/imagens/fotos/LWG.JPG"
+              alt="Instalações Curtumes Ibéria — Certificação LWG"
+              className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[1200ms] ease-out"
+              loading="lazy"
+            />
+            {/* Overlay suave para dar contraste e destacar o selo Gold */}
+            <div className="absolute inset-0 bg-institucional-blue/20 backdrop-brightness-[0.88] transition-opacity duration-500" />
+            <div className="absolute inset-0 flex items-center justify-center p-6 md:p-10 z-10">
               <img
                 src="/logos/CUR224.png"
                 alt="LWG Gold Rated"
-                className="w-64 h-64 md:w-[22rem] md:h-[22rem] lg:w-[26rem] lg:h-[26rem] max-w-full max-h-full object-contain drop-shadow-2xl"
+                className="w-56 h-56 md:w-[20rem] md:h-[20rem] lg:w-[24rem] lg:h-[24rem] max-w-full max-h-full object-contain drop-shadow-2xl transform group-hover:scale-105 transition-transform duration-700 ease-out"
                 loading="lazy"
               />
             </div>
           </motion.div>
 
-          {/* Conteúdo */}
+          {/* Conteúdo: Fundo de cor sólida institucional-blue */}
           <motion.div
             initial={{ opacity: 0, x: 90 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="px-6 md:px-12 lg:px-20 py-16 lg:py-20 flex flex-col justify-center relative z-10"
+            className="bg-institucional-blue px-6 md:px-12 lg:px-20 py-16 lg:py-24 flex flex-col justify-center relative z-10"
           >
             <div className="max-w-xl lg:mr-auto">
-              <span className="text-[11px] font-bold tracking-[0.3em] text-blue-300 uppercase mb-4 block">
+              <span className="text-[11px] font-bold tracking-[0.3em] text-gray-300 uppercase mb-4 block">
                 {data.certCategory}
               </span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-title font-bold text-white uppercase tracking-tight leading-[1.05] mb-3">
                 {data.certTitle}
               </h2>
-              <span className="text-sm md:text-base text-cyan-300 font-medium mb-10 block">
+              <span className="text-sm md:text-base text-gray-300 font-medium mb-10 block">
                 {data.certEdition}
               </span>
 
@@ -700,7 +704,7 @@ export function Home() {
                 {[data.certPoint1, data.certPoint2].map((point, idx) => (
                   <div key={idx} className="flex items-start gap-4">
                     <svg
-                      className="w-5 h-5 text-cyan-300 flex-shrink-0 mt-0.5"
+                      className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -720,7 +724,7 @@ export function Home() {
               </div>
 
               <div className="flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-white/20">
-                <span className="text-xs uppercase tracking-[0.2em] text-blue-200 font-bold">
+                <span className="text-xs uppercase tracking-[0.2em] text-gray-200 font-bold">
                   {data.certFooter}
                 </span>
                 <Link
