@@ -79,6 +79,12 @@ export function Kanban() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState(''); 
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [savingOrder, setSavingOrder] = useState(false);
+  const [newOrder, setNewOrder] = useState({
+    nome_cliente: '', empresa_nif: '', email_cliente: '', telefone_cliente: '',
+    referencia_produto: '', quantidade_m2: '', notas: ''
+  });
 
   const fetchEncomendas = async () => {
     try {
@@ -128,16 +134,56 @@ export function Kanban() {
     }
   };
 
+  const eliminarEncomenda = async (pedido: Pedido) => {
+    const confirmado = window.confirm(`Eliminar permanentemente a encomenda de ${pedido.empresa_nif || pedido.nome_cliente}? Esta ação não pode ser anulada.`);
+    if (!confirmado) return;
+
+    const { error } = await supabase.from('encomendas').delete().eq('id', pedido.id);
+    if (error) {
+      console.error('Erro ao eliminar encomenda:', error);
+      window.alert('Não foi possível eliminar a encomenda. Verifique as permissões e tente novamente.');
+      return;
+    }
+    setPedidos(current => current.filter(item => item.id !== pedido.id));
+  };
+
+  const criarEncomenda = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSavingOrder(true);
+    const payload = {
+      nome_cliente: newOrder.nome_cliente.trim(),
+      empresa_nif: newOrder.empresa_nif.trim(),
+      email_cliente: newOrder.email_cliente.trim(),
+      telefone_cliente: newOrder.telefone_cliente.trim() || null,
+      referencia_produto: newOrder.referencia_produto.trim(),
+      quantidade_m2: newOrder.quantidade_m2 ? Number(newOrder.quantidade_m2) : null,
+      notas: newOrder.notas.trim() || null,
+      status: 'pendente'
+    };
+
+    const { data: inserted, error } = await supabase.from('encomendas').insert([payload]).select().single();
+    setSavingOrder(false);
+    if (error) {
+      console.error('Erro ao criar encomenda:', error);
+      window.alert('Não foi possível criar a encomenda. Verifique os dados e tente novamente.');
+      return;
+    }
+    setPedidos(current => [inserted as Pedido, ...current]);
+    setNewOrder({ nome_cliente: '', empresa_nif: '', email_cliente: '', telefone_cliente: '', referencia_produto: '', quantidade_m2: '', notas: '' });
+    setShowCreateForm(false);
+  };
+
   return (
     <div className="flex flex-col h-full">
       
-      <div className="mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+      <div className="mb-8 flex flex-col xl:flex-row xl:justify-between xl:items-end gap-5">
         <div>
-          <h1 className="text-4xl font-title font-bold text-institucional-blue">{data.title}</h1>
+          <p className="text-xs uppercase tracking-[0.22em] font-bold text-amber-700 mb-2">Curtumes Ibéria · Dashboard</p>
+          <h1 className="text-3xl md:text-4xl font-title font-bold text-institucional-blue">{data.title}</h1>
           <p className="text-gray-500 mt-2">{data.subtitle}</p>
         </div>
-        
-        <div className="w-full md:w-96 relative">
+        <div className="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
+        <div className="w-full sm:w-80 relative">
           <svg className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
@@ -146,10 +192,31 @@ export function Kanban() {
             placeholder={data.searchPlaceholder}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-institucional-blue shadow-sm font-title"
+            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-institucional-blue/20 focus:border-institucional-blue shadow-sm font-title"
           />
         </div>
+        <button onClick={() => setShowCreateForm(true)} className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-institucional-blue text-white font-title font-bold shadow-lg shadow-blue-950/10 hover:bg-blue-950 transition-colors whitespace-nowrap">
+          <span className="text-lg leading-none">+</span> {language === 'PT' ? 'Nova encomenda' : 'New order'}
+        </button>
+        </div>
       </div>
+
+      {!loading && <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 mb-6">
+        {(language === 'PT' ? [
+          ['Total de encomendas', pedidos.length],
+          ['Pendentes', pedidos.filter(p => normalizeStatus(p.status) === 'Pendente').length],
+          ['Em processamento', pedidos.filter(p => normalizeStatus(p.status) === 'Em Processamento').length],
+          ['Concluídas', pedidos.filter(p => normalizeStatus(p.status) === 'Entregue').length]
+        ] : [
+          ['Total orders', pedidos.length],
+          ['Pending', pedidos.filter(p => normalizeStatus(p.status) === 'Pendente').length],
+          ['Processing', pedidos.filter(p => normalizeStatus(p.status) === 'Em Processamento').length],
+          ['Completed', pedidos.filter(p => normalizeStatus(p.status) === 'Entregue').length]
+        ]).map(([label, value]) => <div key={label} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+          <p className="text-xs text-gray-500 font-medium">{label}</p>
+          <p className="text-2xl font-title font-bold text-institucional-blue mt-1">{value}</p>
+        </div>)}
+      </div>}
 
       {loading ? (
         <div className="flex justify-center items-center flex-grow">
@@ -174,11 +241,11 @@ export function Kanban() {
             });
 
             return (
-              <div key={coluna} className="flex flex-col min-w-[340px] w-[340px] bg-gray-200/40 rounded-2xl p-5 border border-gray-100 h-[calc(100vh-220px)]">
+              <div key={coluna} className="flex flex-col min-w-[320px] w-[320px] bg-slate-100/80 rounded-2xl p-4 border border-slate-200/80 h-[calc(100vh-300px)] min-h-[440px]">
                 
                 <div className="flex justify-between items-center mb-6 flex-shrink-0">
-                  <h2 className="font-title font-bold text-gray-800 text-lg">{data.states[coluna]}</h2>
-                  <span className="bg-white text-institucional-blue text-xs font-bold font-title px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
+                  <h2 className="font-title font-bold text-gray-800 text-base">{data.states[coluna]}</h2>
+                  <span className="bg-white text-institucional-blue text-xs font-bold font-title px-3 py-1.5 rounded-full border border-gray-200">
                     {encomendasDaColuna.length}
                   </span>
                 </div>
@@ -190,7 +257,7 @@ export function Kanban() {
                     </div>
                   ) : (
                     encomendasDaColuna.map(pedido => (
-                      <div key={pedido.id} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow group flex flex-col relative overflow-hidden flex-shrink-0">
+                      <div key={pedido.id} className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-100 transition-all group flex flex-col relative overflow-hidden flex-shrink-0">
                         
                         <div className={`absolute top-0 left-0 w-full h-1 ${
                           coluna === 'Pendente' ? 'bg-orange-400' :
@@ -230,7 +297,7 @@ export function Kanban() {
                           </div>
                         )}
 
-                        <div className="mt-auto pt-2 border-t border-gray-50">
+                        <div className="mt-auto pt-3 border-t border-gray-100 flex flex-col gap-2">
                           {transicaoSeguinte[coluna] ? (
                             <button
                               onClick={() => avancarEstado(pedido.id, pedido.status)}
@@ -244,6 +311,10 @@ export function Kanban() {
                               {data.completed}
                             </div>
                           )}
+                          <button onClick={() => eliminarEncomenda(pedido)} className="w-full inline-flex items-center justify-center gap-2 py-2 text-xs font-bold text-red-600 hover:text-white hover:bg-red-600 border border-red-100 hover:border-red-600 rounded-lg transition-colors" aria-label={`${language === 'PT' ? 'Eliminar encomenda de' : 'Delete order for'} ${pedido.empresa_nif}`}>
+                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4h6v3m-9 0h12" /></svg>
+                            {language === 'PT' ? 'Eliminar encomenda' : 'Delete order'}
+                          </button>
                         </div>
                       </div>
                     ))
@@ -254,6 +325,31 @@ export function Kanban() {
           })}
         </div>
       )}
+
+      {showCreateForm && <div className="fixed inset-0 z-50 bg-slate-950/50 backdrop-blur-sm flex items-center justify-center p-4" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget && !savingOrder) setShowCreateForm(false); }}>
+        <form onSubmit={criarEncomenda} className="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl" aria-labelledby="create-order-title">
+          <div className="p-6 md:p-8 border-b border-gray-100 flex items-start justify-between">
+            <div><p className="text-xs uppercase tracking-[0.2em] text-amber-700 font-bold mb-2">{language === 'PT' ? 'Gestão de encomendas' : 'Order management'}</p><h2 id="create-order-title" className="text-2xl font-title font-bold text-institucional-blue">{language === 'PT' ? 'Adicionar encomenda' : 'Add order'}</h2></div>
+            <button type="button" onClick={() => setShowCreateForm(false)} disabled={savingOrder} className="text-gray-400 hover:text-gray-700 text-2xl leading-none" aria-label={language === 'PT' ? 'Fechar' : 'Close'}>×</button>
+          </div>
+          <div className="p-6 md:p-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {([
+              ['nome_cliente', language === 'PT' ? 'Nome do cliente' : 'Customer name', 'text', true],
+              ['empresa_nif', language === 'PT' ? 'Empresa / NIF' : 'Company / VAT', 'text', true],
+              ['email_cliente', 'Email', 'email', true],
+              ['telefone_cliente', language === 'PT' ? 'Telefone (opcional)' : 'Phone (optional)', 'tel', false],
+              ['referencia_produto', language === 'PT' ? 'Referência do artigo' : 'Article reference', 'text', true],
+              ['quantidade_m2', language === 'PT' ? 'Quantidade (m²)' : 'Quantity (m²)', 'number', false]
+            ] as const).map(([field, label, type, required]) => <label key={field} className="text-sm font-semibold text-gray-700">{label}<input type={type} min={type === 'number' ? '0' : undefined} step={type === 'number' ? 'any' : undefined} required={required} value={newOrder[field]} onChange={event => setNewOrder(current => ({ ...current, [field]: event.target.value }))} className="mt-1.5 w-full px-3.5 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-institucional-blue/20 focus:border-institucional-blue" /></label>)}
+            <label className="text-sm font-semibold text-gray-700 sm:col-span-2">{language === 'PT' ? 'Notas / especificações' : 'Notes / specifications'}<textarea rows={4} value={newOrder.notas} onChange={event => setNewOrder(current => ({ ...current, notas: event.target.value }))} className="mt-1.5 w-full px-3.5 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-institucional-blue/20 focus:border-institucional-blue resize-y" /></label>
+            <p className="sm:col-span-2 text-xs text-gray-500">{language === 'PT' ? 'A encomenda será criada com o estado Pendente.' : 'The order will be created with Pending status.'}</p>
+          </div>
+          <div className="px-6 md:px-8 py-5 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
+            <button type="button" disabled={savingOrder} onClick={() => setShowCreateForm(false)} className="px-4 py-2.5 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-200">{language === 'PT' ? 'Cancelar' : 'Cancel'}</button>
+            <button type="submit" disabled={savingOrder} className="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-institucional-blue hover:bg-blue-950 disabled:opacity-60">{savingOrder ? (language === 'PT' ? 'A guardar…' : 'Saving…') : (language === 'PT' ? 'Criar encomenda' : 'Create order')}</button>
+          </div>
+        </form>
+      </div>}
     </div>
   );
 }
